@@ -1,6 +1,6 @@
 ## 📝 About me
 
-Hi, i am Trần Trung Đức you can call me Tanjiro. I come from Vietnam. My hobbies are programming, playing CTF ( capture the flags ) and love learning to program.
+Hi, i am Trần Trung Đức you can call me Draco Chan. I come from Vietnam. My hobbies are programming, playing CTF ( capture the flags ) and love learning to program.
 
 ---
 
