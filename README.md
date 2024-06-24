@@ -6,11 +6,19 @@
 
 ### ⚡ GitHub Stats
 
-![My GitHub Lang Stats](https://github-readme-stats.vercel.app/api/top-langs/?username=Duc-Developer&theme=tokyonight&layout=compact)
+| | |
+| :--: | :--: |
+| ![My GitHub Lang Stats](https://github-readme-stats.vercel.app/api/top-langs/?username=Duc-Developer&theme=radical&layout=compact) | ![My GitHub Stats](https://github-readme-stats.vercel.app/api?username=Duc-Developer&count_private=true&show_icons=true&theme=radical) |
 
-![My GitHub Stats](https://github-readme-stats.vercel.app/api?username=Duc-Developer&count_private=true&show_icons=true&theme=tokyonight)
+![My Life](/images/terminal.gif)
 
 ---
+
+[![My Skills](https://skillicons.dev/icons?i=html,js,ts,nodejs,solidity,react,redux,nextjs,vue,tailwind,vite,bun,git,githubactions,mongodb)](https://skillicons.dev)
+
+---
+
+![Avatar](/images/octocat.png)
 
 ### ☕ Buy for me a coffee
 
