@@ -17,7 +17,9 @@
 ### ☕ Buy for me a coffee
 
 <p align="center">
-  <img src="/images/octocat.png" width="350" alt="my liffe">
+<a href="https://myoctocat.com/build-your-octocat">
+  <img src="/images/octocat.png" width="350" alt="my liffe" >
+</a>
 </p>
 
 [![My Skills](https://skillicons.dev/icons?i=html,js,ts,nodejs,solidity,react,redux,nextjs,vue,tailwind,vite,bun,git,githubactions,mongodb)](https://skillicons.dev)
