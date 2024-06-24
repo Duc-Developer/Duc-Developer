@@ -6,21 +6,21 @@
 
 ### ⚡ GitHub Stats
 
-| | |
-| :--: | :--: |
-| ![My GitHub Lang Stats](https://github-readme-stats.vercel.app/api/top-langs/?username=Duc-Developer&theme=radical&layout=compact) | ![My GitHub Stats](https://github-readme-stats.vercel.app/api?username=Duc-Developer&count_private=true&show_icons=true&theme=radical) |
+![My GitHub Lang Stats](https://github-readme-stats.vercel.app/api/top-langs/?username=Duc-Developer&theme=radical&layout=compact)
 
-![My Life](/images/terminal.gif)
+![My GitHub Stats](https://github-readme-stats.vercel.app/api?username=Duc-Developer&count_private=true&show_icons=true&theme=radical)
 
----
-
-[![My Skills](https://skillicons.dev/icons?i=html,js,ts,nodejs,solidity,react,redux,nextjs,vue,tailwind,vite,bun,git,githubactions,mongodb)](https://skillicons.dev)
+![Terminal](/images/terminal.gif)
 
 ---
-
-![Avatar](/images/octocat.png)
 
 ### ☕ Buy for me a coffee
+
+<p align="center">
+  <img src="/images/octocat.png" width="350" alt="my liffe">
+</p>
+
+[![My Skills](https://skillicons.dev/icons?i=html,js,ts,nodejs,solidity,react,redux,nextjs,vue,tailwind,vite,bun,git,githubactions,mongodb)](https://skillicons.dev)
 
 ---
 
