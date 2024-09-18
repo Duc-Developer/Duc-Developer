@@ -12,7 +12,7 @@ export const Footer = () => {
               key={column.title}
               className="min-w-[200px] h-auto flex flex-col items-center justify-start"
             >
-              <h3 className="font-bold text-[16px]">{column.title}</h3>
+              <h3 className="font-bold text-[16px] text-[#b49bff]">{column.title}</h3>
               {column.data.map(({ icon: Icon, name, link }) => (
                 <Link
                   key={`${column.title}-${name}`}

@@ -5,87 +5,6 @@ import {
 } from "react-icons/rx";
 import { SiZalo } from "react-icons/si";
 
-export const SKILL_DATA = [
-  {
-    skill_name: "HTML",
-    image: "html.png",
-    width: 80,
-    height: 80,
-  },
-  {
-    skill_name: "CSS",
-    image: "css.png",
-    width: 80,
-    height: 80,
-  },
-  {
-    skill_name: "JavaScript",
-    image: "js.png",
-    width: 65,
-    height: 65,
-  },
-  {
-    skill_name: "Tailwind CSS",
-    image: "tailwind.png",
-    width: 80,
-    height: 80,
-  },
-  {
-    skill_name: "React",
-    image: "react.png",
-    width: 80,
-    height: 80,
-  },
-  {
-    skill_name: "Redux",
-    image: "redux.png",
-    width: 80,
-    height: 80,
-  },
-  {
-    skill_name: "React Query",
-    image: "reactquery.png",
-    width: 80,
-    height: 80,
-  },
-  {
-    skill_name: "TypeScript",
-    image: "ts.png",
-    width: 80,
-    height: 80,
-  },
-  {
-    skill_name: "Next.js 14",
-    image: "next.png",
-    width: 80,
-    height: 80,
-  },
-  {
-    skill_name: "Framer Motion",
-    image: "framer.png",
-    width: 80,
-    height: 80,
-  },
-  {
-    skill_name: "Stripe",
-    image: "stripe.png",
-    width: 80,
-    height: 80,
-  },
-  {
-    skill_name: "Node.js",
-    image: "node.png",
-    width: 80,
-    height: 80,
-  },
-  {
-    skill_name: "MongoDB",
-    image: "mongodb.png",
-    width: 40,
-    height: 40,
-  },
-] as const;
-
 export const SOCIALS = [
   {
     name: "Zalo",
@@ -104,156 +23,35 @@ export const SOCIALS = [
   },
 ] as const;
 
-export const FRONTEND_SKILL = [
-  {
-    skill_name: "HTML",
-    image: "html.png",
-    width: 80,
-    height: 80,
-  },
-  {
-    skill_name: "CSS",
-    image: "css.png",
-    width: 80,
-    height: 80,
-  },
-  {
-    skill_name: "JavaScript",
-    image: "js.png",
-    width: 65,
-    height: 65,
-  },
-  {
-    skill_name: "Tailwind CSS",
-    image: "tailwind.png",
-    width: 80,
-    height: 80,
-  },
-  {
-    skill_name: "Material UI",
-    image: "mui.png",
-    width: 80,
-    height: 80,
-  },
-  {
-    skill_name: "React",
-    image: "react.png",
-    width: 80,
-    height: 80,
-  },
-  {
-    skill_name: "Redux",
-    image: "redux.png",
-    width: 80,
-    height: 80,
-  },
-  {
-    skill_name: "React Query",
-    image: "reactquery.png",
-    width: 80,
-    height: 80,
-  },
-  {
-    skill_name: "TypeScript",
-    image: "ts.png",
-    width: 80,
-    height: 80,
-  },
-  {
-    skill_name: "Next.js 14",
-    image: "next.png",
-    width: 80,
-    height: 80,
-  },
+export const BASE_SKILL_URL = 'https://skillicons.dev/icons';
+
+export const MY_SKILLS = [
+  { id: "1", name: "ReactJS", tag: "react", width: 80, height: 80 },
+  { id: "2", name: "NextJS", tag: "nextjs", width: 80, height: 80 },
+  { id: "3", name: "NodeJS", tag: "nodejs", width: 80, height: 80 },
+  { id: "4", name: "HTML", tag: "html", width: 80, height: 80 },
+  { id: "5", name: "CSS", tag: "css", width: 80, height: 80 },
+  { id: "6", name: "JavaScript", tag: "js", width: 65, height: 65 },
+  { id: "7", name: "TypeScript", tag: "ts", width: 80, height: 80 },
+  { id: "8", name: "Vite", tag: "vite", width: 80, height: 80 },
+  { id: "9", name: "BunJS", tag: "bun", width: 80, height: 80 },
+  { id: "10", name: "Git", tag: "git", width: 80, height: 80 },
+  { id: "12", name: "Tailwind", tag: "tailwind", width: 80, height: 80 },
+  { id: "13", name: "GitHub", tag: "github", width: 80, height: 80 },
+  { id: "14", name: "GitLab", tag: "gitlab", width: 80, height: 80 },
+  { id: "15", name: "MUI", tag: "materialui", width: 80, height: 80 },
+  { id: "15", name: "MySQL", tag: "mysql", width: 80, height: 80 },
+  { id: "15", name: "MongoDB", tag: "mongodb", width: 80, height: 80 },
+  { id: "15", name: "Postgres", tag: "postgres", width: 80, height: 80 },
+  { id: "15", name: "Postman", tag: "postman", width: 80, height: 80 },
+  { id: "15", name: "Redux", tag: "redux", width: 80, height: 80 },
+  { id: "15", name: "Rollup", tag: "rollupjs", width: 80, height: 80 },
+  { id: "15", name: "Webpack", tag: "webpack", width: 80, height: 80 },
+  { id: "15", name: "Npm", tag: "npm", width: 80, height: 80 },
+  { id: "15", name: "Yarn", tag: "yarn", width: 80, height: 80 },
+  { id: "15", name: "Workers", tag: "workers", width: 80, height: 80 },
 ] as const;
 
-export const BACKEND_SKILL = [
-  {
-    skill_name: "Node.js",
-    image: "node.png",
-    width: 80,
-    height: 80,
-  },
-  {
-    skill_name: "Express.js",
-    image: "express.png",
-    width: 80,
-    height: 80,
-  },
-  {
-    skill_name: "MongoDB",
-    image: "mongodb.png",
-    width: 40,
-    height: 40,
-  },
-  {
-    skill_name: "Firebase",
-    image: "firebase.png",
-    width: 55,
-    height: 55,
-  },
-  {
-    skill_name: "PostgreSQL",
-    image: "postgresql.png",
-    width: 70,
-    height: 70,
-  },
-  {
-    skill_name: "MySQL",
-    image: "mysql.png",
-    width: 70,
-    height: 70,
-  },
-  {
-    skill_name: "Prisma",
-    image: "prisma.png",
-    width: 70,
-    height: 70,
-  },
-  {
-    skill_name: "Graphql",
-    image: "graphql.png",
-    width: 80,
-    height: 80,
-  },
-] as const;
-
-export const FULLSTACK_SKILL = [
-  {
-    skill_name: "React Native",
-    image: "reactnative.png",
-    width: 70,
-    height: 70,
-  },
-  {
-    skill_name: "Tauri",
-    image: "tauri.png",
-    width: 70,
-    height: 70,
-  },
-  {
-    skill_name: "Docker",
-    image: "docker.png",
-    width: 70,
-    height: 70,
-  },
-
-  {
-    skill_name: "Figma",
-    image: "figma.png",
-    width: 50,
-    height: 50,
-  },
-] as const;
-
-export const OTHER_SKILL = [
-  {
-    skill_name: "Go",
-    image: "go.png",
-    width: 60,
-    height: 60,
-  },
-] as const;
 
 export const PROJECTS = [
   {
