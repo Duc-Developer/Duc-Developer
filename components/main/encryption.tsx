@@ -59,7 +59,7 @@ export const Encryption = () => {
           preload="false"
           className="w-full h-auto"
         >
-          <source src="/videos/encryption-bg.webm" type="video/webm" />
+          <source src="https://res.cloudinary.com/drwgmpzuh/video/upload/v1726709398/videos/encryption-bg_wh2wlu.webm" type="video/webm" />
         </video>
       </div>
     </div>
