@@ -81,7 +81,7 @@ export const HeroContent = () => {
         </motion.a>
       </div>
       
-      <div className="w-screen h-[calc(100vh_+150px)] absolute top-[-150px] left-0">
+      <div className="w-screen h-[calc(100vh_+150px)] absolute top-[-150px] left-0 z-[-1]">
         <AstronautModel
           modelUrl="https://res.cloudinary.com/drwgmpzuh/image/upload/v1726755052/models/Cosmic_Adventure_0919140540_vgqw3g.glb"
         />
