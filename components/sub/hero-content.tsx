@@ -2,21 +2,24 @@
 
 import { SparklesIcon } from "@heroicons/react/24/solid";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import { TypeAnimation } from 'react-type-animation';
 
 import {
   slideInFromLeft,
-  slideInFromRight,
   slideInFromTop,
 } from "@/lib/motion";
+import AstronautModel from "./astronaut-model";
+import clsx from "clsx";
 
 export const HeroContent = () => {
   return (
     <motion.div
       initial="hidden"
       animate="visible"
-      className="flex flex-row items-center justify-center px-5 sm:px-20 mt-40 w-full z-[20]"
+      className={clsx(
+        "flex flex-row items-center justify-center relative",
+        " px-5 sm:px-20 mt-40 w-full z-[20]"
+      )}
     >
       <div className="h-full w-full flex flex-col gap-5 justify-center m-auto text-start">
         <motion.div
@@ -77,20 +80,12 @@ export const HeroContent = () => {
           Learn more
         </motion.a>
       </div>
-
-      <motion.div
-        variants={slideInFromRight(0.8)}
-        className="w-full h-full flex justify-center items-center"
-      >
-        <Image
-          src="/hero-bg.svg"
-          alt="work icons"
-          height={650}
-          width={650}
-          draggable={false}
-          className="select-none"
+      
+      <div className="w-screen h-[calc(100vh_+150px)] absolute top-[-150px] left-0">
+        <AstronautModel
+          modelUrl="https://res.cloudinary.com/drwgmpzuh/image/upload/v1726755052/models/Cosmic_Adventure_0919140540_vgqw3g.glb"
         />
-      </motion.div>
+      </div>
     </motion.div>
   );
 };
