@@ -2,11 +2,8 @@ import { SkillDataProvider } from "@/components/sub/skill-data-provider";
 import { SkillText } from "@/components/sub/skill-text";
 
 import {
-  BACKEND_SKILL,
-  FRONTEND_SKILL,
-  FULLSTACK_SKILL,
-  OTHER_SKILL,
-  SKILL_DATA,
+  MY_SKILLS,
+  BASE_SKILL_URL
 } from "@/constants";
 
 export const Skills = () => {
@@ -18,61 +15,12 @@ export const Skills = () => {
     >
       <SkillText />
 
-      <div className="flex flex-row justify-around flex-wrap mt-4 gap-5 items-center">
-        {SKILL_DATA.map((skill, i) => (
+      <div className="flex flex-row justify-around flex-wrap mt-4 gap-5 items-center max-w-screen-lg">
+        {MY_SKILLS.map((skill, i) => (
           <SkillDataProvider
-            key={skill.skill_name}
-            src={skill.image}
-            name={skill.skill_name}
-            width={skill.width}
-            height={skill.height}
-            index={i}
-          />
-        ))}
-      </div>
-
-      <div className="flex flex-row justify-around flex-wrap mt-4 gap-5 items-center">
-        {FRONTEND_SKILL.map((skill, i) => (
-          <SkillDataProvider
-            key={skill.skill_name}
-            src={skill.image}
-            name={skill.skill_name}
-            width={skill.width}
-            height={skill.height}
-            index={i}
-          />
-        ))}
-      </div>
-      <div className="flex flex-row justify-around flex-wrap mt-4 gap-5 items-center">
-        {BACKEND_SKILL.map((skill, i) => (
-          <SkillDataProvider
-            key={skill.skill_name}
-            src={skill.image}
-            name={skill.skill_name}
-            width={skill.width}
-            height={skill.height}
-            index={i}
-          />
-        ))}
-      </div>
-      <div className="flex flex-row justify-around flex-wrap mt-4 gap-5 items-center">
-        {FULLSTACK_SKILL.map((skill, i) => (
-          <SkillDataProvider
-            key={skill.skill_name}
-            src={skill.image}
-            name={skill.skill_name}
-            width={skill.width}
-            height={skill.height}
-            index={i}
-          />
-        ))}
-      </div>
-      <div className="flex flex-row justify-around flex-wrap mt-4 gap-5 items-center">
-        {OTHER_SKILL.map((skill, i) => (
-          <SkillDataProvider
-            key={skill.skill_name}
-            src={skill.image}
-            name={skill.skill_name}
+            key={skill.id}
+            src={`${BASE_SKILL_URL}?i=${skill.tag}`}
+            name={skill.name}
             width={skill.width}
             height={skill.height}
             index={i}
@@ -90,7 +38,7 @@ export const Skills = () => {
             muted
             autoPlay
           >
-            <source src="/videos/skills-bg.webm" type="video/webm" />
+            <source src="https://res.cloudinary.com/drwgmpzuh/video/upload/v1726709399/videos/skills-bg_fmvnwj.webm" type="video/webm" />
           </video>
         </div>
       </div>
