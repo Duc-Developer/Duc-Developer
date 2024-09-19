@@ -13,6 +13,11 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'skillicons.dev',
       },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+      
+      }
     ],
   },
   basePath: mode === 'development' ? '' : basePathConfig
