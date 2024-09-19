@@ -75,7 +75,11 @@ const AstronautModel = ({ modelUrl }: { modelUrl: string }) => {
                 <Suspense fallback={null}>
                     <Model url={modelUrl} />
                 </Suspense>
-                <OrbitControls enableZoom={false} />
+                <OrbitControls
+                    enableZoom={false}
+                    enablePan={false}
+                    enableRotate={false}
+                />
             </Canvas>
         </div>
     );
