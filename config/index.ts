@@ -81,7 +81,7 @@ export const metadataVn = {
     type: "website",
     url: "https://david.id.vn",
     images: {
-      url: "https://david.id.vn/meta-image.png",
+      url: "https://res.cloudinary.com/drwgmpzuh/image/upload/v1726822070/david.id.vn/meta-image.png",
       alt: "David kỹ sư phần mềm",
       type: "website",
       width: 800,
@@ -93,7 +93,7 @@ export const metadataVn = {
     title: "David Chan | Kỹ sư phần mềm",
     description: "Chào mừng đến với portfolio của tôi! Tôi là David Chan, một kỹ sư phần mềm.",
     images: {
-      url: "https://david.id.vn/meta-image.png",
+      url: "https://res.cloudinary.com/drwgmpzuh/image/upload/v1726822070/david.id.vn/meta-image.png",
       alt: "David kỹ sư phần mềm",
       type: "website",
       width: 800,
