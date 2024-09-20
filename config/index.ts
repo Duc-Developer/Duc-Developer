@@ -24,6 +24,31 @@ export const metadataEn = {
     name: "David Chan",
     url: "https://github.com/Duc-Developer",
   },
+  openGraph: {
+    title: "David Chan | Software Engineer",
+    description: "Welcome to my portfolio! I'm David Chan, a software engineer.",
+    type: "website",
+    url: "https://david.id.vn",
+    images: {
+      url: "https://david.id.vn/meta-image.png",
+      alt: "David software engineer",
+      type: "website",
+      width: 800,
+      height: 600
+    }
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "David Chan | Software Engineer",
+    description: "Welcome to my portfolio! I'm David Chan, a software engineer.",
+    images: {
+      url: "https://david.id.vn/meta-image.png",
+      alt: "David software engineer",
+      type: "website",
+      width: 800,
+      height: 600
+    }
+  }
 } as const;
 
 export const metadataVn = {
@@ -50,4 +75,29 @@ export const metadataVn = {
     name: "David Chan",
     url: "https://github.com/Duc-Developer",
   },
+  openGraph: {
+    title: "David Chan | Kỹ sư phần mềm",
+    description: "Chào mừng đến với portfolio của tôi! Tôi là David Chan, một kỹ sư phần mềm.",
+    type: "website",
+    url: "https://david.id.vn",
+    images: {
+      url: "https://david.id.vn/meta-image.png",
+      alt: "David kỹ sư phần mềm",
+      type: "website",
+      width: 800,
+      height: 600
+    }
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "David Chan | Kỹ sư phần mềm",
+    description: "Chào mừng đến với portfolio của tôi! Tôi là David Chan, một kỹ sư phần mềm.",
+    images: {
+      url: "https://david.id.vn/meta-image.png",
+      alt: "David kỹ sư phần mềm",
+      type: "website",
+      width: 800,
+      height: 600
+    }
+  }
 } as const;
