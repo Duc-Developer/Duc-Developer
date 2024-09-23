@@ -81,7 +81,7 @@ export const HeroContent = () => {
         </motion.a>
       </div>
       
-      <div className="grow h-full h-96">
+      <div className="grow h-96">
         <AstronautModel
           modelUrl="https://res.cloudinary.com/drwgmpzuh/image/upload/v1727063086/models/An_astronaut_is_flyin_0923034350_refine_pzdcig.glb"
         />
