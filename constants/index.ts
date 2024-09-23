@@ -141,5 +141,6 @@ export const NAV_LINKS = [
   {
     title: "Blogs",
     link: "#blogs",
+    backLink: "https://codecungdavid.blogspot.com"
   },
 ] as const;
