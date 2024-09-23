@@ -7,7 +7,7 @@ export const Hero = () => {
         autoPlay
         muted
         loop
-        className="rotate-180 absolute top-[-20em] sm:top-[-340px] left-0 w-full h-screen object-cover -z-20"
+        className="rotate-180 absolute top-[-26em] left-0 w-full h-screen object-cover -z-20"
       >
         <source src="https://res.cloudinary.com/drwgmpzuh/video/upload/v1726709398/videos/blackhole_vlnyv4.webm" type="video/webm" />
       </video>

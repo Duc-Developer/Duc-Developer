@@ -10,12 +10,11 @@ export const Skills = () => {
   return (
     <section
       id="skills"
-      style={{ transform: "scale(0.9)" }}
-      className="flex flex-col items-center justify-center gap-3 h-full relative overflow-hidden py-20"
+      className="flex flex-col items-center justify-center gap-3 h-full relative overflow-hidden"
     >
       <SkillText />
 
-      <div className="flex flex-row justify-around flex-wrap mt-4 gap-5 items-center max-w-screen-lg">
+      <div className="flex flex-row justify-around flex-wrap mt-4 gap-5 items-center max-w-screen-lg px-4 md:px-0">
         {MY_SKILLS.map((skill, i) => (
           <SkillDataProvider
             key={skill.id}

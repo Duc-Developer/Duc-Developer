@@ -23,6 +23,7 @@ const MobileMenu = () => {
       <Link
         href="#about-me"
         className="h-auto w-auto flex flex-row items-center"
+        title="home"
       >
         <Image
           src="/logo.png"
@@ -38,6 +39,7 @@ const MobileMenu = () => {
       <Link
         href="#projects"
         className="h-auto w-auto flex flex-row items-center active:scale-110"
+        title="projects"
       >
         <GrProjects size={25} color="white" />
       </Link>
@@ -49,13 +51,14 @@ const MobileMenu = () => {
       </Link>
     </div>
     <div className="flex flex-row justify-between items-center gap-8">
-      <Link
-        href="#blogs"
+      <a
+        href={NAV_LINKS.find(l => l.title === "Blogs")?.backLink} target="_blank"
         className="h-auto w-auto flex flex-row items-center active:scale-110"
+        title="blog"
       >
         <FaBlog size={25} color="white" />
-      </Link>
-      <a href="https://www.linkedin.com/in/david-chan-0b7103212" target="_blank">
+      </a>
+      <a href="https://www.linkedin.com/in/david-chan-0b7103212" target="_blank" title="linkedin">
         <CiLinkedin size={35} color="white" />
       </a>
     </div>
@@ -84,15 +87,25 @@ const DesktopMenu = () => {
 
       <div className="w-[500px] h-full flex flex-row items-center justify-between md:mr-20">
         <div className="flex items-center justify-between w-full h-auto border-purple-heart-61 bg-gray-500 mr-[15px] px-[20px] py-[10px] rounded-full text-gray-200">
-          {NAV_LINKS.map((link) => (
-            <Link
+          {NAV_LINKS.map((link) => {
+            if (link.title === 'Blogs') {
+              return <a
+                key={link.title}
+                href={link.backLink}
+                target="_blank"
+                className="cursor-pointer hover:text-purple-heart transition"
+              >
+                {link.title}
+              </a>
+            }
+            return <Link
               key={link.title}
               href={link.link}
               className="cursor-pointer hover:text-purple-heart transition"
             >
               {link.title}
             </Link>
-          ))}
+          })}
         </div>
       </div>
 
