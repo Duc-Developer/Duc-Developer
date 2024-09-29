@@ -1,55 +1,86 @@
-import { FaYoutube, FaFacebook, FaMailBulk, FaSkype, FaTelegram } from "react-icons/fa";
+import { FaYoutube, FaFacebook, FaMailBulk, FaSkype, FaTelegramPlane, FaLinkedin } from "react-icons/fa";
 import {
   RxGithubLogo,
   RxLinkedinLogo,
 } from "react-icons/rx";
-import { SiZalo } from "react-icons/si";
+import { MdEmail } from "react-icons/md";
+import { FaGithub } from "react-icons/fa";
 
-export const SOCIALS = [
-  {
-    name: "Zalo",
-    icon: SiZalo,
-    link: "https://zalo.me/0943862358",
-  },
-  {
-    name: "Telegram",
-    icon: FaTelegram,
-    link: "https://t.me/ductrantrung",
-  },
+export const CONTACTS = [
   {
     name: "Skype",
     icon: FaSkype,
     link: "https://join.skype.com/invite/uzEhCJj4aXEd",
+    visibleMode: "all"
   },
+  {
+    name: "Telegram",
+    icon: FaTelegramPlane,
+    link: "https://t.me/ductrantrung",
+    visibleMode: "all"
+  },
+  {
+    name: "Mail",
+    icon: MdEmail,
+    link: "mailto:mrtranduc1994@gmail.com",
+    visibleMode: "expanded"
+  }
+] as const;
+
+export const SOCIALS = [
+  {
+    name: "Linkedin",
+    icon: FaLinkedin,
+    link: "https://www.linkedin.com/in/david-chan-0b7103212",
+    visibleMode: "all"
+  },
+  {
+    name: "Facebook",
+    icon: FaFacebook,
+    link: "https://www.facebook.com/PoPeooo/",
+    visibleMode: "all"
+  },
+  {
+    name: "Github",
+    icon: FaGithub,
+    link: "https://github.com/Duc-Developer",
+    visibleMode: "expanded"
+  },
+  {
+    name: "Youtube",
+    icon: FaYoutube,
+    link: "#sorry-not-available",
+    visibleMode: "expanded"
+  }
 ] as const;
 
 export const BASE_SKILL_URL = 'https://skillicons.dev/icons';
 
 export const MY_SKILLS = [
-  { id: "1", name: "ReactJS", tag: "react", width: 80, height: 80 },
-  { id: "2", name: "NextJS", tag: "nextjs", width: 80, height: 80 },
-  { id: "3", name: "NodeJS", tag: "nodejs", width: 80, height: 80 },
-  { id: "4", name: "HTML", tag: "html", width: 80, height: 80 },
-  { id: "5", name: "CSS", tag: "css", width: 80, height: 80 },
-  { id: "6", name: "JavaScript", tag: "js", width: 65, height: 65 },
-  { id: "7", name: "TypeScript", tag: "ts", width: 80, height: 80 },
-  { id: "8", name: "Vite", tag: "vite", width: 80, height: 80 },
-  { id: "9", name: "BunJS", tag: "bun", width: 80, height: 80 },
-  { id: "10", name: "Git", tag: "git", width: 80, height: 80 },
-  { id: "12", name: "Tailwind", tag: "tailwind", width: 80, height: 80 },
-  { id: "13", name: "GitHub", tag: "github", width: 80, height: 80 },
-  { id: "14", name: "GitLab", tag: "gitlab", width: 80, height: 80 },
-  { id: "15", name: "MUI", tag: "mui", width: 80, height: 80 },
-  { id: "16", name: "MySQL", tag: "mysql", width: 80, height: 80 },
-  { id: "17", name: "MongoDB", tag: "mongodb", width: 80, height: 80 },
-  { id: "18", name: "Postgres", tag: "postgres", width: 80, height: 80 },
-  { id: "19", name: "Postman", tag: "postman", width: 80, height: 80 },
-  { id: "20", name: "Redux", tag: "redux", width: 80, height: 80 },
-  { id: "21", name: "Rollup", tag: "rollup", width: 80, height: 80 },
-  { id: "22", name: "Webpack", tag: "webpack", width: 80, height: 80 },
-  { id: "23", name: "Npm", tag: "npm", width: 80, height: 80 },
-  { id: "24", name: "Yarn", tag: "yarn", width: 80, height: 80 },
-  { id: "25", name: "Workers", tag: "workers", width: 80, height: 80 },
+  { id: "1", name: "ReactJS", tag: "react", width: 45, height: 45 },
+  { id: "2", name: "NextJS", tag: "nextjs", width: 45, height: 45 },
+  { id: "3", name: "NodeJS", tag: "nodejs", width: 45, height: 45 },
+  { id: "4", name: "HTML", tag: "html", width: 45, height: 45 },
+  { id: "5", name: "CSS", tag: "css", width: 45, height: 45 },
+  { id: "6", name: "JavaScript", tag: "js", width: 45, height: 65 },
+  { id: "7", name: "TypeScript", tag: "ts", width: 45, height: 45 },
+  { id: "8", name: "Vite", tag: "vite", width: 45, height: 45 },
+  { id: "9", name: "BunJS", tag: "bun", width: 45, height: 45 },
+  { id: "10", name: "Git", tag: "git", width: 45, height: 45 },
+  { id: "12", name: "Tailwind", tag: "tailwind", width: 45, height: 45 },
+  { id: "13", name: "GitHub", tag: "github", width: 45, height: 45 },
+  { id: "14", name: "GitLab", tag: "gitlab", width: 45, height: 45 },
+  { id: "15", name: "MUI", tag: "mui", width: 45, height: 45 },
+  { id: "16", name: "MySQL", tag: "mysql", width: 45, height: 45 },
+  { id: "17", name: "MongoDB", tag: "mongodb", width: 45, height: 45 },
+  { id: "18", name: "Postgres", tag: "postgres", width: 45, height: 45 },
+  { id: "19", name: "Postman", tag: "postman", width: 45, height: 45 },
+  { id: "20", name: "Redux", tag: "redux", width: 45, height: 45 },
+  { id: "21", name: "Rollup", tag: "rollup", width: 45, height: 45 },
+  { id: "22", name: "Webpack", tag: "webpack", width: 45, height: 45 },
+  { id: "23", name: "Npm", tag: "npm", width: 45, height: 45 },
+  { id: "24", name: "Yarn", tag: "yarn", width: 45, height: 45 },
+  { id: "25", name: "Workers", tag: "workers", width: 45, height: 45 },
 ] as const;
 
 
@@ -128,19 +159,19 @@ export const FOOTER_DATA = [
 export const NAV_LINKS = [
   {
     title: "About me",
-    link: "#about-me",
+    link: "?active=about-me",
   },
   {
     title: "Skills",
-    link: "#skills",
+    link: "?active=skills",
   },
   {
     title: "Projects",
-    link: "#projects",
+    link: "?active=projects",
   },
   {
     title: "Blogs",
-    link: "#blogs",
+    link: "?active=blogs",
     backLink: "https://codecungdavid.blogspot.com"
   },
 ] as const;
