@@ -1,0 +1,46 @@
+'use client';
+
+import { classNames } from '@/lib/utils'
+import React, { useEffect, useState } from 'react'
+
+const defaultTransition = 'after:transition-transform after:transition duration-300';
+const LanguageToggle = () => {
+    const [language, setLanguage] = useState('en');
+    const [transition, setTransition] = useState(defaultTransition);
+
+    useEffect(() => {
+        const savedLanguage = localStorage.getItem('language');
+        if (savedLanguage) {
+            setLanguage(savedLanguage);
+        }
+    }, []);
+
+    const handleChange = (val: string) => {
+        console.warn('%c[Warning from David: LanguageToggle] %cSorry, this functionality has not been implemented yet.', 'color: #f39c12', 'color: #bdc3c7');
+        localStorage.setItem('language', val);
+        setTransition(transition + ' after:scale-50 after: after:rounded-lg after:translate-y-1/8');
+        setTimeout(() => {
+            setLanguage(val);
+            setTransition(defaultTransition);
+        }, 250);
+    };
+
+    return (
+        <div className={classNames(
+            "flex h-8 items-center gap-4 rounded-full bg-orange px-3 relative text-sm overflow-hidden bg-darkNeutral cursor-pointer",
+            'after:content-[""] after:w-1/2 after:h-full after:bg-neutral after:absolute after:top-0 after:opacity-50',
+            language === 'en' ? 'after:right-0' : 'after:left-0',
+            transition
+        )}
+            onClick={() => handleChange(language === 'en' ? 'vn' : 'en')}>
+            <span className={classNames('select-none text-center', language === 'vn' && 'line-through')}>
+                EN
+            </span>
+            <span className={classNames('select-none text-center', language === 'en' && 'line-through')}>
+                VN
+            </span>
+        </div>
+    )
+}
+
+export default LanguageToggle
