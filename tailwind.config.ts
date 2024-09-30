@@ -1,4 +1,5 @@
-import type { Config } from 'tailwindcss'
+import type { Config } from 'tailwindcss';
+import { COLORS } from './theme.variables';
 
 const config: Config = {
   content: [
@@ -14,17 +15,7 @@ const config: Config = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       colors: {
-        'white': '#ffffff',
-        'black': '#000000',
-        'black-pearl': '#030014',
-        'gray-500': '#0300145e',
-        'black-pearl-27': '#03001427',
-        'purple-heart': '#7042f8',
-        'purple-heart-61': '#7042f861',
-        'purple-heart-8b': '#7042f88b',
-        'purple-500': '#2A0E61',
-        'electric-violet': '#b49bff',
-        'cyan-500': '#00f7ff',
+        ...COLORS
       }
     },
   },
@@ -32,7 +23,12 @@ const config: Config = {
     function ({ addVariant }: { addVariant: (name: string, generator: string) => void }) {
       addVariant('child', '&>*');
       addVariant('child-hover', '&>*:hover');
-  }
+    }
   ],
+  variants: {
+    extend: {
+      fill: ['hover']
+    },
+  }
 }
 export default config

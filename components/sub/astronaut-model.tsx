@@ -16,10 +16,12 @@ const Model = ({ url }: { url: string }) => {
             const loopDuration = 3;
             const normalizedTime = (time % loopDuration) / loopDuration; // Normalize time to [0, 1] range
             const easedTime = easeInOutSine(normalizedTime);
-            const newY = Math.cos(easedTime * Math.PI * 2) * 0.2;
+            const newY = Math.cos(easedTime * Math.PI * 2) * 0.4;
+            const newZ = Math.sin(easedTime * Math.PI * 2) * 0.2;
+            const newX = Math.sin(easedTime * Math.PI * 2) * 0.1 + Math.cos(easedTime * Math.PI * 2) * 0.1;
 
-            modelRef.current.position.set(0, newY, 0);
-            modelRef.current.rotation.y = Math.cos(easedTime * Math.PI * 2) * 0.1;
+            modelRef.current.position.set(newX, newY, newZ);
+            // modelRef.current.rotation.y = Math.cos(easedTime * Math.PI * 2) * 0.1;
 
             const direction = new THREE.Vector3(0, 1, 0).normalize();
             const targetQuaternion = new THREE.Quaternion();
@@ -33,19 +35,21 @@ const Model = ({ url }: { url: string }) => {
 
 const AstronautModel = ({ modelUrl }: { modelUrl: string }) => {
     return (
-        <Canvas style={{ pointerEvents: 'none' }} camera={{ position: [3, 0, 10], fov: 15 }} >
-            <ambientLight intensity={0.5} />
-            <pointLight position={[10, 10, 10]} intensity={1.5} />
-            <directionalLight position={[5, 5, 5]} intensity={1.5} />
-            <Suspense fallback={null}>
-                <Model url={modelUrl} />
-            </Suspense>
-            <OrbitControls
-                enableZoom={false}
-                enablePan={false}
-                enableRotate={false}
-            />
-        </Canvas>
+        <div className="w-[42rem] h-[42rem] relative">
+            <Canvas style={{ pointerEvents: 'none' }} camera={{ position: [1, 6, 10], fov: 15 }} >
+                <ambientLight intensity={0.5} />
+                <pointLight position={[10, 10, 10]} intensity={1.5} />
+                <directionalLight position={[5, 5, 5]} intensity={1.5} />
+                <Suspense fallback={null}>
+                    <Model url={modelUrl} />
+                </Suspense>
+                <OrbitControls
+                    enableZoom={false}
+                    enablePan={false}
+                    enableRotate={false}
+                />
+            </Canvas>
+        </div>
     );
 };
 
