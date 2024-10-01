@@ -47,7 +47,7 @@ const AboutMe = () => {
         >
             <TypeAnimation
                 sequence={[
-                    "Hi there! I'am David Chan",
+                    "Hi there! I'm David Chan",
                     1000,
                     "A Frontend Developer",
                     500,
