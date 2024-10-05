@@ -58,11 +58,9 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Decode Base64-encoded secret
         run: |
-          echo "${{ secrets.CERTIFICATE_BASE64 }}" | base64 --decode > my-cert.json
+          echo "${{ secrets.CERTIFICATE_BASE64 }}" | base64 --decode > my-cerf.json
         env:
           CERTIFICATE_BASE64: ${{ secrets.CERTIFICATE_BASE64 }}
-      - name: Debug List files in the working directory
-        run: ls -la
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
         env:
