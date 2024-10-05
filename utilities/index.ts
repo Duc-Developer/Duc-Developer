@@ -1,3 +1,4 @@
+import { blogger_v3 } from 'googleapis';
 import DOMPurify from 'isomorphic-dompurify';
 
 export const MY_BLOG_URL = 'https://codecungdavid.blogspot.com';
@@ -33,4 +34,14 @@ export const setupDOMPurify = () => {
         });
         resolve();
     });
+};
+
+export const sanitizeDescription = (data?: blogger_v3.Schema$Post, limit?: number) => {
+    if (!data?.content) return '';
+    const sanitizedContent = DOMPurify.sanitize(data.content ?? '', { ALLOWED_TAGS: [] });
+    const cleanedContent = sanitizedContent.replaceAll(/\n\s+/g, ' ').replaceAll(/&nbsp;/g, ' ');
+    if (limit) {
+        return cleanedContent.substring(0, limit) + '...';
+    }
+    return cleanedContent;
 };

@@ -1,14 +1,12 @@
 import Image from 'next/image';
 import styles from './card.module.css'
 import { blogger_v3 } from 'googleapis';
-import DOMPurify from 'isomorphic-dompurify'
-import { SlugConverter } from '@/utilities';
+import { sanitizeDescription, SlugConverter } from '@/utilities';
 import Link from 'next/link';
 import { FaArrowRight } from "react-icons/fa";
 
 const PostCard = ({ data }: { data: blogger_v3.Schema$Post }) => {
-    const sanitizedContent = DOMPurify.sanitize(data.content ?? '', { ALLOWED_TAGS: [] });
-    const cleanedContent = sanitizedContent.replaceAll(/\n\s+/g, ' ').replaceAll(/&nbsp;/g, ' ');
+    const cleanedContent = sanitizeDescription(data);
     return <div className={styles.wrapper}>
         <div className={styles.cardHover}>
             <div className={styles.cardHoverBackground} />
