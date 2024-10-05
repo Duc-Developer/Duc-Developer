@@ -11,7 +11,7 @@ export const getBlogInfo = async () => {
 };
 
 export const getPosts = async (params?: blogger_v3.Params$Resource$Posts$List, options?: any) => {
-    const response = await blogger.posts.list({ blogId, ...params }, options);
+    const response = await blogger.posts.list({ blogId: process.env.GOOGLE_BLOG_ID, ...params }, options);
     return (response.data as blogger_v3.Schema$PostList).items || [];
 };
 
