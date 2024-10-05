@@ -8,7 +8,9 @@
     "build": "next build",
     "start": "next start",
     "start:export": "npx serve@latest dist",
-    "lint": "next lint"
+    "lint": "next lint",
+    "mac:encode": "base64 -i my-cerf.json -o cert.base64",
+    "linux:encode": "base64 -w 0 my-cerf.json > cert.base64"
   },
   "author": {
     "name": "David Chan",
