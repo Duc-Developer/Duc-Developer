@@ -26,12 +26,7 @@ const nextConfig = {
   },
   basePath: mode === 'development' ? '' : basePathConfig,
   env:{
-    GOOGLE_BLOG_ID: process.env.GOOGLE_BLOG_ID,
-    GOOGLE_BLOG_PROJECT_ID: process.env.GOOGLE_BLOG_PROJECT_ID,
-    GOOGLE_BLOG_PRIVATE_KEY_ID: process.env.GOOGLE_BLOG_PRIVATE_KEY_ID,
-    GOOGLE_BLOG_PRIVATE_KEY: process.env.GOOGLE_BLOG_PRIVATE_KEY,
-    GOOGLE_BLOG_CLIENT_EMAIL: process.env.GOOGLE_BLOG_CLIENT_EMAIL,
-    GOOGLE_BLOG_CLIENT_ID: process.env.GOOGLE_BLOG_CLIENT_ID
+    GOOGLE_BLOG_ID: process.env.GOOGLE_BLOG_ID
   }
 }
 

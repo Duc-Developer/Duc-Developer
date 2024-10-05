@@ -3,4 +3,7 @@ const domain = process.env.DOMAIN;
 module.exports = {
     siteUrl: domain,
     generateRobotsTxt: true,
+    generateIndexSitemap: false,
+    outDir: "./dist",
+    output: 'export'
 }
