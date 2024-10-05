@@ -3,6 +3,7 @@
 import { classNames } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { FaRegMoon, FaSun } from "react-icons/fa";
+import { showToast } from "../common/toast";
 
 const ThemeToggle = () => {
     const [isDarkMode, setIsDarkMode] = useState(true);
@@ -15,9 +16,9 @@ const ThemeToggle = () => {
             }
         }
     }, []);
-    
+
     const toggleTheme = () => {
-        console.warn('%c[Warning from David: ThemeToggle] %cSorry, this functionality has not been implemented yet.', 'color: #f39c12', 'color: #bdc3c7');
+        showToast({ message: 'This functionality has not been implemented yet.', status: 'error' });
         const newValue = !isDarkMode;
         localStorage.setItem('mode', newValue ? 'dark' : 'light');
         setTimeout(() => {

@@ -12,6 +12,7 @@ import Head from 'next/head';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import "./globals.css";
+import { ToastContainer } from '@/components/common/toast';
 
 const MyApp = ({ Component, pageProps }: AppProps) => (<>
     <section className="w-screen max-h-screen transparent flex text-neutral">
@@ -48,6 +49,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => (<>
             <VideoBackground />
             <Navbar />
             <section className="grow"><Component {...pageProps} /></section>
+            <ToastContainer />
             <Footer />
         </section>
     </section>
