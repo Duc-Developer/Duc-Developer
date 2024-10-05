@@ -5,6 +5,7 @@ import { FaArrowLeft, FaShareAlt } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import styles from './post-content.module.css';
 import { setupDOMPurify } from '@/utilities';
+import { showToast } from '../common/toast';
 
 
 const PostContent = ({ data }: { data: blogger_v3.Schema$Post }) => {
@@ -21,7 +22,7 @@ const PostContent = ({ data }: { data: blogger_v3.Schema$Post }) => {
 
     if (!data?.content) return <div>Opp!.. Not found</div>;
     const clean = isPurifySetup ? DOMPurify.sanitize(data.content) : '';
- 
+
     const handleBackClick = () => {
         router.back();
     };
@@ -34,23 +35,23 @@ const PostContent = ({ data }: { data: blogger_v3.Schema$Post }) => {
                     text: 'Check out this post!',
                     url: window.location.href,
                 });
-                console.log('Content shared successfully');
+                showToast({ message: 'Content shared successfully', status: 'success' });
             } catch (error) {
-                console.error('Error sharing content:', error);
+                showToast({ message: 'Error sharing content', status: 'error' });
             }
         } else {
-            console.error('Web Share API not supported in this browser');
+            showToast({ message: 'Web Share API not supported in this browser' });
         }
     };
 
-    
+
     return (<div className={styles.wrapper}>
         <button className={styles.backButton} onClick={handleBackClick} title='go back'>
             <FaArrowLeft className={styles.icon} size={20} />
         </button>
         <button className={styles.shareButton} onClick={handleShareClick} title='share'>
-                <FaShareAlt className={styles.icon} size={20} />
-            </button>
+            <FaShareAlt className={styles.icon} size={20} />
+        </button>
         <div className={styles.postContent}>
             <div dangerouslySetInnerHTML={{
                 __html: clean

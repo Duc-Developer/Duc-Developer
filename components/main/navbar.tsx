@@ -26,16 +26,6 @@ const DesktopMenu = () => {
     <div className="w-[36em] h-full flex flex-row items-center justify-between">
       <div className="flex items-center justify-between w-full h-auto border-purple-heart-61 bg-gray-500 px-8 py-4 mr-4 rounded-full text-gray-200">
         {NAV_LINKS.map((link) => {
-          // if (link.title === 'Blogs') {
-          //   return <a
-          //     key={link.title}
-          //     href={link.backLink}
-          //     target="_blank"
-          //     className="cursor-pointer hover:text-purple transition"
-          //   >
-          //     {link.title}
-          //   </a>
-          // }
           return <Link
             key={link.title}
             href={link.link}
