@@ -1,15 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { blogger_v3 } from 'googleapis';
 import DOMPurify from "isomorphic-dompurify";
 import { FaArrowLeft, FaShareAlt } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import styles from './post-content.module.css';
+import { setupDOMPurify } from '@/utilities';
+
 
 const PostContent = ({ data }: { data: blogger_v3.Schema$Post }) => {
     const router = useRouter();
-    if (!data?.content) return <div>Opp!.. Not found</div>;
-    const clean = DOMPurify.sanitize(data.content);
+    const [isPurifySetup, setIsPurifySetup] = useState(false);
+    useEffect(() => {
+        const setup = async () => {
+            if (!router) return;
+            await setupDOMPurify();
+            setIsPurifySetup(true);
+        };
+        setup();
+    }, []);
 
+    if (!data?.content) return <div>Opp!.. Not found</div>;
+    const clean = isPurifySetup ? DOMPurify.sanitize(data.content) : '';
+ 
     const handleBackClick = () => {
         router.back();
     };

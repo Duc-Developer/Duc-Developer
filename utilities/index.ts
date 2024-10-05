@@ -1,3 +1,5 @@
+import DOMPurify from 'isomorphic-dompurify';
+
 export const MY_BLOG_URL = 'https://codecungdavid.blogspot.com';
 export class SlugConverter {
     static toPostSlug(href?: string | null): string | null {
@@ -16,3 +18,19 @@ export class SlugConverter {
         return MY_BLOG_URL + '/' + match[1] + '/' + match[2] + '/' + match[3] + '.html';
     }
 }
+
+
+export const setupDOMPurify = () => {
+    return new Promise<void>((resolve) => {
+        DOMPurify.addHook('afterSanitizeAttributes', (node) => {
+            if (node.tagName === 'A' && node.getAttribute('href')) {
+                const href = node.getAttribute('href');
+                if (href && href.startsWith('https://codecungdavid.blogspot.com/')) {
+                    const newUrl = `blogs/${SlugConverter.toPostSlug(href)}`;
+                    node.setAttribute('href', `${window.location.origin}/${newUrl}`);
+                }
+            }
+        });
+        resolve();
+    });
+};
