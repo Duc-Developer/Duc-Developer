@@ -2,6 +2,7 @@
 
 import { classNames } from '@/lib/utils'
 import React, { useEffect, useState } from 'react'
+import { showToast } from '../common/toast';
 
 const defaultTransition = 'after:transition-transform after:transition duration-300';
 const LanguageToggle = () => {
@@ -16,7 +17,7 @@ const LanguageToggle = () => {
     }, []);
 
     const handleChange = (val: string) => {
-        console.warn('%c[Warning from David: LanguageToggle] %cSorry, this functionality has not been implemented yet.', 'color: #f39c12', 'color: #bdc3c7');
+        showToast({ message: 'This functionality has not been implemented yet.', status: 'error' });
         localStorage.setItem('language', val);
         setTransition(transition + ' after:scale-50 after: after:rounded-lg after:translate-y-1/8');
         setTimeout(() => {

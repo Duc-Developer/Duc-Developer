@@ -12,7 +12,9 @@
     border-radius: 0.5rem;
 }
 
-.backButton, .shareButton {
+.backButton,
+.shareButton,
+.scrollToTopButton {
     position: absolute;
     z-index: 1;
     right: 4rem;
@@ -20,11 +22,33 @@
     align-items: center;
     padding: 0.5rem 1rem;
     background-color: #352C63;
-    color: white;
+    color: #ffffff;
     border: none;
     border-radius: 0.25rem;
     text-decoration: none;
     transition: background-color 0.3s;
+}
+
+.scrollToTopButton {
+    bottom: 0;
+    padding: 1rem 1rem;
+    border-radius: 50%;
+}
+
+.scrollToTopButton .floating {
+    display: none;
+}
+
+.scrollToTopButton:hover .floating {
+    display: block;
+}
+
+.scrollToTopButton:hover .normal {
+    display: none;
+}
+
+.scrollToTopButton:hover .icon {
+    animation: float 1.5s ease-in-out infinite;
 }
 
 .backButton {
@@ -35,7 +59,9 @@
     top: 3rem;
 }
 
-.backButton:hover, .shareButton:hover {
+.backButton:hover,
+.shareButton:hover,
+.scrollToTopButton:hover {
     background-color: #8270DB;
 }
 
@@ -111,4 +137,16 @@
 .postContent ol {
     list-style-type: decimal;
     padding-left: 2.5rem;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
 }
