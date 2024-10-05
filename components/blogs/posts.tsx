@@ -18,7 +18,7 @@ const Posts = ({ data }: { data: blogger_v3.Schema$Post[] }) => {
     );
 
     return (
-        <>
+        <div className={styles.wrapper}>
             <div className={styles.posts}>
                 {!data?.length
                     ? <div>No post</div>
@@ -31,7 +31,7 @@ const Posts = ({ data }: { data: blogger_v3.Schema$Post[] }) => {
                 totalPages={totalPages}
                 onPageChange={setCurrentPage}
             />
-        </>
+        </div>
     );
 }
 
