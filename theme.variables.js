@@ -49,7 +49,7 @@ export const COLORS = {
     green4: '#6CD9C0',
     green5: '#4ACAA0',
     green6: '#2CA786',
-    green7: '#1A8B6E',
+    green7: '#2d7f0b',
     green8: '#0F7B5A',
     green: '#0D524D',
 

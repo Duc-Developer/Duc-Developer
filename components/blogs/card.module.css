@@ -1,0 +1,215 @@
+.cardHoverThumbnail {
+  max-width: 100%;
+  height: auto;
+}
+
+.wrapper {
+  -webkit-text-size-adjust: 100%;
+  font-variant-ligatures: none;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-size: 100%;
+  border-radius: 0.3rem;
+  overflow: hidden;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  width: fit-content;
+  color: #ffffff;
+}
+
+.hover__title,
+.cardHoverTextExtra {
+  font-weight: 800;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.cardHover {
+  width: 20rem; 
+  height: 27.78rem; 
+  position: relative;
+  border-radius: 0.3rem;
+  box-shadow: 0 0 1.78rem -0.56rem rgba(0, 0, 0, 0.08);
+}
+
+.cardHoverBackground {
+  background-color: #ffffff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+}
+
+.cardHover:has(.cardHoverLink:hover) .cardHoverExtra {
+  transform: translateY(0);
+  transition: transform 0.35s;
+}
+
+.cardHover:hover .cardHoverContent {
+  background-color: #596773;
+  bottom: 100%;
+  transform: translateY(100%);
+  padding: 2.78rem 2rem;
+  transition: all 0.35s cubic-bezier(0.1, 0.72, 0.4, 0.97);
+}
+
+.cardHover:hover .cardHoverLink {
+  opacity: 1;
+  transform: translate(-50%, 0);
+  transition: all 0.3s 0.35s cubic-bezier(0.1, 0.72, 0.4, 0.97);
+}
+
+.cardHover:hover .cardHoverThumbnail {
+  object-position: bottom;
+}
+
+.cardHover:hover img {
+  transform: scale(1);
+  transition: 0.35s 0.1s transform cubic-bezier(0.1, 0.72, 0.4, 0.97);
+}
+
+.cardHoverContent {
+  width: 100%;
+  text-align: center;
+  background-color: #2C333A;
+  padding: 1rem 2rem;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform: translateY(0);
+  transition: all 0.35s 0.35s cubic-bezier(0.1, 0.72, 0.4, 0.97);
+  will-change: bottom, background-color, transform, padding;
+  z-index: 1;
+}
+
+.cardHoverText span {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre-wrap;
+}
+
+.cardHoverContent::before,
+.cardHoverContent::after {
+  content: '';
+  width: 100%;
+  height: 6.67rem; /* 120px / 18 */
+  background-color: inherit;
+  position: absolute;
+  left: 0;
+  z-index: -1;
+}
+
+.cardHoverContent::before {
+  top: -4.44rem; /* 80px / 18 */
+  clip-path: ellipse(60% 4.44rem at bottom center); /* 80px / 18 */
+}
+
+.cardHoverContent::after {
+  bottom: -4.44rem; /* 80px / 18 */
+  clip-path: ellipse(60% 4.44rem at top center); /* 80px / 18 */
+}
+
+.cardHoverTitle {
+  font-size: 1.5rem;
+  line-height: 1.6rem;
+  margin-bottom: 0.5rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cardHoverText {
+  font-size: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.cardHoverLink {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translate(-50%, 10%);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  text-decoration: none;
+  color: #352C63;
+  opacity: 0;
+  padding: 0.56rem;
+  transition: all 0.35s;
+  font-weight: 700;
+}
+
+.cardHoverLink:hover svg {
+  transform: translateX(0.32rem); 
+}
+
+.cardHoverLink:hover span {
+  transform: scale(1.1); 
+  transition: transform 0.3s;
+}
+
+.cardHoverLink svg {
+  width: 1rem; 
+  margin-left: 0.22rem; 
+  transition: transform 0.3s;
+}
+
+.cardHoverExtra {
+  height: 50%;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  font-size: 1.5rem;
+  text-align: center;
+  background-color: #352C63;
+  padding: 4.5rem 3rem 1.5rem 3rem;
+  box-sizing: border-box;
+  bottom: -2px;
+  z-index: 0;
+  color: #dee8c2;
+  transform: translateY(100%);
+  will-change: transform;
+  transition: transform 0.35s;
+}
+
+.cardHoverExtra i {
+  font-size: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.cardHoverExtra span {
+  color: #2d7f0b;
+}
+
+.cardHover .cardHoverThumbnail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: top;
+  z-index: -1;
+  transform: scale(1.2);
+  transition: 0.35s 0.35s transform cubic-bezier(0.1, 0.72, 0.4, 0.97);
+}

@@ -159,19 +159,19 @@ export const FOOTER_DATA = [
 export const NAV_LINKS = [
   {
     title: "About me",
-    link: "?active=about-me",
+    link: "/?active=about-me",
   },
   {
     title: "Skills",
-    link: "?active=skills",
+    link: "/?active=skills",
   },
   {
     title: "Projects",
-    link: "?active=projects",
+    link: "/?active=projects",
   },
   {
     title: "Blogs",
-    link: "?active=blogs",
+    link: "/blogs",
     backLink: "https://codecungdavid.blogspot.com"
   },
 ] as const;

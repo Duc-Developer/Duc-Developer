@@ -1,0 +1,24 @@
+.posts {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 2rem;
+    padding: 0 3rem;
+    margin: 0 3rem;
+    height: calc(100vh - 15rem);
+    overflow-y: auto;
+}
+
+.posts::-webkit-scrollbar {
+    width: 0.75rem;
+}
+
+.posts::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 0.45rem;
+}
+
+.posts {
+    scrollbar-width: medium;
+    scrollbar-color: #ffffff transparent;
+}
