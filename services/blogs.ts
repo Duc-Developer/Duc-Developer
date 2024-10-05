@@ -18,7 +18,14 @@ export const getPosts = async (params?: blogger_v3.Params$Resource$Posts$List, o
 export const getBlogByPath = async (path: string) => {
     const response = await blogger.posts.getByPath({
         path,
-        blogId: process.env.GOOGLE_BLOG_ID
+        blogId: process.env.GOOGLE_BLOG_ID,
+    }, {
+        apiVersion: 'v3'
     });
-    return response.data;
+    let summaryData = { data: {} };
+    if (response?.data?.id) {
+        summaryData = await blogger.posts.get({ postId: response.data.id, blogId: process.env.GOOGLE_BLOG_ID, fetchBody: false, fetchImages: true });
+    }
+    const fullData = { ...summaryData?.data, ...response.data };
+    return fullData;
 };
