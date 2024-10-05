@@ -61,6 +61,8 @@ jobs:
           echo "${{ secrets.CERTIFICATE_BASE64 }}" | base64 --decode > my-cert.json
         env:
           CERTIFICATE_BASE64: ${{ secrets.CERTIFICATE_BASE64 }}
+      - name: Verify the decoded file
+        run: cat my-cert.json
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
         env:
