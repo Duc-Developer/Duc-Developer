@@ -2,12 +2,12 @@ import { getBlogInfo, getPosts } from '@/services/blogs';
 import { SlugConverter } from '@/utilities';
 import type { MetadataRoute } from 'next'
 
-const JUMP_PAGE = 499;
+const JUMP_PAGE = 500;
 export async function generateSitemaps() {
     const blog = await getBlogInfo({ view: 'READER' }, { http2: false }) ?? [];
     const totalItems = blog.posts?.totalItems ?? 0;
     const results = [
-        { id: 'sitemap-0' },
+        { id: 'sitemap' },
         ...Array.from({ length: Math.ceil(totalItems / JUMP_PAGE) }, (_, i) => i + 1)
             .map((id) => ({ id: `sitemap-${id}` }))
     ];
@@ -33,13 +33,22 @@ export default async function sitemap({
     // const end = start + 50000
 
     // generate sitemap for static pages
-    if (id === 'sitemap-0') {
-        return STATIC_PAGES.map((item) => {
-            return {
+    if (id === 'sitemap') {
+
+        const sitemaps = await generateSitemaps();
+        return [
+            ...STATIC_PAGES.map((item) => ({
                 ...item,
                 lastModified: new Date().toISOString()
-            };
-        });
+            })),
+            ...sitemaps.filter(sitemap => sitemap.id !== 'sitemap').
+                map((sitemap) => ({
+                    url: `${process.env.DOMAIN}/${sitemap.id}.xml`,
+                    lastModified: new Date().toISOString(),
+                    changeFrequency: 'monthly' as 'monthly',
+                    priority: 0.8,
+                }))
+        ];
     }
 
     // generate sitemap for blog posts
