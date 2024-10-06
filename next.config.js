@@ -26,7 +26,8 @@ const nextConfig = {
   },
   basePath: mode === 'development' ? '' : basePathConfig,
   env:{
-    GOOGLE_BLOG_ID: process.env.GOOGLE_BLOG_ID
+    GOOGLE_BLOG_ID: process.env.GOOGLE_BLOG_ID,
+    DOMAIN: process.env.DOMAIN,
   }
 }
 

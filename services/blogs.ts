@@ -3,16 +3,20 @@ import GoogleAuth from "./auth";
 
 const blogger = new GoogleAuth(['https://www.googleapis.com/auth/blogger']).blogger();
 
-export const getBlogInfo = async () => {
+export const getBlogInfo = async (params?: typeof blogger.blogs.get.arguments[0], options?: typeof blogger.blogs.get.arguments[1]) => {
     const response = await blogger.blogs.get({
-        blogId: process.env.GOOGLE_BLOG_ID
-    });
-    return response.data;
+        blogId: process.env.GOOGLE_BLOG_ID,
+        ...params
+    }, options);
+    return response.data as blogger_v3.Schema$Blog;
 };
 
 export const getPosts = async (params?: blogger_v3.Params$Resource$Posts$List, options?: any) => {
-    const response = await blogger.posts.list({ blogId: process.env.GOOGLE_BLOG_ID, ...params }, options);
-    return (response.data as blogger_v3.Schema$PostList).items || [];
+    const response = await blogger.posts.list({ blogId: process.env.GOOGLE_BLOG_ID, status: ['LIVE'], ...params }, options);
+    return {
+        posts: (response?.data as blogger_v3.Schema$PostList)?.items || [],
+        nextPageToken: (response?.data as blogger_v3.Schema$PostList)?.nextPageToken,
+    };
 };
 
 export const getBlogByPath = async (path: string) => {

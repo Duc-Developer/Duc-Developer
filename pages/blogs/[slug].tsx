@@ -12,7 +12,7 @@ import type { GetStaticProps } from 'next';
 export const getStaticPaths = (async () => {
     const blogInfo = await getBlogInfo();
 
-    const posts = await getPosts({
+    const { posts } = await getPosts({
         fetchImages: false,
         fetchBodies: false,
         view: 'READER',

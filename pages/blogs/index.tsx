@@ -4,7 +4,7 @@ import Posts from "@/components/blogs/posts";
 
 export const getStaticProps = async (context: any) => {
     const blogInfo = await getBlogInfo();
-    const posts = await getPosts({
+    const { posts } = await getPosts({
         fetchImages: true,
         fetchBodies: true,
         view: 'READER',
