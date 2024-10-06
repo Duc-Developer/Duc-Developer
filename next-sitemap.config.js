@@ -4,6 +4,6 @@ module.exports = {
     siteUrl: domain,
     generateRobotsTxt: true,
     generateIndexSitemap: false,
-    outDir: "./dist",
+    outDir: "./dist/server/pages",
     output: 'export'
 }
