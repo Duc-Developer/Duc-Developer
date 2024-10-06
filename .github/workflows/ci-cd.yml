@@ -15,25 +15,11 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  decode-secret:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Decode Base64-encoded secret
-        run: |
-          echo "${{ secrets.CERTIFICATE_BASE64 }}" | base64 --decode > my-cerf.json
-        env:
-          CERTIFICATE_BASE64: ${{ secrets.CERTIFICATE_BASE64 }}
-  
-  detect-package-manager:
-    runs-on: ubuntu-latest
-    needs: decode-secret
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
       - name: Detect package manager
         id: detect-package-manager
         run: |
@@ -51,39 +37,15 @@ jobs:
             echo "Unable to determine package manager"
             exit 1
           fi
-
-  setup-node:
-    runs-on: ubuntu-latest
-    needs: detect-package-manager
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: ${{ needs.detect-package-manager.outputs.manager }}
-
-  setup-pages:
-    runs-on: ubuntu-latest
-    needs: setup-node
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
+          cache: ${{ steps.detect-package-manager.outputs.manager }}
       - name: Setup Pages
         uses: actions/configure-pages@v5
         with:
           static_site_generator: next
-
-  restore-cache:
-    runs-on: ubuntu-latest
-    needs: setup-pages
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
       - name: Restore cache
         uses: actions/cache@v4
         with:
@@ -92,36 +54,17 @@ jobs:
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
-
-  install-dependencies:
-    runs-on: ubuntu-latest
-    needs: restore-cache
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
       - name: Install dependencies
-        run: ${{ needs.detect-package-manager.outputs.manager }} ${{ needs.detect-package-manager.outputs.command }}
-
-  build:
-    runs-on: ubuntu-latest
-    needs: install-dependencies
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Building my app
-        run: ${{ needs.detect-package-manager.outputs.runner }} next build
+        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+      - name: Decode Base64-encoded secret
+        run: |
+          echo "${{ secrets.CERTIFICATE_BASE64 }}" | base64 --decode > my-cerf.json
+        env:
+          CERTIFICATE_BASE64: ${{ secrets.CERTIFICATE_BASE64 }}
+      - name: Build with Next.js
+        run: ${{ steps.detect-package-manager.outputs.runner }} next build
         env:
           GOOGLE_BLOG_ID: ${{ secrets.GOOGLE_BLOG_ID }}
-
-  upload-artifact:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -132,7 +75,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: upload-artifact
+    needs: build
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
