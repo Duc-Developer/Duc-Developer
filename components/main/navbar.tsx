@@ -7,7 +7,7 @@ import ThemeToggle from "../sub/theme-toggle";
 const DesktopMenu = () => {
   return <div className="max-w-full flex justify-between gap-4 p-4 px-8">
     <Link
-      href="#about-me"
+      href="/#about-me"
       className="h-auto w-auto flex flex-row items-center"
     >
       <Image

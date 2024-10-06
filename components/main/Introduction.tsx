@@ -73,7 +73,7 @@ const AboutMe = () => {
 
 const Slider = () => {
     const searchParams = useSearchParams();
-    const activeSlide = searchParams.get('active');
+    const activeSlide = searchParams?.get('active');
     const slideRef = useRef<any>(null);
 
     useEffect(() => {
