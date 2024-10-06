@@ -111,9 +111,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Building my app
-        run: |
-          export PATH=$(npm bin):$PATH
-          ${{ needs.detect-package-manager.outputs.runner }} yarn build
+        run: ${{ needs.detect-package-manager.outputs.runner }} next build
         env:
           GOOGLE_BLOG_ID: ${{ secrets.GOOGLE_BLOG_ID }}
 
