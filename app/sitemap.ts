@@ -45,7 +45,7 @@ export default async function sitemap({
             })),
             ...sitemaps.filter(sitemap => sitemap.id !== BASE_SITEMAP_ID).
                 map((sitemap) => ({
-                    url: `${process.env.DOMAIN}/${sitemap.id}.xml`,
+                    url: `${domain}/${sitemap.id}.xml`,
                     lastModified: new Date().toISOString(),
                     changeFrequency: 'monthly' as 'monthly',
                     priority: 0.8,
