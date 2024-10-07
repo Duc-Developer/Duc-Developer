@@ -3,11 +3,12 @@ import { SlugConverter } from '@/utilities';
 import type { MetadataRoute } from 'next'
 
 const JUMP_PAGE = 500;
+const BASE_SITEMAP_ID = 'index'
 export async function generateSitemaps() {
     const blog = await getBlogInfo({ view: 'READER' }, { http2: false }) ?? [];
     const totalItems = blog.posts?.totalItems ?? 0;
     const results = [
-        { id: 'sitemap' },
+        { id: BASE_SITEMAP_ID },
         ...Array.from({ length: Math.ceil(totalItems / JUMP_PAGE) }, (_, i) => i + 1)
             .map((id) => ({ id: `sitemap-${id}` }))
     ];
@@ -33,7 +34,7 @@ export default async function sitemap({
     // const end = start + 50000
 
     // generate sitemap for static pages
-    if (id === 'sitemap') {
+    if (id === BASE_SITEMAP_ID) {
 
         const sitemaps = await generateSitemaps();
         return [
@@ -41,7 +42,7 @@ export default async function sitemap({
                 ...item,
                 lastModified: new Date().toISOString()
             })),
-            ...sitemaps.filter(sitemap => sitemap.id !== 'sitemap').
+            ...sitemaps.filter(sitemap => sitemap.id !== BASE_SITEMAP_ID).
                 map((sitemap) => ({
                     url: `${process.env.DOMAIN}/${sitemap.id}.xml`,
                     lastModified: new Date().toISOString(),
