@@ -3,7 +3,8 @@ import { SlugConverter } from '@/utilities';
 import type { MetadataRoute } from 'next'
 
 const JUMP_PAGE = 500;
-const BASE_SITEMAP_ID = 'index'
+const BASE_SITEMAP_ID = 'index';
+const domain = process.env.DOMAIN || 'https://david.id.vn';
 export async function generateSitemaps() {
     const blog = await getBlogInfo({ view: 'READER' }, { http2: false }) ?? [];
     const totalItems = blog.posts?.totalItems ?? 0;
@@ -17,7 +18,7 @@ export async function generateSitemaps() {
 
 const STATIC_PAGES = [
     {
-        url: `${process.env.DOMAIN}/`,
+        url: `${domain}/`,
         changeFrequency: 'yearly' as 'yearly',
         priority: 1
     }
@@ -69,7 +70,7 @@ export default async function sitemap({
     pageToken = nextPageToken;
     return posts.map((item) => {
         const slug = `blogs/${SlugConverter.toPostSlug(item.url)}`;
-        const newUrl = `${process.env.DOMAIN}/${slug}`;
+        const newUrl = `${domain}/${slug}`;
         return {
             url: newUrl,
             lastModified: item.updated ?? item.published ?? new Date().toISOString(),
