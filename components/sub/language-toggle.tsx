@@ -28,7 +28,7 @@ const LanguageToggle = () => {
 
     return (
         <div className={classNames(
-            "flex h-8 items-center gap-4 rounded-full bg-orange px-3 relative text-sm overflow-hidden bg-darkNeutral cursor-pointer",
+            "flex w-fit h-8 items-center gap-4 rounded-full bg-orange px-3 relative text-sm overflow-hidden bg-darkNeutral cursor-pointer",
             'after:content-[""] after:w-1/2 after:h-full after:bg-neutral after:absolute after:top-0 after:opacity-50',
             language === 'en' ? 'after:right-0' : 'after:left-0',
             transition

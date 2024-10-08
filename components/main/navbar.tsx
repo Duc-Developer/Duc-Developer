@@ -4,6 +4,22 @@ import Link from "next/link";
 import { NAV_LINKS } from "@/constants";
 import ThemeToggle from "../sub/theme-toggle";
 
+export const MenuLink = ({ onClick }: { onClick?: Function }) => {
+
+  return <>
+    {NAV_LINKS.map((link) => {
+      return <Link
+        key={link.title}
+        href={link.link}
+        onClick={() => onClick && onClick(link)}
+        className="cursor-pointer hover:text-purple transition"
+      >
+        {link.title}
+      </Link>
+    })}
+  </>
+};
+
 const DesktopMenu = () => {
   return <div className="max-w-full flex justify-between gap-4 p-4 px-8">
     <Link
@@ -25,15 +41,7 @@ const DesktopMenu = () => {
 
     <div className="w-[36em] h-full flex flex-row items-center justify-between">
       <div className="flex items-center justify-between w-full h-auto border-purple-heart-61 bg-gray-500 px-8 py-4 mr-4 rounded-full text-gray-200">
-        {NAV_LINKS.map((link) => {
-          return <Link
-            key={link.title}
-            href={link.link}
-            className="cursor-pointer hover:text-purple transition"
-          >
-            {link.title}
-          </Link>
-        })}
+        <MenuLink />
       </div>
       <ThemeToggle />
     </div>
@@ -42,7 +50,7 @@ const DesktopMenu = () => {
 
 export const Navbar = () => {
   return <section>
-    <div className="">
+    <div className="hidden md:block">
       <DesktopMenu />
     </div>
   </section>;

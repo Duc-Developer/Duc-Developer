@@ -15,7 +15,7 @@ import "./globals.css";
 import { ToastContainer } from '@/components/common/toast';
 
 const MyApp = ({ Component, pageProps }: AppProps) => (<>
-    <section className="w-screen max-h-screen transparent flex text-neutral">
+    <section className="relative w-screen max-h-screen transparent flex text-neutral">
         <Head>
             <title>{metadataVn.title}</title>
             <meta name="description" content={metadataVn.description} />
@@ -48,7 +48,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => (<>
         <section className="h-screen w-full grow flex flex-col gap-4">
             <VideoBackground />
             <Navbar />
-            <section className="grow"><Component {...pageProps} /></section>
+            <section className="grow pt-16 md:mt-0 "><Component {...pageProps} /></section>
             <ToastContainer />
             <Footer />
         </section>

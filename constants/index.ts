@@ -35,16 +35,16 @@ export const SOCIALS = [
     visibleMode: "all"
   },
   {
-    name: "Facebook",
-    icon: FaFacebook,
-    link: "https://www.facebook.com/PoPeooo/",
-    visibleMode: "all"
-  },
-  {
     name: "Github",
     icon: FaGithub,
     link: "https://github.com/Duc-Developer",
     visibleMode: "expanded"
+  },
+  {
+    name: "Facebook",
+    icon: FaFacebook,
+    link: "https://www.facebook.com/PoPeooo/",
+    visibleMode: "all"
   },
   {
     name: "Youtube",
