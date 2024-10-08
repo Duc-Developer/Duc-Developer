@@ -6,7 +6,7 @@ const VideoBackground = () => {
         autoPlay
         muted
         loop
-        className="rotate-180 absolute top-0 left-0 w-full h-screen object-cover -z-20 pointer-events-none"
+        className="hidden md:block rotate-180 absolute md:top-0 left-0 w-full h-screen object-cover -z-20 pointer-events-none"
     >
         <source src={url} type="video/webm" />
     </video>;

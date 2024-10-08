@@ -19,7 +19,7 @@
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-.Welcome-box {
+.welcome-box {
   isolation: isolate;
   overflow: hidden;
   align-items: center;

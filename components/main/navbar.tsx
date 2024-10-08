@@ -42,7 +42,7 @@ const DesktopMenu = () => {
 
 export const Navbar = () => {
   return <section>
-    <div className="">
+    <div className="hidden md:block">
       <DesktopMenu />
     </div>
   </section>;
