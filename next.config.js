@@ -20,7 +20,7 @@ const nextConfig = {
       }
     ],
   },
-  basePath: mode === 'development' ? '' : basePathConfig,
+  basePath: basePathConfig,
   env:{
     GOOGLE_BLOG_ID: process.env.GOOGLE_BLOG_ID,
     DOMAIN: process.env.DOMAIN,
