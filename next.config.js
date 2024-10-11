@@ -1,12 +1,9 @@
 /** @type {import('next').NextConfig} */
-const mode = process.env.MODE;
 const basePathConfig = process.env.BASE_PATH;
 
 const nextConfig = {
-  output: mode === 'development' ? undefined : 'export',
   distDir: 'dist',
   images: {
-    unoptimized: mode !== 'development',
     dangerouslyAllowSVG: true,
     remotePatterns: [
       {
@@ -16,7 +13,6 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'res.cloudinary.com',
-      
       },
       {
         protocol: 'https',
@@ -24,7 +20,7 @@ const nextConfig = {
       }
     ],
   },
-  basePath: mode === 'development' ? '' : basePathConfig,
+  basePath: basePathConfig,
   env:{
     GOOGLE_BLOG_ID: process.env.GOOGLE_BLOG_ID,
     DOMAIN: process.env.DOMAIN,

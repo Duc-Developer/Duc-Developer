@@ -8,7 +8,7 @@
     flex-wrap: wrap;
     justify-content: flex-start;
     gap: 2rem;
-    height: calc(100vh - 15rem);
+    height: calc(100vh - 18rem);
     overflow-y: auto;
 }
 
@@ -24,4 +24,11 @@
 .posts {
     scrollbar-width: medium;
     scrollbar-color: #ffffff transparent;
+}
+
+@media screen and (max-width: 768px) {
+    .posts {
+        height: fit-content;
+    }
+    
 }
