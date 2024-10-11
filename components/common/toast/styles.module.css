@@ -17,6 +17,11 @@
     animation: floatUp 0.5s ease-in-out forwards;
 }
 
+.icon {
+    width: 2rem;
+    height: 2rem;
+}
+
 .info {
     background-color: #0070f3;
 }
@@ -27,6 +32,16 @@
 
 .error {
     background-color: #dc3545;
+}
+
+@media screen and (max-width: 425px) {
+    .toast {
+        width: calc(100vw - 1rem);
+    }
+    .icon {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
 }
 
 @keyframes floatUp {

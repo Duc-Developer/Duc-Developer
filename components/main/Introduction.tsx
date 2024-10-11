@@ -20,7 +20,7 @@ const AboutMe = () => {
     return <>
         <motion.div
             variants={slideInFromTop}
-            className="Welcome-box py-[8px] px-[7px] border border-purple opacity-90"
+            className="welcome-box py-[8px] px-[7px] border border-purple opacity-90"
         >
             <SparklesIcon className="text-electric-violet mr-[10px] h-5 w-5" />
             <h1 className="Welcome-text text-sm">
@@ -30,20 +30,20 @@ const AboutMe = () => {
 
         <motion.div
             variants={slideInFromLeft(0.5)}
-            className="flex flex-col gap-6 mt-6 text-6xl text-bold text-white max-w-[calc(100vw_-_2rem)] sm:max-w-xl w-auto h-auto"
+            className="flex flex-col gap-6 mt-6 text-5xl md:text-6xl text-bold text-white max-w-[calc(100vw_-_2rem)] sm:max-w-xl w-auto h-auto"
         >
-            <span className="text-6xl">
-                Providing{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple to-blue4">
+            <span className="text-4xl md:text-6xl">
+                Providing<br/>
+                <span className="text-6xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-r from-purple to-blue4">
                     the best
-                </span>{" "}
+                </span><br/>
                 project experience.
             </span>
         </motion.div>
 
         <motion.p
             variants={slideInFromLeft(0.8)}
-            className="text-lg text-gray-400 my-5 max-w-[calc(100vw_-_2rem)] sm:max-w-[650px]"
+            className="md:text-lg text-gray-400 my-5 max-w-[calc(100vw_-_2rem)] sm:max-w-[650px]"
         >
             <TypeAnimation
                 sequence={[
@@ -90,7 +90,7 @@ const Slider = () => {
     return <div className="introduction_slider">
         <Swiper
             direction='vertical'
-            className="mySwiper h-[28rem]"
+            className="mySwiper h-[18rem] md:h-[28rem]"
             onSwiper={(swiper) => slideRef.current = swiper}
         >
             <SwiperSlide><AboutMe /></SwiperSlide>

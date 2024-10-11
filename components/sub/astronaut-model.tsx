@@ -35,7 +35,7 @@ const Model = ({ url }: { url: string }) => {
 
 const AstronautModel = ({ modelUrl }: { modelUrl: string }) => {
     return (
-        <div className="w-[42rem] h-[42rem] relative">
+        <div className="max-w-screen w-[20rem] h-[20rem] sm:w-[36rem] sm:h-[36rem] md:w-[42rem] md:h-[42rem] relative">
             <Canvas style={{ pointerEvents: 'none' }} camera={{ position: [1, 6, 10], fov: 15 }} >
                 <ambientLight intensity={0.5} />
                 <pointLight position={[10, 10, 10]} intensity={1.5} />
