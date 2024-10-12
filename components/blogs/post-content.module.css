@@ -98,45 +98,34 @@
     color: #352C63;
 }
 
-.postContent h1 {
-    font-size: 2.5rem;
-    line-height: 3.5rem;
-    font-weight: 700;
+@media screen and (max-width: 1024px) {
+    .postContent {
+        padding: 2rem 4rem;
+        margin: 0 6rem;
+        max-height: calc(100vh - 8rem);
+    }
+
+    .backButton,
+    .shareButton,
+    .scrollToTopButton {
+        right: 2rem;
+    }
+    
 }
 
-.postContent h2 {
-    font-size: 2rem;
-    line-height: 3rem;
-    font-weight: 700;
-}
+@media screen and (max-width: 768px) {
+    .postContent {
+        padding: 2rem 2rem;
+        margin: 0 2rem;
+        max-height: calc(100vh - 6rem);
+    }
 
-.postContent h3 {
-    font-size: 1.75rem;
-    line-height: 2.75rem;
-    font-weight: 700;
-}
-
-.postContent h4 {
-    font-size: 1.5rem;
-    line-height: 2.5rem;
-    font-weight: 700;
-}
-
-.postContent h5 {
-    font-size: 1.25rem;
-    line-height: 2rem;
-    font-weight: 700;
-}
-
-.postContent ul {
-    list-style-type: disc;
-    padding-left: 2.5rem;
-    margin: 0.5rem 0;
-}
-
-.postContent ol {
-    list-style-type: decimal;
-    padding-left: 2.5rem;
+    .backButton,
+    .shareButton,
+    .scrollToTopButton {
+        right: 0.5rem;
+    }
+    
 }
 
 @keyframes float {

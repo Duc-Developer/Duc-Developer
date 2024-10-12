@@ -1,6 +1,6 @@
 .wrapper {
-    padding: 0 3rem;
-    margin: 0 3rem;
+    padding: 0 2rem;
+    margin: 0 2rem;
 }
 
 .posts {
@@ -27,8 +27,13 @@
 }
 
 @media screen and (max-width: 768px) {
+    .wrapper {
+        padding: 0 1rem;
+        margin: 0 1rem;
+    }
+
     .posts {
         height: fit-content;
+        justify-content: center;
     }
-    
 }
