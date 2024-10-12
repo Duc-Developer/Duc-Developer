@@ -1,4 +1,5 @@
 import type { AppProps } from 'next/app';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 import { Footer } from "@/components/main/footer";
 import { Navbar } from "@/components/main/navbar";
@@ -53,6 +54,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => (<>
             <Footer />
         </section>
     </section>
+    <SpeedInsights />
 </>
 )
 
