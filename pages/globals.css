@@ -7,18 +7,18 @@
 .cursive {
   font-family: "Cedarville Cursive", cursive;
 }
+
 .Welcome-text {
-  background: linear-gradient(
-      0deg,
+  background: linear-gradient(0deg,
       rgba(255, 255, 255, 0.4),
-      rgba(255, 255, 255, 0.4)
-    ),
+      rgba(255, 255, 255, 0.4)),
     linear-gradient(90.01deg, #e59cff 0.01%, #ba9cff 50.01%, #9cb2ff 100%);
   background-blend-mode: normal, screen;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
 .welcome-box {
   isolation: isolate;
   overflow: hidden;
@@ -36,33 +36,145 @@
 }
 
 .button-primary {
-  background: linear-gradient(
-      180deg,
+  background: linear-gradient(180deg,
       rgba(60, 8, 126, 0) 0%,
-      rgba(60, 8, 126, 0.32) 100%
-    ),
+      rgba(60, 8, 126, 0.32) 100%),
     rgba(113, 47, 255, 0.12);
   box-shadow: inset 0 0 12px #bf97ff3d;
 }
+
 .button-primary:hover {
-  background: linear-gradient(
-      180deg,
+  background: linear-gradient(180deg,
       rgba(60, 8, 126, 0) 0%,
-      rgba(60, 8, 126, 0.42) 100%
-    ),
+      rgba(60, 8, 126, 0.42) 100%),
     rgba(113, 47, 255, 0.24);
   box-shadow: inset 0 0 12px #bf97ff70;
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .scrollbar-hidden {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
+
 .scrollbar-hidden::-webkit-scrollbar {
   display: none;
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+
+h1 {
+  font-size: 2.5rem;
+  line-height: 3.5rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 2rem;
+  line-height: 3rem;
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 1.75rem;
+  line-height: 2.75rem;
+  font-weight: 700;
+}
+
+h4 {
+  font-size: 1.5rem;
+  line-height: 2.5rem;
+  font-weight: 700;
+}
+
+h5 {
+  font-size: 1.25rem;
+  line-height: 2rem;
+  font-weight: 700;
+}
+
+ul {
+  list-style-type: disc;
+  padding-left: 2.5rem;
+  margin: 0.5rem 0;
+}
+
+ol {
+  list-style-type: decimal;
+  padding-left: 2.5rem;
+}
+
+@media screen and (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+    line-height: 3rem;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+    line-height: 2.75rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    line-height: 2.5rem;
+  }
+
+  h4 {
+    font-size: 1.25rem;
+    line-height: 2rem;
+  }
+
+  h5 {
+    font-size: 1rem;
+    line-height: 1.75rem;
+  }
+
+  ul {
+    padding-left: 2rem;
+  }
+
+  ol {
+    padding-left: 2rem;
+  }
+
+}
+
+
+@media screen and (max-width: 425px) {
+  h1 {
+    font-size: 1.75rem;
+    line-height: 2.75rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    line-height: 2.5rem;
+  }
+
+
+  h3 {
+    font-size: 1.25rem;
+    line-height: 2rem;
+  }
+
+  h4 {
+    font-size: 1rem;
+    line-height: 1.75rem;
+  }
+
+  h5 {
+    font-size: 0.75rem;
+    line-height: 1.5rem;
+  }
+
+  ul {
+    padding-left: 1.5rem;
+  }
+
 }
