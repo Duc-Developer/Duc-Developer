@@ -1,8 +1,6 @@
 #!/usr/bin/env node
-
+require('dotenv').config();
 const vercelEnv = process.env.VERCEL_ENV;
-
-console.log(`VERCEL_ENV: ${vercelEnv}`);
 
 if (vercelEnv === 'production') {
   // Proceed with the build

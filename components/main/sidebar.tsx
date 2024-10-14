@@ -14,7 +14,7 @@ const Sidebar = () => {
 
     return (
         <section className={classNames(
-            "fixed top-0 left-0 z-50 p-4 bg-purple6 md:bg-neutral_30 shadow flex flex-wrap justify-end",
+            "fixed top-0 left-0 z-50 p-4 bg-purple md:bg-neutral_30 shadow flex flex-wrap justify-end",
             isCollapsed ? "w-screen md:w-auto" : "w-screen md:w-[15em]",
             "md:h-screen md:relative md:z-auto md:flex-col md:p-4 md:pb-8"
         )}>
