@@ -24,7 +24,7 @@ export const Projects = () => {
           pauseOnMouseEnter: true,
         }}
         modules={[Autoplay, Pagination]}
-        className="project-swiper w-[36rem] h-full mt-2"
+        className="project-swiper w-full md:w-[36rem] h-full mt-2 mx-0"
       >
         {PROJECTS.map((project) => (<SwiperSlide
           key={project.title}
