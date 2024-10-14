@@ -45,3 +45,30 @@ export const sanitizeDescription = (data?: blogger_v3.Schema$Post, limit?: numbe
     }
     return cleanedContent;
 };
+
+export const throttle = (func: Function, limit: number = 500) => {
+    let inThrottle: boolean;
+    return function(this: any) {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    }
+};
+
+export const debounce = (func: Function, delay: number = 500) => {
+    let timeoutId: ReturnType<typeof setTimeout> | null;
+    return function(this: any) {
+        const args = arguments;
+        const context = this;
+        if (timeoutId) {
+            clearTimeout(timeoutId);
+        }
+        timeoutId = setTimeout(() => {
+            func.apply(context, args);
+        }, delay);
+    }
+};

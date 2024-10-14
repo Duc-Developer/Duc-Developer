@@ -3,6 +3,7 @@ import PostCard from './card';
 import styles from './posts.module.css';
 import Pagination from '../common/pagination';
 import { useState } from 'react';
+import NoData from '../common/blank/no-data';
 
 const Posts = ({ data }: { data: blogger_v3.Schema$Post[] }) => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -21,7 +22,7 @@ const Posts = ({ data }: { data: blogger_v3.Schema$Post[] }) => {
         <div className={styles.wrapper}>
             <div className={styles.posts}>
                 {!data?.length
-                    ? <div>No post</div>
+                    ? <NoData wrapperClassName='mt-32' />
                     : currentPosts.map((post: any) => <PostCard key={post.id} data={post} />)}
 
 

@@ -49,9 +49,7 @@ const DesktopMenu = () => {
 };
 
 export const Navbar = () => {
-  return <section>
-    <div className="hidden md:block">
+  return <section className="hidden md:block md:sticky top-0 z-[1000] bg-purple">
       <DesktopMenu />
-    </div>
   </section>;
 };

@@ -20,13 +20,26 @@ import LoadingPage from '@/components/common/loading/loading-page';
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
     const [loadingPage, setLoadingPage] = useState(false);
+    const [timeStart, setTimeStart] = useState<number | null>(null);
     const router = useRouter();
 
-    const handleStart = () => setLoadingPage(true);
-    const handleComplete = () => setLoadingPage(false);
+    const handleStart = () => {
+        setLoadingPage(true);
+        setTimeStart(new Date().getTime());
+    };
+    const handleComplete = () => {
+        if (!timeStart) return setLoadingPage(false);
+        const timeEnd = new Date().getTime();
+        const range = timeEnd - timeStart;
+        if (range < 500) {
+            setTimeout(() => setLoadingPage(false), 500 - range);
+        } else {
+            setLoadingPage(false);
+        }
+        setTimeStart(null);
+    };
 
     useEffect(() => {
-
         router.events.on('routeChangeStart', handleStart);
         router.events.on('routeChangeComplete', handleComplete);
         router.events.on('routeChangeError', handleComplete);
@@ -37,6 +50,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
             router.events.off('routeChangeError', handleComplete);
         };
     }, [router]);
+
     return (<>
         <section className="relative w-screen max-h-screen transparent flex text-neutral">
             <Head>
@@ -68,13 +82,13 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
             </Head>
             <StarsCanvas />
             <Sidebar />
-            <section className="h-screen w-full grow flex flex-col gap-4">
+            <section className="h-screen w-full grow flex flex-col gap-4 md:overflow-y-auto">
                 {
                     loadingPage ? <LoadingPage />
                         : <>
                             <VideoBackground />
                             <Navbar />
-                            <section className="grow pt-16 md:mt-0 ">
+                            <section className="grow pt-16 md:pt-0 md:mt-0">
                                 <Suspense fallback={<>...</>}>
                                     <Component {...pageProps} />
                                 </Suspense>

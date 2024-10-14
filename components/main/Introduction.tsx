@@ -90,7 +90,7 @@ const Slider = () => {
     return <div className="introduction_slider">
         <Swiper
             direction='vertical'
-            className="mySwiper h-[18rem] md:h-[28rem]"
+            className="mySwiper h-[28rem]"
             onSwiper={(swiper) => slideRef.current = swiper}
         >
             <SwiperSlide><AboutMe /></SwiperSlide>

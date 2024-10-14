@@ -24,9 +24,9 @@ export const ProjectCard = ({
         className="w-[20em] mx-auto object-contain"
       />
 
-      <div className="relative p-4">
+      <div className="relative p-2 md:p-4">
         <h3 className="text-xl font-semibold text-outline">{title}</h3>
-        <p className="mt-2 text-gray-300 text-outline">{description}</p>
+        <p className="mt-2 text-gray-300 text-xs md:text-lg text-outline">{description}</p>
       </div>
     </>
   );
