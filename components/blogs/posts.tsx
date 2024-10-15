@@ -7,7 +7,7 @@ import NoData from '../common/blank/no-data';
 
 const Posts = ({ data }: { data: blogger_v3.Schema$Post[] }) => {
     const [currentPage, setCurrentPage] = useState(1);
-    const postsPerPage = 8;
+    const postsPerPage = 12;
 
     // Calculate the total number of pages
     const totalPages = Math.ceil(data.length / postsPerPage);
@@ -24,8 +24,6 @@ const Posts = ({ data }: { data: blogger_v3.Schema$Post[] }) => {
                 {!data?.length
                     ? <NoData wrapperClassName='mt-32' />
                     : currentPosts.map((post: any) => <PostCard key={post.id} data={post} />)}
-
-
             </div>
             <Pagination
                 currentPage={currentPage}

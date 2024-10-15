@@ -1,4 +1,5 @@
-import { getBlogByPath, getBlogInfo, getPosts } from '@/services/blogs';
+import { getBlogInfo } from '@/services/blogs';
+import { getPostByPath, getPosts } from '@/services/posts';
 import type {
     InferGetStaticPropsType,
     GetStaticPaths,
@@ -32,7 +33,7 @@ export const getStaticPaths = (async () => {
 
     return {
         paths,
-        fallback: false
+        fallback: 'blocking'
     }
 }) satisfies GetStaticPaths
 
@@ -41,11 +42,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
     const slug = Array.isArray(context.params?.slug) ? context.params.slug?.[0] : context.params?.slug;
     const originUrl = slug ? '/' + slug.replaceAll('_', '/') + '.html' : null;
     if (!originUrl) return { notFound: true };
-    const post = await getBlogByPath(originUrl);
+    const post = await getPostByPath(originUrl);
     return {
         props: {
             data: post,
         },
+        revalidate: 86400,
     };
 };
 
