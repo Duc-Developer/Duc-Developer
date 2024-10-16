@@ -1,4 +1,5 @@
-import { getBlogInfo, getPosts } from '@/services/blogs';
+import { getBlogInfo } from '@/services/blogs';
+import { getPosts } from '@/services/posts';
 import { SlugConverter } from '@/utilities';
 import type { MetadataRoute } from 'next'
 
@@ -6,7 +7,7 @@ const JUMP_PAGE = 500;
 const BASE_SITEMAP_ID = 'index';
 const domain = process.env.DOMAIN || 'https://david.id.vn';
 export async function generateSitemaps() {
-    const blog = await getBlogInfo({ view: 'READER' }, { http2: false }) ?? [];
+    const blog = await getBlogInfo({ view: 'READER' }) ?? [];
     const totalItems = blog.posts?.totalItems ?? 0;
     const results = [
         { id: BASE_SITEMAP_ID },
@@ -19,6 +20,11 @@ export async function generateSitemaps() {
 const STATIC_PAGES = [
     {
         url: `${domain}/`,
+        changeFrequency: 'yearly' as 'yearly',
+        priority: 1
+    },
+    {
+        url: `${domain}/blogs`,
         changeFrequency: 'yearly' as 'yearly',
         priority: 1
     }
