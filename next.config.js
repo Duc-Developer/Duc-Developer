@@ -24,6 +24,7 @@ const nextConfig = {
   env:{
     GOOGLE_BLOG_ID: process.env.GOOGLE_BLOG_ID,
     DOMAIN: process.env.DOMAIN,
+    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
   }
 }
 
