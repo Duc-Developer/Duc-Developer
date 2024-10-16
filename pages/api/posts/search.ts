@@ -8,6 +8,7 @@ export type ResponseData = {
     message: string;
     posts?: blogger_v3.Schema$Post[];
     nextPageToken?: string | null;
+    totalItems?: number;
 }
 
 export default async function searchPosts(
@@ -23,14 +24,15 @@ export default async function searchPosts(
             const response = await blogger.posts.search({ blogId: process.env.GOOGLE_BLOG_ID, q: search, ...params });
             const posts = (response?.data as blogger_v3.Schema$PostList)?.items || [];
             posts.forEach(post => {
-                if(post?.images?.[0]?.url || !post?.content) return;
+                if (post?.images?.[0]?.url || !post?.content) return;
                 const thumbnail = new RegExp(`src=\\"([^"]+)\\"`).exec(post.content)?.[1];
-                if(thumbnail) post.images = [{ url: thumbnail }];
+                if (thumbnail) post.images = [{ url: thumbnail }];
             });
             const results = {
                 posts: (response?.data as blogger_v3.Schema$PostList)?.items || [],
                 nextPageToken: (response?.data as blogger_v3.Schema$PostList)?.nextPageToken ?? null,
-                message: 'success'
+                message: 'success',
+                totalItems: response?.data?.items?.length || 0
             };
             res.status(200).json(results);
         } else {

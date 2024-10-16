@@ -109,6 +109,25 @@ ol {
   padding-left: 2.5rem;
 }
 
+pre {
+  background-color: #DCDFE4;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+}
+
+blockquote {
+  margin: 0.5rem auto;
+  background-color: #DCDFE4;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+}
+
+code {
+  display: inline-block;
+}
+
 @media screen and (max-width: 768px) {
   h1 {
     font-size: 2rem;

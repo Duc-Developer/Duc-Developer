@@ -1,4 +1,5 @@
-import { getBlogInfo, getPosts } from '@/services/blogs';
+import { getBlogInfo } from '@/services/blogs';
+import { getPosts } from '@/services/posts';
 import { SlugConverter } from '@/utilities';
 import type { MetadataRoute } from 'next'
 
@@ -66,7 +67,7 @@ export default async function sitemap({
     if (params && pageToken) {
         params.pageToken = pageToken;
     }
-    const { posts, nextPageToken } = await getPosts(params, { http2: false }) ?? []
+    const { posts = [], nextPageToken } = await getPosts(params) ?? []
     pageToken = nextPageToken;
     return posts.map((item) => {
         const slug = `blogs/${SlugConverter.toPostSlug(item.url)}`;
