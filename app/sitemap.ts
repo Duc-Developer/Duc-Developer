@@ -1,5 +1,4 @@
-import { getBlogInfo } from '@/services/blogs';
-import { getPosts } from '@/services/posts';
+import { getBlogInfo, getPosts } from '@/services/blogs';
 import { SlugConverter } from '@/utilities';
 import type { MetadataRoute } from 'next'
 
