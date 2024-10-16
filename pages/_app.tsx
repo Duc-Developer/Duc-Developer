@@ -6,6 +6,7 @@ import MainLayout from '@/components/layouts/MainLayout';
 import LoadingPage from '@/components/common/loading/loading-page';
 
 import type { AppProps } from 'next/app';
+
 import 'swiper/css';
 import 'swiper/css/pagination';
 import "./globals.css";

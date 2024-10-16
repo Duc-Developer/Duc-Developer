@@ -1,11 +1,13 @@
 import { useState } from 'react';
+import dynamic from 'next/dynamic';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
 import GoogleLoginButton from '@/components/google/GoogleLoginButton';
 
 import { showToast } from '@/components/common/toast';
-import type { ResponseData as AuthResponse } from '@/pages/api/admin/auth';
+const RichEditor = dynamic( () => import( '@/components/rich-editor' ), { ssr: false } );
 
+import type { ResponseData as AuthResponse } from '@/pages/api/admin/auth';
 const googleClientId = process.env.GOOGLE_CLIENT_ID as string;
 
 const Admin = () => {
@@ -32,21 +34,23 @@ const Admin = () => {
         }
     };
 
-    if (!isAuthenticated) {
-        return <GoogleOAuthProvider clientId={googleClientId}>
-            <div className='w-full h-full flex justify-center items-center'>
-                <div className='w-96 h-fit min-w-[33%] p-6 bg-astronaut-gradient rounded'>
-                    <h4 className='text-neutral text-center'>Nếu bạn là nhà phát triển vui lòng đăng nhập</h4>
-                    <h6 className='text-neutral text-center'>Nếu bạn muốn đóng góp cho blog, vui lòng liên hệ với tôi</h6>
-                    <div className='w-60 mt-8 mx-auto'>
-                        <GoogleLoginButton onSuccess={(res) => handleLoginSuccess(res.credential)} />
-                    </div>
-                </div>
-            </div>
-        </GoogleOAuthProvider>;
-    }
+    // if (!isAuthenticated) {
+    //     return <GoogleOAuthProvider clientId={googleClientId}>
+    //         <div className='w-full h-full flex justify-center items-center'>
+    //             <div className='w-96 h-fit min-w-[33%] p-6 bg-astronaut-gradient rounded'>
+    //                 <h4 className='text-neutral text-center'>Nếu bạn là nhà phát triển vui lòng đăng nhập</h4>
+    //                 <h6 className='text-neutral text-center'>Nếu bạn muốn đóng góp cho blog, vui lòng liên hệ với tôi</h6>
+    //                 <div className='w-60 mt-8 mx-auto'>
+    //                     <GoogleLoginButton onSuccess={(res) => handleLoginSuccess(res.credential)} />
+    //                 </div>
+    //             </div>
+    //         </div>
+    //     </GoogleOAuthProvider>;
+    // }
 
-    return <div>Admin login success with {userInfo?.name}</div>;
+    return <div className='p-4 h-full'>
+        <RichEditor onChange={console.log}/>
+    </div>;
 }
 
 export default Admin
