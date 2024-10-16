@@ -1,4 +1,4 @@
-import { getBlogInfo, getPosts, getBlogByPath } from '@/services/blogs';
+import { getBlogInfo } from '@/services/blogs';
 import type {
     InferGetStaticPropsType,
     GetStaticPaths,
@@ -8,6 +8,7 @@ import { sanitizeDescription, SlugConverter } from '@/utilities';
 import PostContent from '@/components/blogs/post-content';
 import Head from 'next/head';
 import type { GetStaticProps } from 'next';
+import { getPostByPath, getPosts } from '@/services/posts';
 
 export const getStaticPaths = (async () => {
     const blogInfo = await getBlogInfo();
@@ -41,7 +42,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     const slug = Array.isArray(context.params?.slug) ? context.params.slug?.[0] : context.params?.slug;
     const originUrl = slug ? '/' + slug.replaceAll('_', '/') + '.html' : null;
     if (!originUrl) return { notFound: true };
-    const post = await getBlogByPath(originUrl);
+    const post = await getPostByPath(originUrl);
     return {
         props: {
             data: post,

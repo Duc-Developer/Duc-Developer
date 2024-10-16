@@ -20,13 +20,13 @@ export default async function getBlog(
             const response = await blogger.blogs.get({
                 blogId: id as string,
                 ...params
-            });
+            }, { http2: false, apiVersion: 'v3' });
             res.status(200).json({
                 data: response.data,
                 message: 'success'
             });
         } else {
-            res.status(405).json({ message: 'We only support POST requests' });
+            res.status(405).json({ message: 'We only support GET requests' });
         }
     } catch (error) {
         res.status(500).json({ message: 'Internal server error' });
