@@ -9,11 +9,18 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      keyframes: {
+        float: {
+          '100%': { transform: 'translateY(0)' },
+          '0%': { transform: 'translateY(200%)' },
+        },
       },
+      animation: {
+        float300: 'float 0.3s ease-in-out',
+      },
+      backgroundImage: {
+        'astronaut-gradient': 'linear-gradient(135deg, rgba(50, 50, 150, 0.8), rgba(100, 150, 200, 0.8))',
+        },
       colors: {
         ...COLORS
       }
@@ -27,7 +34,8 @@ const config: Config = {
   ],
   variants: {
     extend: {
-      fill: ['hover']
+      fill: ['hover'],
+      animation: ['hover'],
     },
   }
 }

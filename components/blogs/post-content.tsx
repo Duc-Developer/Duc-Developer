@@ -8,7 +8,7 @@ import { setupDOMPurify } from '@/utilities';
 import { showToast } from '../common/toast';
 import { TbArrowBigUpLinesFilled, TbArrowBigUp } from "react-icons/tb";
 
-const PostContent = ({ data }: { data: blogger_v3.Schema$Post }) => {
+const PostContent = ({ data, isPreview }: { data: blogger_v3.Schema$Post; isPreview?: boolean; }) => {
     const router = useRouter();
     const [isPurifySetup, setIsPurifySetup] = useState(false);
     const [showScrollToTop, setShowScrollToTop] = useState(false);
@@ -50,7 +50,7 @@ const PostContent = ({ data }: { data: blogger_v3.Schema$Post }) => {
     const handleShareClick = async () => {
         if (navigator.share) {
             try {
-               await navigator.share({
+                await navigator.share({
                     title: document.title,
                     text: 'Check out this post!',
                     url: window.location.href,
@@ -70,12 +70,18 @@ const PostContent = ({ data }: { data: blogger_v3.Schema$Post }) => {
     };
 
     return (<div className={styles.wrapper}>
-        <button className={styles.backButton} onClick={handleBackClick} title='go back'>
-            <FaArrowLeft className={styles.icon} size={20} />
-        </button>
-        <button className={styles.shareButton} onClick={handleShareClick} title='share'>
-            <FaShareAlt className={styles.icon} size={20} />
-        </button>
+        {
+            !isPreview && (
+                <>
+                    <button className={styles.backButton} onClick={handleBackClick} title='go back'>
+                        <FaArrowLeft className={styles.icon} size={20} />
+                    </button>
+                    <button className={styles.shareButton} onClick={handleShareClick} title='share'>
+                        <FaShareAlt className={styles.icon} size={20} />
+                    </button>
+                </>
+            )
+        }
         <div className={styles.postContent} ref={postContentRef}>
             <div dangerouslySetInnerHTML={{
                 __html: clean
