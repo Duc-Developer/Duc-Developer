@@ -7,6 +7,7 @@ export type ResponseData = {
   message: string;
   posts?: blogger_v3.Schema$Post[];
   nextPageToken?: string | null;
+  totalItems?: number;
 }
 
 export default async function getPosts(
@@ -17,11 +18,20 @@ export default async function getPosts(
     await runMiddleware(req, res);
     if (req.method === 'POST') {
       const params = req.body;
-      const response = await blogger.posts.list({ blogId: process.env.GOOGLE_BLOG_ID, status: ['LIVE'], ...params });
+      const blogId = process.env.GOOGLE_BLOG_ID;
+      const [PostResponses, blogInfoResponse] = await Promise.all([
+        blogger.posts.list({ blogId, status: ['LIVE'], ...params }),
+        blogger.blogs.get({
+          blogId,
+          maxPosts: 0,
+          view: 'READER'
+        }, { apiVersion: 'v3' })
+      ]);
       const results = {
-        posts: (response?.data as blogger_v3.Schema$PostList)?.items || [],
-        nextPageToken: (response?.data as blogger_v3.Schema$PostList)?.nextPageToken ?? null,
-        message: 'success'
+        posts: (PostResponses?.data as blogger_v3.Schema$PostList)?.items || [],
+        nextPageToken: (PostResponses?.data as blogger_v3.Schema$PostList)?.nextPageToken ?? null,
+        message: 'success',
+        totalItems: (blogInfoResponse?.data as blogger_v3.Schema$Blog)?.posts?.totalItems || 0
       };
       res.status(200).json(results);
     } else {
