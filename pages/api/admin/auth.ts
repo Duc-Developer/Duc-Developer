@@ -1,43 +1,35 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { google } from 'googleapis';
 import { runMiddleware } from '@/config/cors';
+import { rootAuth } from '@/services/blogs';
+import { supportedMethod } from '@/utilities/api';
+import { COMMON_API_RESPONSES } from '@/constants/server';
 
-const CLIENT_ID = process.env.GOOGLE_CLIENT_ID as string;
-const AUTHORIZED_USERS = ['mrtranduc1994@gmail.com'];
-
-const oauth2Client = new google.auth.OAuth2(CLIENT_ID);
 export type ResponseData = {
     authorized: boolean;
-    data?: {
-        email?: string;
-        avatar?: string;
-        name?: string;
-    } | null;
+    message: string;
+    access_token?: string;
+    refresh_token?: string;
 }
-export default async function verifyIdToken(req: NextApiRequest, res: NextApiResponse) {
-    await runMiddleware(req, res);
-    const { token } = req.body;
-
+export default async function getGoogleCredential(req: NextApiRequest, res: NextApiResponse) {
+    const { code } = req.body;
+    const { status, message } = supportedMethod(['POST'], req.method);
+    if (!code || !status) {
+        return res.status(COMMON_API_RESPONSES.BAD_REQUEST.STATUS).json({ authorized: false, message: message ?? COMMON_API_RESPONSES.BAD_REQUEST.MESSAGE });
+    }
     try {
-        const ticket = await oauth2Client.verifyIdToken({
-            idToken: token,
-            audience: CLIENT_ID,
+        await runMiddleware(req, res);
+        const { tokens } = await rootAuth.clientGetToken(code);
+        res.status(COMMON_API_RESPONSES.SUCCESS.STATUS).json({
+            authorized: true,
+            message: 'Login success',
+            access_token: tokens.access_token,
+            refresh_token: tokens.refresh_token,
+            expires_in: tokens.expiry_date
         });
-
-        const payload = ticket.getPayload();
-        const email = payload?.email;
-
-        if (email && AUTHORIZED_USERS.includes(email)) {
-            const userData = {
-                email,
-                avatar: payload?.picture,
-                name: payload?.name,
-            };
-            res.status(200).json({ authorized: true, data: userData});
-        } else {
-            res.status(401).json({ authorized: false });
-        }
     } catch (error) {
-        res.status(500).json({ error: 'Token verification failed' });
+        res
+            .status(COMMON_API_RESPONSES.INTERNAL_SERVER_ERROR.STATUS)
+            .json({ authorized: false, message: COMMON_API_RESPONSES.INTERNAL_SERVER_ERROR.MESSAGE });
+
     }
 };

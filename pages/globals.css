@@ -197,3 +197,13 @@ code {
   }
 
 }
+
+/** style for rich editor */
+.ck-content a {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+.ck-editor__editable {
+  height: 720px;
+}
