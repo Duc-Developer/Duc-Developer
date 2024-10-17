@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import {
   ClassicEditor,
@@ -72,13 +72,14 @@ type Props = {
   onChange?: (event: EventInfo, editor: ClassicEditor) => void;
 }
 
-const RichEditor = ({ defaultValue = '', onChange }: Props) => {
+const RichEditor = ({ defaultValue = '', onChange }: Props, ref: any) => {
 
   return (
     <div className={styles.richEditorWrapper}>
       <CKEditor
         editor={ClassicEditor}
         onChange={onChange}
+        ref={ref}
         config={{
           toolbar: {
             items: [
@@ -109,4 +110,4 @@ const RichEditor = ({ defaultValue = '', onChange }: Props) => {
   );
 };
 
-export default RichEditor;
+export default forwardRef(RichEditor);

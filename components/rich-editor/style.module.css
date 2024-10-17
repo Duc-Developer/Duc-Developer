@@ -1,12 +1,3 @@
 .richEditorWrapper {
     color: #000000;
 }
-
-.richEditorWrapper .ck-content a {
-    color: #007bff !important;
-    text-decoration: underline !important;
-}
-
-.richEditorWrapper .ck-editor__editable {
-    min-height: 500px !important;
-}

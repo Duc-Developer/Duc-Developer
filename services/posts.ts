@@ -7,7 +7,7 @@ export const getPosts = async (params?: blogger_v3.Params$Resource$Posts$List): 
     const responses = await fetch(endpoint, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(params),
     });
@@ -57,4 +57,20 @@ export const getPostByPath = async (path: string) => {
     const detailData = await responseDetail.json();
     const fullData = { ...summaryData?.data, ...detailData.data };
     return fullData;
+};
+
+export const insertPost = async (body: blogger_v3.Schema$Post) => {
+    const responses = await fetch(`${endpoint}/insert`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+        },
+        body: JSON.stringify({ requestBody: body }),
+    });
+    if (responses.status !== 200) {
+        throw new Error('Failed to insert post');
+    }
+    const data = await responses.json();
+    return data;
 };

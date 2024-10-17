@@ -1,43 +1,31 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { google } from 'googleapis';
 import { runMiddleware } from '@/config/cors';
+import { rootAuth } from '@/services/blogs';
 
-const CLIENT_ID = process.env.GOOGLE_CLIENT_ID as string;
-const AUTHORIZED_USERS = ['mrtranduc1994@gmail.com'];
-
-const oauth2Client = new google.auth.OAuth2(CLIENT_ID);
 export type ResponseData = {
     authorized: boolean;
-    data?: {
-        email?: string;
-        avatar?: string;
-        name?: string;
-    } | null;
+    message: string;
+    access_token?: string;
+    refresh_token?: string;
 }
-export default async function verifyIdToken(req: NextApiRequest, res: NextApiResponse) {
-    await runMiddleware(req, res);
-    const { token } = req.body;
-
+export default async function getGoogleCredential(req: NextApiRequest, res: NextApiResponse) {
+    const { code } = req.body;
+    if (!code) return res.status(403).json({ authorized: false, message: 'Unauthorized' });
+    if(req.method !== 'POST') {
+        return res.status(400).json({ authorized: false, message: 'Sorry, this api only support POST method' });
+    }
     try {
-        const ticket = await oauth2Client.verifyIdToken({
-            idToken: token,
-            audience: CLIENT_ID,
+        await runMiddleware(req, res);
+        const {tokens} = await  rootAuth.getClientToken(code);
+        res.status(200).json({  
+            authorized: true, 
+            message: 'Login success',
+            access_token: tokens.access_token,
+            refresh_token: tokens.refresh_token,
+            expires_in: tokens.expiry_date
         });
-
-        const payload = ticket.getPayload();
-        const email = payload?.email;
-
-        if (email && AUTHORIZED_USERS.includes(email)) {
-            const userData = {
-                email,
-                avatar: payload?.picture,
-                name: payload?.name,
-            };
-            res.status(200).json({ authorized: true, data: userData});
-        } else {
-            res.status(401).json({ authorized: false });
-        }
     } catch (error) {
-        res.status(500).json({ error: 'Token verification failed' });
+        res.status(500).json({ authorized: false, message: 'Internal server error' });
+        
     }
 };
