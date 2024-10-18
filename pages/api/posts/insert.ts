@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { blogger_v3, google } from "googleapis";
 import { blogger, rootAuth } from "@/services/blogs";
 import { runMiddleware } from '@/config/cors';
+import { getBearerToken } from '@/utilities/api';
 
 export type ResponseData = {
     message: string;
@@ -17,7 +18,7 @@ export default async function insert(
         if (req.method !== 'POST') {
             return res.status(405).json({ message: 'We only support POST requests' });
         }
-        const bearerToken = req.headers.authorization?.split(' ')[1];
+        const bearerToken = getBearerToken(req);
         if (!bearerToken) {
             return res.status(401).json({ message: 'Authorization token is missing' });
         }

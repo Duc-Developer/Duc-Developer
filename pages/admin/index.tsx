@@ -22,6 +22,15 @@ import Autocomplete from '@/components/common/input/autocomplete';
 import PostList from '@/components/admin/post-list';
 
 const reCaptchaKey = process.env.GOOGLE_RE_CAPTCHA_KEY ?? '';
+const authorId = process.env.AUTHOR_ID ?? '';
+const initialForm: blogger_v3.Schema$Post = {
+    title: '',
+    content: '',
+    labels: [],
+    author: {
+        id: authorId,
+    },
+};
 const Admin = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -29,14 +38,9 @@ const Admin = () => {
     const editorRef = useRef<any>(null);
     const [reCaptchaToken, setReCaptchaToken] = useState<string | null>(null);
 
-    const [form, setForm] = useState<blogger_v3.Schema$Post>({
-        title: '',
-        content: '',
-        labels: []
-    });
+    const [form, setForm] = useState<blogger_v3.Schema$Post>(initialForm);
 
     const labelOptions = (posts: blogger_v3.Schema$Post[]) => {
-
         const results: string[] = [];
         posts.forEach(post => {
             if (post.labels) {
@@ -52,8 +56,9 @@ const Admin = () => {
             const data = await searchPosts({
                 fetchImages: true,
                 fetchBodies: true,
-                view: 'READER',
+                view: 'ADMIN',
                 maxResults: 500,
+                status: ['LIVE', 'DRAFT'],
             });
             setAllPosts(data.posts ?? []);
         } catch (error) {
@@ -116,13 +121,22 @@ const Admin = () => {
 
     const handleChangeTitle = (text: string) => setForm({ ...form, title: text });
 
-    const handleSubmit = async () => {
+    const handlePublish = async () => {
         try {
-            const data = await insertPost(form);
+            const data = await insertPost({ ...form, updated: new Date().toISOString(), published: new Date().toISOString() });
             showToast({ message: `drafted ${data.title}`, status: 'success' });
         } catch (error) {
-            showToast({ message: 'Failed to submit', status: 'error' });
+            showToast({ message: 'Failed to publish', status: 'error' });
         }
+    };
+
+    const handleDraft = async () => {
+        try {
+            const data = await insertPost({ ...form, updated: new Date().toISOString() });
+            showToast({ message: `published ${data.title}`, status: 'success' });
+        } catch (error) {
+            showToast({ message: 'Failed to draft', status: 'error' });
+        };
     };
 
     const handleReCaptchaChange = (token: string | null) => {
@@ -167,13 +181,25 @@ const Admin = () => {
         </div>
         <div className='basis-2/12 flex flex-col gap-4 items-center bg-neutral rounded p-4'>
             <div className='w-full flex items-center justify-center flex-wrap gap-4'>
-                <Button className='bg-yellow text-darkNeutral w-32 flex gap-2 items-center justify-center' onClick={console.log}>
+                <Button
+                    className='bg-yellow text-darkNeutral w-32 flex gap-2 items-center justify-center'
+                    onClick={console.log}
+                    disabled={!form.title && !form.content}
+                >
                     <IoEyeSharp color='#000' />Preview
                 </Button>
-                <Button className='bg-purple w-32 flex gap-2 items-center justify-center' onClick={console.log}>
-                    <FaCloudArrowUp color='#fff' />Save
+                <Button
+                    className='bg-purple w-32 flex gap-2 items-center justify-center'
+                    onClick={handleDraft}
+                    disabled={!form.title || !form.content || !!form?.published}
+                >
+                    <FaCloudArrowUp color='#fff' />Draft
                 </Button>
-                <Button className='bg-purple basis-full flex gap-2 items-center justify-center' onClick={handleSubmit}>
+                <Button
+                    className='bg-purple basis-full flex gap-2 items-center justify-center'
+                    onClick={handlePublish}
+                    disabled={!form.title || !form.content}
+                >
                     <FaRegSave color='#fff' />Submit
                 </Button>
             </div>

@@ -28,6 +28,7 @@ const nextConfig = {
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     GOOGLE_RE_CAPTCHA_KEY: process.env.GOOGLE_RE_CAPTCHA_KEY,
     GOOGLE_RE_CAPTCHA_SECRET: process.env.GOOGLE_RE_CAPTCHA_SECRET,
+    AUTHOR_ID: process.env.AUTHOR_ID,
   }
 }
 

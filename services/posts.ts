@@ -23,6 +23,7 @@ export const searchPosts = async (params?: blogger_v3.Params$Resource$Posts$List
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
         },
         body: JSON.stringify(params),
     });
