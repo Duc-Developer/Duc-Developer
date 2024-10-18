@@ -204,6 +204,6 @@ code {
   text-decoration: underline;
 }
 
-.ck-editor__editable {
-  height: 720px;
+.ck-content {
+  height: calc(100vh - 235px);
 }

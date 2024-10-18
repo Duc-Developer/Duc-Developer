@@ -1,4 +1,5 @@
 import { HTTP_STATUS } from "@/constants/server";
+import { ResponseData as InfoResponse } from "@/pages/api/admin/info";
 
 const endpoint = `${process.env.DOMAIN}/api/admin`;
 
@@ -27,7 +28,7 @@ export const getCredentials = async (code: string) => {
     return data;
 };
 
-export const getInfo = async () => {
+export const getInfo = async (): Promise<InfoResponse> => {
     const response = await fetch(`${endpoint}/info`, {
         method: 'GET',
         headers: {

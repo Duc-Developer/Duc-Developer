@@ -10,7 +10,7 @@ export type ResponseData = {
     data?: blogger_v3.Schema$Post;
 }
 
-export default async function insert(
+export default async function update(
     req: NextApiRequest,
     res: NextApiResponse<ResponseData>
 ) {
@@ -24,7 +24,7 @@ export default async function insert(
         if (!bearerToken) {
             return res.status(COMMON_API_RESPONSES.FORBIDDEN.STATUS).json({ message: COMMON_API_RESPONSES.FORBIDDEN.MESSAGE });
         }
-        const params = req.body as blogger_v3.Params$Resource$Posts$Insert;
+        const params = req.body as blogger_v3.Params$Resource$Posts$Publish;
         const args = {
             blogId: process.env.GOOGLE_BLOG_ID,
             isDraft: true,
@@ -36,15 +36,15 @@ export default async function insert(
         const response = await google.blogger({
             version: 'v3',
             auth: rootAuth.clientCtx
-        }).posts.insert(args);
+        }).posts.publish(args);
 
         res.status(COMMON_API_RESPONSES.SUCCESS.STATUS).json({
             data: response.data,
-            message: 'Insert successful!'
+            message: 'Updated successful!'
         });
     } catch (error) {
         res
-        .status(COMMON_API_RESPONSES.INTERNAL_SERVER_ERROR.STATUS)
-        .json({ message: COMMON_API_RESPONSES.INTERNAL_SERVER_ERROR.MESSAGE });
+            .status(COMMON_API_RESPONSES.INTERNAL_SERVER_ERROR.STATUS)
+            .json({ message: COMMON_API_RESPONSES.INTERNAL_SERVER_ERROR.MESSAGE });
     }
 }

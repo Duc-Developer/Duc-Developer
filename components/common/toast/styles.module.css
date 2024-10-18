@@ -34,6 +34,10 @@
     background-color: #dc3545;
 }
 
+.warning {
+    background-color: #FFC940;
+}
+
 @media screen and (max-width: 425px) {
     .toast {
         width: calc(100vw - 1rem);

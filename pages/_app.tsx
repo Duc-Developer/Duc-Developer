@@ -1,5 +1,10 @@
 import { Suspense, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
+import {
+    HydrationBoundary,
+    QueryClient,
+    QueryClientProvider,
+} from '@tanstack/react-query'
 
 import AdminLayout from '@/components/layouts/AdminLayout';
 import MainLayout from '@/components/layouts/MainLayout';
@@ -12,6 +17,7 @@ import 'swiper/css/pagination';
 import "./globals.css";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
+    const [queryClient] = useState(() => new QueryClient());
     const [loadingPage, setLoadingPage] = useState(false);
     const [timeStart, setTimeStart] = useState<number | null>(null);
     const router = useRouter();
@@ -46,11 +52,14 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     }, [router]);
 
     const Layout = useMemo(() => isAdminRoute ? AdminLayout : MainLayout, [isAdminRoute]);
-    return (<Layout loading={loadingPage}>
+    return (<QueryClientProvider client={queryClient}><Layout loading={loadingPage}>
         <Suspense fallback={<LoadingPage />}>
-            <Component {...pageProps} />
+            <HydrationBoundary state={pageProps.dehydratedState}>
+                <Component {...pageProps} />
+            </HydrationBoundary>
         </Suspense>
-    </Layout>);
+    </Layout>
+    </QueryClientProvider>);
 }
 
 export default MyApp

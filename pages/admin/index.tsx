@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import ReCAPTCHA from "react-google-recaptcha";
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { showToast } from '@/components/common/toast';
 const RichEditor = dynamic(() => import('@/components/rich-editor'), { ssr: false });
@@ -14,12 +15,24 @@ import { FaRegSave } from "react-icons/fa";
 import { FaCloudArrowUp } from "react-icons/fa6";
 
 import { ClassicEditor, EventInfo } from 'ckeditor5';
-import { insertPost, searchPosts } from '@/services/posts';
+import { insertPost, publishPost, searchPosts, updatePost } from '@/services/posts';
 import { blogger_v3 } from 'googleapis';
 import { getInfo, requestConsentPage, verifyCaptcha } from '@/services/admin';
-import { CONTACTS } from '@/constants';
+import { CONTACTS, POST_STATUS } from '@/constants';
 import Autocomplete from '@/components/common/input/autocomplete';
 import PostList from '@/components/admin/post-list';
+import { IoIosCreate } from "react-icons/io";
+
+import { ResponseData as PostResponses } from "@/pages/api/posts";
+import { ResponseData as InfoResponse } from "@/pages/api/admin/info";
+import { ResponseData as InsertPostResponses } from "@/pages/api/posts/insert";
+import { ResponseData as UpdatePostResponses } from "@/pages/api/posts/update";
+import { ResponseData as PublishPostResponses } from "@/pages/api/posts/publish";
+import PostContent from '@/components/blogs/post-content';
+import CustomModal from '@/components/common/modal';
+import { SlugConverter } from '@/utilities';
+type WriterResponse = InsertPostResponses | UpdatePostResponses | PublishPostResponses;
+type WriterVariables = blogger_v3.Schema$Post & { mode: 'INSERT' | 'UPDATE' | 'PUBLISH' };
 
 const reCaptchaKey = process.env.GOOGLE_RE_CAPTCHA_KEY ?? '';
 const authorId = process.env.AUTHOR_ID ?? '';
@@ -33,12 +46,42 @@ const initialForm: blogger_v3.Schema$Post = {
 };
 const Admin = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [allPosts, setAllPosts] = useState<blogger_v3.Schema$Post[]>([]);
     const editorRef = useRef<any>(null);
     const [reCaptchaToken, setReCaptchaToken] = useState<string | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const [form, setForm] = useState<blogger_v3.Schema$Post>(initialForm);
+
+    let mounted = true;
+    useEffect(() => {
+        return () => {
+            mounted = false;
+        };
+    }, []);
+
+    /** get all post and calculate label */
+    const {
+        data: postResponses,
+        error: errorFetchPosts,
+        isFetching: fetchingPosts,
+        refetch: refetchPosts
+    } = useQuery<PostResponses>({
+        queryKey: ['posts'],
+        queryFn: () => searchPosts({
+            fetchImages: true,
+            fetchBodies: true,
+            view: 'ADMIN',
+            maxResults: 500,
+            status: ['LIVE', 'DRAFT'],
+        }),
+        enabled: isAuthenticated,
+    });
+    useEffect(() => {
+        if (errorFetchPosts) {
+            showToast({ message: 'Failed to fetch posts', status: 'error' });
+        }
+    }, [errorFetchPosts]);
+    const allPosts = postResponses?.posts ?? [];
 
     const labelOptions = (posts: blogger_v3.Schema$Post[]) => {
         const results: string[] = [];
@@ -50,46 +93,20 @@ const Admin = () => {
         return results.filter((value, index, self) => self.indexOf(value) === index);
     };
 
-    const fetchPosts = async () => {
-        setLoading(true);
-        try {
-            const data = await searchPosts({
-                fetchImages: true,
-                fetchBodies: true,
-                view: 'ADMIN',
-                maxResults: 500,
-                status: ['LIVE', 'DRAFT'],
-            });
-            setAllPosts(data.posts ?? []);
-        } catch (error) {
-            showToast({ message: 'Failed to fetch posts', status: 'error' });
-        } finally {
-            setLoading(false);
-        }
-    };
+    /** check token info */
+    const { data: tokenInfo, isFetched: fetchedTokenInfo } = useQuery<InfoResponse>({
+        queryKey: ['token_info'],
+        queryFn: getInfo,
+        enabled: typeof window !== 'undefined' && !!localStorage.getItem('access_token'),
+    });
 
-    const fetchInfo = async () => {
-        try {
-            const data = await getInfo();
-            if (data?.data?.expiry_date > new Date().getTime()) {
-                setIsAuthenticated(true);
-            } else {
-                throw new Error('Access token expired');
-            }
-        } catch (error) {
+    useEffect(() => {
+        if (tokenInfo?.data?.expiry_date > new Date().getTime()) {
+            setIsAuthenticated(true);
+        } else {
             setIsAuthenticated(false);
         }
-    };
-
-    useEffect(() => {
-        const token = localStorage.getItem('access_token');
-        if (token) fetchInfo();
-    }, []);
-
-    useEffect(() => {
-        if (!isAuthenticated) return;
-        fetchPosts();
-    }, [isAuthenticated]);
+    }, [fetchedTokenInfo]);
 
     const handleLogin = async () => {
         try {
@@ -121,23 +138,35 @@ const Admin = () => {
 
     const handleChangeTitle = (text: string) => setForm({ ...form, title: text });
 
-    const handlePublish = async () => {
-        try {
-            const data = await insertPost({ ...form, updated: new Date().toISOString(), published: new Date().toISOString() });
-            showToast({ message: `drafted ${data.title}`, status: 'success' });
-        } catch (error) {
-            showToast({ message: 'Failed to publish', status: 'error' });
-        }
-    };
 
-    const handleDraft = async () => {
-        try {
-            const data = await insertPost({ ...form, updated: new Date().toISOString() });
-            showToast({ message: `published ${data.title}`, status: 'success' });
-        } catch (error) {
-            showToast({ message: 'Failed to draft', status: 'error' });
-        };
-    };
+    const writer = useMutation<WriterResponse, Error, WriterVariables>(
+        {
+            mutationFn: async (variables) => {
+                const mode = variables.mode;
+                const body = { ...variables, updated: new Date().toISOString() };
+                let request = insertPost;
+                if (mode === 'PUBLISH') {
+                    request = publishPost;
+                    body.status = 'LIVE';
+                } else if (mode === 'UPDATE') {
+                    request = updatePost;
+                }
+                const data = await request(body);
+                return data;
+            },
+            onSuccess: ({ data }) => {
+                const message = data?.title ?? 'This post';
+                const dataStatus = data?.status;
+                if (dataStatus === 'LIVE') {
+                    refetchPosts({ cancelRefetch: !mounted });
+                }
+                showToast({ message: message, status: 'success' });
+            },
+            onError: () => {
+                showToast({ message: 'Failed to draft', status: 'error' });
+            },
+        }
+    );
 
     const handleReCaptchaChange = (token: string | null) => {
         setReCaptchaToken(token);
@@ -175,41 +204,59 @@ const Admin = () => {
     }
 
     return <div className='p-4 w-full h-full flex gap-4 text-darkNeutral'>
-        <div className='grow flex flex-col gap-4 mt-4' style={{ maxWidth: '82%' }}>
+        <div className='grow flex flex-col gap-4 mt-4' style={{ maxWidth: '74%' }}>
             <Input value={form.title} placeholder='Title' className='w-full' onChange={handleChangeTitle} />
             <RichEditor editorRef={editorRef} onChange={handleChangeEditor} />
         </div>
-        <div className='basis-2/12 flex flex-col gap-4 items-center bg-neutral rounded p-4'>
+        <div className='basis-3/12 flex flex-col gap-4 items-center bg-neutral rounded p-4'>
             <div className='w-full flex items-center justify-center flex-wrap gap-4'>
                 <Button
+                    className='bg-green5 text-darkNeutral w-32 flex gap-2 items-center justify-center'
+                    onClick={() => setForm(initialForm)}
+                >
+                    <IoIosCreate color='#000' />New
+                </Button>
+                <Button
                     className='bg-yellow text-darkNeutral w-32 flex gap-2 items-center justify-center'
-                    onClick={console.log}
-                    disabled={!form.title && !form.content}
+                    onClick={() => setIsModalOpen(true)}
+                    disabled={!form.title}
                 >
                     <IoEyeSharp color='#000' />Preview
                 </Button>
                 <Button
-                    className='bg-purple w-32 flex gap-2 items-center justify-center'
-                    onClick={handleDraft}
-                    disabled={!form.title || !form.content || !!form?.published}
+                    className='bg-darkNeutral text-neutral w-32 flex gap-2 items-center justify-center'
+                    onClick={() => writer.mutate({ ...form, mode: form?.id ? 'UPDATE' : 'INSERT' })}
+                    disabled={!form.title || form?.status === 'LIVE'}
                 >
                     <FaCloudArrowUp color='#fff' />Draft
                 </Button>
                 <Button
                     className='bg-purple basis-full flex gap-2 items-center justify-center'
-                    onClick={handlePublish}
-                    disabled={!form.title || !form.content}
+                    onClick={() => writer.mutate({ ...form, mode: form?.status === 'LIVE' ? 'UPDATE' : 'PUBLISH' })}
+                    disabled={!form.title}
                 >
                     <FaRegSave color='#fff' />Submit
                 </Button>
             </div>
             {
-                loading ? <p>Loading...</p> : <div className='w-full h-[300px] overflow-auto'>
-                    <PostList data={allPosts} onEdit={(post) => {
-                        if (!post) return;
-                        setForm(post);
-                        editorRef.current?.setData(post.content ?? '');
-                    }} />
+                fetchingPosts ? <p>Loading...</p> : <div className='w-full h-[300px] overflow-auto'>
+                    <PostList
+                        data={allPosts}
+                        onEdit={(post) => {
+                            if (!post) return;
+                            setForm(post);
+                            editorRef.current?.setData(post.content ?? '');
+                        }}
+                        onView={(post) => {
+                            if (!post) return;
+                            const slug = SlugConverter.toPostSlug(post.url);
+                            if (slug && post?.status === POST_STATUS.LIVE) {
+                                window.open(`${process.env.DOMAIN}/blogs/${slug}`, '_blank');
+                            } else if (post.url) {
+                                showToast({ message: 'This post is not live yet', status: 'warning' });
+                            }
+                        }}
+                    />
                 </div>
             }
             <hr className='w-full border border-gray-300' />
@@ -219,6 +266,13 @@ const Admin = () => {
                 onSelected={(values) => setForm({ ...form, labels: values })}
             />
         </div>
+        <CustomModal
+            isOpen={isModalOpen}
+            onRequestClose={() => setIsModalOpen(false)}
+            overlayClassName='bg-darkNeutral p-4 z-[1000] fixed top-0 left-0 w-screen h-screen'
+        >
+            <PostContent data={form} isPreview />
+        </CustomModal>
     </div>;
 }
 
