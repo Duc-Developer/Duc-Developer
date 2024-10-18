@@ -4,12 +4,16 @@ import { CONTACTS, SOCIALS } from "@/constants";
 import { classNames } from "@/lib/utils";
 import Link from "next/link";
 import { useState } from "react";
-import { GoSidebarCollapse } from "react-icons/go";
-import { GoSidebarExpand } from "react-icons/go";
+import { usePathname } from "next/navigation";
+
+import { GoSidebarCollapse, GoSidebarExpand } from "react-icons/go";
 import LanguageToggle from "../sub/language-toggle";
 import { MenuLink } from "./navbar";
+import { MdAdminPanelSettings } from "react-icons/md";
+import { FaHome } from "react-icons/fa";
 
 const Sidebar = () => {
+    const pathname = usePathname();
     const [isCollapsed, setIsCollapsed] = useState(true);
 
     return (
@@ -33,6 +37,17 @@ const Sidebar = () => {
                 </div>
                 {!isCollapsed && <div className="hidden md:block"><LanguageToggle /></div>}
             </div>
+            
+            {
+                !isCollapsed && <Link
+                    rel="noreferrer noopener"
+                    className="hidden md:block mx-auto mb-2 text-neutral active:scale-90"
+                    href={pathname?.startsWith('/admin') ? '/' : '/admin'}
+                    title="For admin"
+                >
+                    { pathname?.startsWith('/admin') ?<FaHome size={32} />  : <MdAdminPanelSettings size={32} />  }
+                </Link>
+            }
             <div className={classNames("hidden md:block font-bold text-white text-lg text-center whitespace-nowrap select-none", isCollapsed && "w-[1.5em] h-[1.5em] mx-0 -rotate-90")}>
                 TRẦN TRUNG ĐỨC
                 {!isCollapsed && <p className="text-sm text-center">David Chan</p>}
