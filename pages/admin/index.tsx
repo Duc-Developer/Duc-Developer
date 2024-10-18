@@ -177,12 +177,6 @@ const Admin = () => {
                     <FaRegSave color='#fff' />Submit
                 </Button>
             </div>
-            <Autocomplete
-                placeholder='Add labels...'
-                suggestions={labelOptions(allPosts)}
-                onSelected={(values) => setForm({ ...form, labels: values })}
-            />
-            <hr className='w-full border border-gray-300' />
             {
                 loading ? <p>Loading...</p> : <div className='w-full h-[300px] overflow-auto'>
                     <PostList data={allPosts} onEdit={(post) => {
@@ -192,6 +186,12 @@ const Admin = () => {
                     }} />
                 </div>
             }
+            <hr className='w-full border border-gray-300' />
+            <Autocomplete
+                placeholder='Add labels...'
+                suggestions={labelOptions(allPosts)}
+                onSelected={(values) => setForm({ ...form, labels: values })}
+            />
         </div>
     </div>;
 }
