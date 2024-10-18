@@ -175,3 +175,13 @@ export const NAV_LINKS = [
     backLink: "https://codecungdavid.blogspot.com"
   },
 ] as const;
+
+export const POST_STATUS = {
+  LIVE: "LIVE",
+  DRAFT: "DRAFT",
+  SOFT_TRASHED: "SOFT_TRASHED",
+  SCHEDULE: "SCHEDULE",
+} as const;
+export type PostStatus = typeof POST_STATUS[keyof typeof POST_STATUS];
+
+export const IMAGE_SRC_DEFAULT = "https://placehold.co/640x480/webp";
