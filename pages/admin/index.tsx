@@ -202,7 +202,7 @@ const Admin = () => {
             />
         </div>;
     }
-
+console.log({form})
     return <div className='p-4 w-full h-full flex gap-4 text-darkNeutral'>
         <div className='grow flex flex-col gap-4 mt-4' style={{ maxWidth: '74%' }}>
             <Input value={form.title} placeholder='Title' className='w-full' onChange={handleChangeTitle} />
@@ -267,6 +267,7 @@ const Admin = () => {
                 placeholder='Add labels...'
                 suggestions={labelOptions(allPosts)}
                 onSelected={(values) => setForm({ ...form, labels: values })}
+                defaultValue={form.labels}
             />
         </div>
         <CustomModal

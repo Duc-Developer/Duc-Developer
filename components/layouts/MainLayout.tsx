@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import { Suspense } from 'react';
-import { SpeedInsights } from '@vercel/speed-insights/next';
 
 import { ToastContainer } from '@/components/common/toast';
 import LoadingPage from '@/components/common/loading/loading-page';
@@ -53,7 +52,7 @@ const MainLayout = ({ children, loading }: { children: React.ReactNode; loading:
                             : <>
                                 <VideoBackground />
                                 <Navbar />
-                                <section className="grow pt-16 md:pt-8 md:mt-0 md:overflow-y-auto">
+                                <section className="page-wrapper grow pt-16 md:pt-8 md:mt-0 md:overflow-y-auto">
                                     <Suspense fallback={<>...</>}>
                                         {children}
                                     </Suspense>
@@ -64,7 +63,6 @@ const MainLayout = ({ children, loading }: { children: React.ReactNode; loading:
                     <Footer />
                 </section>
             </section>
-            <SpeedInsights />
         </>
     );
 };

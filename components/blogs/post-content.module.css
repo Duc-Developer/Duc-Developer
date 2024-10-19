@@ -1,12 +1,13 @@
 .wrapper {
     position: relative;
+    padding-top: 1rem;
 }
 
 .postContent {
     color: #000;
     padding: 3rem 10rem;
     margin: 0 8rem;
-    max-height: calc(100vh - 12rem);
+    max-height: calc(100vh - 15rem);
     overflow-y: auto;
     background-color: #fff;
     border-radius: 0.5rem;
@@ -102,7 +103,7 @@
     .postContent {
         padding: 2rem 4rem;
         margin: 0 6rem;
-        max-height: calc(100vh - 8rem);
+        max-height: calc(100vh - 16rem);
     }
 
     .backButton,
@@ -117,13 +118,36 @@
     .postContent {
         padding: 2rem 2rem;
         margin: 0 2rem;
-        max-height: calc(100vh - 6rem);
+        max-height: calc(100vh - 12rem);
     }
 
     .backButton,
     .shareButton,
     .scrollToTopButton {
-        right: 0.5rem;
+        top: auto;
+        right: auto;
+    }
+
+    .backButton {
+        left: 2rem;
+        right: auto;
+        position:fixed;
+        bottom: 4rem;
+    }
+
+    .shareButton {
+        position:fixed;
+        bottom: 4rem;
+        right: 2.5rem;
+    }
+
+    .scrollToTopButton {
+        position:fixed;
+        left: calc(50vw - 3rem);
+        transform: translateX(50%);
+        bottom: 3.5rem;
+        width: 3rem;
+        height: 3rem;
     }
     
 }

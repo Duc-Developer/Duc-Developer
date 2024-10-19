@@ -31,7 +31,7 @@ export const SkillText = () => {
 
       <motion.div
         variants={slideInFromRight(0.5)}
-        className="cursive text-lg text-gray-200 mb-10 mt-2 text-center"
+        className="text-lg text-gray-200 mb-10 mt-2 text-center"
       >
         Never miss a task, deadline or idea.
       </motion.div>

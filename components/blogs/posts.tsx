@@ -23,9 +23,9 @@ const Posts = ({ data, loading }: { data: blogger_v3.Schema$Post[]; loading?: bo
             <div className={styles.posts}>
                 {!data?.length
                     ? <NoData wrapperClassName='mt-32' />
-                    : currentPosts.map((post: any) => {
+                    : currentPosts.map((post: any, index) => {
                         return <PostCard
-                            key={post.id}
+                            key={loading ? index :post.id}
                             data={post}
                             isLoading={loading}
                         />;

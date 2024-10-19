@@ -20,7 +20,7 @@ export class SlugConverter {
     }
 }
 
-
+const LanguageWhiteList = ['javascript', 'java', 'json', 'xml'];
 export const setupDOMPurify = () => {
     return new Promise<void>((resolve) => {
         DOMPurify.addHook('afterSanitizeAttributes', (node) => {
@@ -29,6 +29,14 @@ export const setupDOMPurify = () => {
                 if (href && href.startsWith('https://codecungdavid.blogspot.com/')) {
                     const newUrl = `blogs/${SlugConverter.toPostSlug(href)}`;
                     node.setAttribute('href', `${window.location.origin}/${newUrl}`);
+                }
+            }
+            if (node.tagName === 'CODE') {
+                const className = node.getAttribute('class');
+                const notExistHighlight = !className || !LanguageWhiteList.some(lang => className === `language-${lang}`);
+                if (notExistHighlight) {
+                    // add default language for highlight.js
+                    node.setAttribute('class', (className ?? '') + ' language-javascript');
                 }
             }
         });
@@ -71,4 +79,13 @@ export const debounce = (func: Function, delay: number = 500) => {
             func.apply(context, args);
         }, delay);
     }
+};
+
+export const uuid = (): string => {
+    const timestamp = Date.now().toString(16);
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c, i) => {
+        const r = (parseInt(timestamp[i % timestamp.length], 16) + Math.random() * 16) % 16 | 0;
+        const v = c === 'x' ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+    });
 };
