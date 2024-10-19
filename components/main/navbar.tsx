@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { NAV_LINKS } from "@/constants";
 import ThemeToggle from "../sub/theme-toggle";
+import { classNames } from "@/lib/utils";
 
 export const MenuLink = ({ onClick }: { onClick?: Function }) => {
 
@@ -12,16 +13,20 @@ export const MenuLink = ({ onClick }: { onClick?: Function }) => {
         key={link.title}
         href={link.link}
         onClick={() => onClick && onClick(link)}
-        className="cursor-pointer hover:text-purple transition"
+        className={classNames(
+          "h-full min-w-24 text-center rounded-full py-2 px-2",
+          "cursor-pointer hover:text-purple transition hover:bg-neutral hover:text-darkNeutral",
+          "transition-colors duration-300 ease-in group"
+        )}
       >
-        {link.title}
+        <span className="inline-block group-hover:animate-float300">{link.title}</span>
       </Link>
     })}
   </>
 };
 
 const DesktopMenu = () => {
-  return <div className="max-w-full flex justify-between gap-4 p-4 px-8">
+  return <div className="max-w-full flex justify-between gap-4 py-4 px-8">
     <Link
       href="/#about-me"
       className="h-auto w-auto flex flex-row items-center"
@@ -40,7 +45,11 @@ const DesktopMenu = () => {
     </Link>
 
     <div className="w-[36em] h-full flex flex-row items-center justify-between">
-      <div className="flex items-center justify-between w-full h-auto border-purple-heart-61 bg-gray-500 px-8 py-4 mr-4 rounded-full text-gray-200">
+      <div className={classNames(
+        "flex items-center justify-between w-full h-auto",
+        "px-8 mr-4 rounded-full",
+        "bg-purple text-gray-200 overflow-hidden"
+      )}>
         <MenuLink />
       </div>
       <ThemeToggle />
@@ -49,7 +58,7 @@ const DesktopMenu = () => {
 };
 
 export const Navbar = () => {
-  return <section className="hidden md:block md:sticky top-0 z-[1000] bg-purple">
+  return <section className="hidden md:block md:sticky top-0 z-[1000]">
       <DesktopMenu />
   </section>;
 };

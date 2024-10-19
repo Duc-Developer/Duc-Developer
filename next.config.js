@@ -17,6 +17,10 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'blogger.googleusercontent.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'placehold.co',
       }
     ],
   },
@@ -24,6 +28,11 @@ const nextConfig = {
   env:{
     GOOGLE_BLOG_ID: process.env.GOOGLE_BLOG_ID,
     DOMAIN: process.env.DOMAIN,
+    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+    GOOGLE_RE_CAPTCHA_KEY: process.env.GOOGLE_RE_CAPTCHA_KEY,
+    GOOGLE_RE_CAPTCHA_SECRET: process.env.GOOGLE_RE_CAPTCHA_SECRET,
+    AUTHOR_ID: process.env.AUTHOR_ID,
   }
 }
 
