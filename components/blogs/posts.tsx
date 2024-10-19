@@ -5,7 +5,7 @@ import Pagination from '../common/pagination';
 import { useState } from 'react';
 import NoData from '../common/blank/no-data';
 
-const Posts = ({ data }: { data: blogger_v3.Schema$Post[] }) => {
+const Posts = ({ data, loading }: { data: blogger_v3.Schema$Post[]; loading?: boolean; }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const postsPerPage = 12;
 
@@ -23,7 +23,13 @@ const Posts = ({ data }: { data: blogger_v3.Schema$Post[] }) => {
             <div className={styles.posts}>
                 {!data?.length
                     ? <NoData wrapperClassName='mt-32' />
-                    : currentPosts.map((post: any) => <PostCard key={post.id} data={post} />)}
+                    : currentPosts.map((post: any) => {
+                        return <PostCard
+                            key={post.id}
+                            data={post}
+                            isLoading={loading}
+                        />;
+                    })}
             </div>
             <Pagination
                 currentPage={currentPage}

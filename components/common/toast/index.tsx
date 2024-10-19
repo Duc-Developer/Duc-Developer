@@ -1,11 +1,13 @@
 /* eslint-disable react/display-name */
 import React, { createRef, forwardRef, useImperativeHandle, useState } from 'react';
 import { FaInfoCircle, FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
+import { IoWarning } from "react-icons/io5";
+
 import styles from './styles.module.css';
 
 interface ToastParams {
     message: string;
-    status?: 'info' | 'success' | 'error';
+    status?: 'info' | 'success' | 'error' | 'warning';
     duration?: number;
 }
 
@@ -39,6 +41,8 @@ const Toast = forwardRef<any, ToastRef>((_: any, ref) => {
                 return <FaCheckCircle className={styles.icon} />;
             case 'error':
                 return <FaExclamationCircle className={styles.icon} />;
+            case 'warning':
+                return <IoWarning className={styles.icon} />;
             case 'info':
             default:
                 return <FaInfoCircle className={styles.icon} />;
