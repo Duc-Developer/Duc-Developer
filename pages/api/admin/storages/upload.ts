@@ -20,7 +20,8 @@ export const config = {
 
 export type ResponseData = {
     status_code: number;
-    data: UploadApiResponse;
+    message: string;
+    data?: UploadApiResponse;
 }
 export default async function upload(req: NextApiRequest, res: NextApiResponse) {
     const { files } = await parseForm(req);
@@ -50,10 +51,17 @@ export default async function upload(req: NextApiRequest, res: NextApiResponse) 
         });
         res
             .status(COMMON_API_RESPONSES.SUCCESS.STATUS)
-            .json({ status_code: COMMON_API_RESPONSES.CREATED.STATUS, data: response });
+            .json({
+                status_code: COMMON_API_RESPONSES.CREATED.STATUS,
+                data: response
+            });
     } catch (error) {
+        console.log('Error uploading images:', error);
         res
             .status(COMMON_API_RESPONSES.INTERNAL_SERVER_ERROR.STATUS)
-            .json({ message: COMMON_API_RESPONSES.INTERNAL_SERVER_ERROR.MESSAGE });
+            .json({
+                status_code: COMMON_API_RESPONSES.INTERNAL_SERVER_ERROR.STATUS,
+                message: COMMON_API_RESPONSES.INTERNAL_SERVER_ERROR.MESSAGE
+            });
     }
 };

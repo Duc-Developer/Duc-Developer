@@ -212,7 +212,10 @@ const Admin = () => {
             <div className='w-full flex items-center justify-center flex-wrap gap-4'>
                 <Button
                     className='bg-green5 text-darkNeutral w-32 flex gap-2 items-center justify-center'
-                    onClick={() => setForm(initialForm)}
+                    onClick={() => {
+                        setForm(initialForm);
+                        editorRef.current?.setData('');
+                    }}
                 >
                     <IoIosCreate color='#000' />New
                 </Button>

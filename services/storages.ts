@@ -1,6 +1,9 @@
 
+import { ResponseData as UploadResponse } from "@/pages/api/admin/storages/upload";
+
 const endpoint = `${process.env.DOMAIN}/api/admin/storages`;
-export const uploadImages = async (files: File[]) => {
+
+export const uploadImages = async (files: File[]): Promise<UploadResponse> => {
     const formData = new FormData();
     for (let i = 0; i < files.length; i++) {
       formData.append('file', files[i]);
