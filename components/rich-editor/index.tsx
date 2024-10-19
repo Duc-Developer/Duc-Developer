@@ -35,6 +35,7 @@ import {
 
 import 'ckeditor5/ckeditor5.css';
 import styles from './style.module.css';
+import CustomUploadAdapterPlugin from './plugins/uploader';
 
 const plugins = [
   Essentials,
@@ -91,6 +92,7 @@ const RichEditor = ({ defaultValue = '', editorRef, onChange }: Props) => {
           ref.current = editor;
         }}
         config={{
+          extraPlugins: [CustomUploadAdapterPlugin],
           toolbar: {
             items: [
               'undo', 'redo', '|',
