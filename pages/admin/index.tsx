@@ -23,14 +23,17 @@ import Autocomplete from '@/components/common/input/autocomplete';
 import PostList from '@/components/admin/post-list';
 import { IoIosCreate } from "react-icons/io";
 
+import PostContent from '@/components/blogs/post-content';
+import CustomModal from '@/components/common/modal';
+import { SlugConverter } from '@/utilities';
+
 import { ResponseData as PostResponses } from "@/pages/api/posts";
 import { ResponseData as InfoResponse } from "@/pages/api/admin/info";
 import { ResponseData as InsertPostResponses } from "@/pages/api/posts/insert";
 import { ResponseData as UpdatePostResponses } from "@/pages/api/posts/update";
 import { ResponseData as PublishPostResponses } from "@/pages/api/posts/publish";
-import PostContent from '@/components/blogs/post-content';
-import CustomModal from '@/components/common/modal';
-import { SlugConverter } from '@/utilities';
+import { getCategories } from '@/services/categories';
+
 type WriterResponse = InsertPostResponses | UpdatePostResponses | PublishPostResponses;
 type WriterVariables = blogger_v3.Schema$Post & { mode: 'INSERT' | 'UPDATE' | 'PUBLISH' };
 
@@ -83,15 +86,14 @@ const Admin = () => {
     }, [errorFetchPosts]);
     const allPosts = postResponses?.posts ?? [];
 
-    const labelOptions = (posts: blogger_v3.Schema$Post[]) => {
-        const results: string[] = [];
-        posts.forEach(post => {
-            if (post.labels) {
-                results.push(...post.labels);
-            }
-        });
-        return results.filter((value, index, self) => self.indexOf(value) === index);
-    };
+    const { data: categories = [] } = useQuery<string[]>({
+        queryKey: ['categories'],
+        queryFn: async () => {
+            const data = await getCategories();
+            return data.data?.map(category => category.value) ?? [];
+        },
+        enabled: isAuthenticated,
+    });
 
     /** check token info */
     const { data: tokenInfo, isFetched: fetchedTokenInfo } = useQuery<InfoResponse>({
@@ -265,8 +267,9 @@ const Admin = () => {
             <hr className='w-full border border-gray-300' />
             <Autocomplete
                 placeholder='Add labels...'
-                suggestions={labelOptions(allPosts)}
+                suggestions={categories}
                 onSelected={(values) => setForm({ ...form, labels: values })}
+                defaultValue={form.labels}
             />
         </div>
         <CustomModal

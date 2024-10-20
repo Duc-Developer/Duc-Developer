@@ -6,9 +6,10 @@ interface AutocompleteProps {
     className?: string;
     placeholder?: string;
     onSelected?: (values?: string[]) => void;
+    defaultValue?: string[] | null;
 }
 
-const Autocomplete: React.FC<AutocompleteProps> = ({ suggestions, className, onSelected, placeholder }) => {
+const Autocomplete: React.FC<AutocompleteProps> = ({ suggestions, className, onSelected, placeholder, defaultValue }) => {
     const [filteredSuggestions, setFilteredSuggestions] = useState<string[]>([]);
     const [activeSuggestionIndex, setActiveSuggestionIndex] = useState<number>(0);
     const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
@@ -16,8 +17,18 @@ const Autocomplete: React.FC<AutocompleteProps> = ({ suggestions, className, onS
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
     useEffect(() => {
+        if (!defaultValue) return;
+        const isDifferent = selectedTags.length !== defaultValue?.length
+            || new Set(selectedTags).difference(new Set(defaultValue)).size > 0;
+        if (isDifferent) {
+            setSelectedTags(defaultValue);
+        }
+    }, [defaultValue])
+
+    const handleChangeTags = (tags: string[]) => {
+        setSelectedTags(tags);
         onSelected && onSelected(selectedTags);
-    }, [selectedTags])
+    };
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const userInput = e.currentTarget.value;
@@ -35,7 +46,7 @@ const Autocomplete: React.FC<AutocompleteProps> = ({ suggestions, className, onS
     const onClick = (e: React.MouseEvent<HTMLLIElement>) => {
         const newTag = e.currentTarget.innerText;
         if (!selectedTags.includes(newTag)) {
-            setSelectedTags([...selectedTags, newTag]);
+            handleChangeTags([...selectedTags, newTag]);
         }
         setFilteredSuggestions([]);
         setUserInput('');
@@ -47,7 +58,7 @@ const Autocomplete: React.FC<AutocompleteProps> = ({ suggestions, className, onS
         if (e.key === 'Enter') {
             const newTag = userInput.trim();
             if (newTag && !selectedTags.includes(newTag)) {
-                setSelectedTags([...selectedTags, newTag]);
+                handleChangeTags([...selectedTags, newTag]);
             }
             setUserInput('');
             setFilteredSuggestions([]);
@@ -67,14 +78,14 @@ const Autocomplete: React.FC<AutocompleteProps> = ({ suggestions, className, onS
     };
 
     const removeTag = (tag: string) => {
-        setSelectedTags(selectedTags.filter(t => t !== tag));
+        handleChangeTags(selectedTags.filter(t => t !== tag));
     };
 
     const SuggestionsListComponent = () => {
         return filteredSuggestions.length ? (
             <ul className={
                 classNames(
-                    "absolute bg-white border border-gray-300 w-full mt-1 rounded-md shadow-lg z-10 list-none pl-4",
+                    "absolute bg-white border border-gray-300 w-full mt-1 rounded-md shadow-lg z-10 list-none pl-0",
                     "max-h-96 overflow-auto"
                 )
             }>
@@ -85,7 +96,7 @@ const Autocomplete: React.FC<AutocompleteProps> = ({ suggestions, className, onS
                     }
                     return (
                         <li
-                            className={`p-2 cursor-pointer ${style}`}
+                            className={`p-2 cursor-pointer ${style} px-4`}
                             key={suggestion}
                             onClick={onClick}
                         >

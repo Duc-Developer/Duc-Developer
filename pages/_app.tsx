@@ -9,6 +9,7 @@ import {
 import AdminLayout from '@/components/layouts/AdminLayout';
 import MainLayout from '@/components/layouts/MainLayout';
 import LoadingPage from '@/components/common/loading/loading-page';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 import type { AppProps } from 'next/app';
 
@@ -59,6 +60,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
             </HydrationBoundary>
         </Suspense>
     </Layout>
+        <SpeedInsights />
     </QueryClientProvider>);
 }
 

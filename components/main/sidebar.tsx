@@ -18,7 +18,6 @@ const Sidebar = () => {
 
     useEffect(() => {
         const collapsed = localStorage.getItem('sidebarCollapsed');
-        console.log({collapsed})
         if (collapsed) setIsCollapsed(collapsed === "true");
     }, [pathname]);
 
