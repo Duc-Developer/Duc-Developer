@@ -11,6 +11,7 @@ import { StarsCanvas } from "@/components/main/star-background";
 import { metadataVn } from "@/config";
 import Sidebar from "@/components/main/sidebar";
 import VideoBackground from "@/components/sub/video-background";
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 
 const MainLayout = ({ children, loading }: { children: React.ReactNode; loading: boolean; }) => {
@@ -63,6 +64,7 @@ const MainLayout = ({ children, loading }: { children: React.ReactNode; loading:
                     <Footer />
                 </section>
             </section>
+            <SpeedInsights />
         </>
     );
 };
