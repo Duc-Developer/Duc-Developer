@@ -92,7 +92,7 @@ const Autocomplete: React.FC<AutocompleteProps> = ({ suggestions, className, onS
                 {filteredSuggestions.map((suggestion, index) => {
                     let style;
                     if (index === activeSuggestionIndex) {
-                        style = 'bg-blue text-neutral';
+                        style = 'bg-blue text-white100';
                     }
                     return (
                         <li
@@ -116,7 +116,7 @@ const Autocomplete: React.FC<AutocompleteProps> = ({ suggestions, className, onS
         <div className={classNames("relative w-full", className)}>
             <div className="flex flex-wrap gap-2 mb-2 max-h-48 overflow-auto">
                 {selectedTags.map(tag => (
-                    <div key={tag} className="bg-purple text-neutral px-2 py-1 rounded-md flex items-center">
+                    <div key={tag} className="bg-primary100 text-text100 px-2 py-1 rounded-md flex items-center">
                         {tag}
                         <button
                             type="button"

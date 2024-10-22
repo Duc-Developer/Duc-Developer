@@ -94,7 +94,7 @@ const PostContent = ({ data, isPreview }: { data: blogger_v3.Schema$Post; isPrev
             {data?.labels
                 ?.slice(0, 3) // show maximum 3 labels
                 ?.map((label, index) => {
-                    let bgColor = 'bg-red';
+                    let bgColor = 'bg-red100';
                     if(index === 1) bgColor = 'bg-blue';
                     if(index === 2) bgColor = 'bg-yellow';
                     return <div key={index} className={`rounded px-4 py-2 ${bgColor}`}>

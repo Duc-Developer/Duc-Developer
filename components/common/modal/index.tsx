@@ -19,7 +19,7 @@ const CustomModal = ({ isOpen, onRequestClose, overlayClassName, children }: Mod
       className="modal"
       overlayClassName={classNames(style.modalOverlay, overlayClassName)}
     >
-      <button onClick={onRequestClose} className="close-button">Close</button>
+      <button onClick={onRequestClose} className="close-button text-white100">Close</button>
       {children}
     </Modal>
   );

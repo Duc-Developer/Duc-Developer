@@ -15,7 +15,7 @@ export const MenuLink = ({ onClick }: { onClick?: Function }) => {
         onClick={() => onClick && onClick(link)}
         className={classNames(
           "h-full min-w-24 text-center rounded-full py-2 px-2",
-          "cursor-pointer hover:text-purple transition hover:bg-neutral hover:text-darkNeutral",
+          "cursor-pointer hover:text-accent300 transition hover:bg-white100 hover:text-black100",
           "transition-colors duration-300 ease-in group"
         )}
       >
@@ -48,7 +48,7 @@ const DesktopMenu = () => {
       <div className={classNames(
         "flex items-center justify-between w-full h-auto",
         "px-8 mr-4 rounded-full",
-        "bg-purple text-gray-200 overflow-hidden"
+        "bg-astronaut50 backdrop-blur15 border border-white100 text-gray200 overflow-hidden"
       )}>
         <MenuLink />
       </div>

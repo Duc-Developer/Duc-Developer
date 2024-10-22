@@ -1,5 +1,5 @@
 import type { Config } from 'tailwindcss';
-import { COLORS } from './theme.variables';
+import { ASTRONAUT_PALETTE, COLORS } from './theme.variables';
 
 const config: Config = {
   content: [
@@ -22,8 +22,18 @@ const config: Config = {
         'astronaut-gradient': 'linear-gradient(135deg, rgba(50, 50, 150, 0.8), rgba(100, 150, 200, 0.8))',
         },
       colors: {
-        ...COLORS
-      }
+        ...COLORS,
+        ...ASTRONAUT_PALETTE
+      },
+      backdropFilter: {
+        'blur15': 'blur(15px)',
+      },
+      backgroundColor: {
+        'astronaut50': 'rgba(16,51,84,0.5)',
+      },
+      borderColor: {
+        'astronaut25': 'rgba(16,51,84,0.25)',
+      },
     },
   },
   plugins: [

@@ -20,7 +20,7 @@ const AboutMe = () => {
     return <>
         <motion.div
             variants={slideInFromTop}
-            className="welcome-box py-[8px] px-[7px] border border-purple opacity-90"
+            className="welcome-box py-[8px] px-[7px] border border-accent100 opacity-90"
         >
             <SparklesIcon className="text-electric-violet mr-[10px] h-5 w-5" />
             <h1 className="Welcome-text text-sm">
@@ -34,7 +34,7 @@ const AboutMe = () => {
         >
             <span className="text-4xl md:text-6xl">
                 Providing<br/>
-                <span className="text-6xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-r from-purple to-blue4">
+                <span className="text-6xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-r from-purple to-blue">
                     the best
                 </span><br/>
                 project experience.
