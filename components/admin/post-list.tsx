@@ -12,15 +12,15 @@ import { IMAGE_SRC_DEFAULT, POST_STATUS, PostStatus } from '@/constants';
 const Tag = ({ status, className }: { status?: PostStatus | string | null; className?: string; }) => {
     switch (status) {
         case POST_STATUS.DRAFT:
-            return <p className={classNames("text-xs bg-neutral5", className)}>Draft</p>;
+            return <p className={classNames("text-xs bg-white300", className)}>Draft</p>;
         case POST_STATUS.LIVE:
-            return <p className={classNames("text-xs bg-green5", className)}>Live</p>;
+            return <p className={classNames("text-xs bg-green200", className)}>Live</p>;
         case POST_STATUS.SOFT_TRASHED:
-            return <p className={classNames("text-xs bg-red5", className)}>Trashed</p>;
+            return <p className={classNames("text-xs bg-red300", className)}>Trashed</p>;
         case POST_STATUS.SCHEDULE:
             return <p className={classNames("text-xs bg-blue", className)}>Scheduled</p>;
         default:
-            return <p className={classNames("text-xs text-neutral bg-darkNeutral", className)}>Unknown</p>;
+            return <p className={classNames("text-xs text-white100 bg-black100", className)}>Unknown</p>;
     }
 };
 
@@ -51,18 +51,18 @@ const PostList = ({ data, className, onEdit, onView }: Props) => {
                     </div>
                     <p className="text-sm font-bold mb-2 grow">{post.title}</p>
                     <div className={classNames(
-                        "absolute inset-0 bg-darkNeutral bg-opacity-50",
+                        "absolute inset-0 bg-black100 bg-opacity-50",
                         "flex items-center justify-center gap-2",
                         "opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                     )}>
                         <button
-                            className="bg-blue-500 text-neutral px-4 py-2 rounded active:scale-90"
+                            className="bg-blue-500 text-white100 px-4 py-2 rounded active:scale-90"
                             onClick={() => onEdit && onEdit(post)}
                         >
                             <FaEdit size={24} color='#ffffff' />
                         </button>
                         <button
-                            className="bg-green-500 text-neutral px-4 py-2 rounded active:scale-90"
+                            className="bg-green100-500 text-white100 px-4 py-2 rounded active:scale-90"
                             onClick={() => onView && onView(post)}
                         >
                             <FaEye size={24} color='#ffffff' />

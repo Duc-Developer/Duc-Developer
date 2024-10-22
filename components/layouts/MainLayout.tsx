@@ -17,7 +17,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 const MainLayout = ({ children, loading }: { children: React.ReactNode; loading: boolean; }) => {
     return (
         <>
-            <section className="relative w-screen max-h-screen transparent flex text-neutral">
+            <section className="relative w-screen max-h-screen transparent flex text-white100">
                 <Head>
                     <title>{metadataVn.title}</title>
                     <meta name="description" content={metadataVn.description} />
