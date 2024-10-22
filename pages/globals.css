@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 html {
-  cursor: url('/cursor.svg'), auto;
+  cursor: url('/cursor.svg') 4 0, auto;
 }
 
 .Welcome-text {
