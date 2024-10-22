@@ -87,7 +87,7 @@ const AudioPlayer = () => {
 
     return (
         <div className="flex w-full max-w-xl items-center justify-center">
-            <article className="group relative flex h-[12rem] w-full overflow-hidden rounded-2xl bg-darkNeutral7">
+            <article className="group relative flex h-[12rem] w-full overflow-hidden rounded-2xl bg-astronaut200">
                 <aside className="absolute right-0 flex h-full flex-col justify-center space-y-8 p-3">
                     <FaRedo onClick={() => handleReset(true)} className='cursor-pointer active:scale-110' />
                     <FaDownload onClick={handleDownload} className='cursor-pointer active:scale-110' />
@@ -98,7 +98,7 @@ const AudioPlayer = () => {
                     }}
                         className='h-full w-full bg-cover bg-center'
                     />
-                    <div className="invisible absolute inset-0 flex h-full w-full items-center justify-center bg-darkNeutral/70 opacity-0 transition-all group-hover:visible group-hover:opacity-100">
+                    <div className="invisible absolute inset-0 flex h-full w-full items-center justify-center bg-black100/70 opacity-0 transition-all group-hover:visible group-hover:opacity-100">
                         {
                             isPlaying
                                 ? <FaPause className='cursor-pointer' size={30} onClick={handlePlay} />
@@ -108,7 +108,7 @@ const AudioPlayer = () => {
                 </div>
                 <div className="absolute inset-y-0 left-44 w-[26rem] overflow-hidden rounded-2xl transition-all group-hover:w-[23rem]">
                     <div style={{ backgroundImage: `url(${backgroundUrl})` }} className="h-full w-full bg-cover bg-center">
-                        <div className="h-full w-full bg-neutral5/80 transition-all group-hover:bg-darkNeutral3/80" />
+                        <div className="h-full w-full bg-white300/80 transition-all group-hover:bg-black300/80" />
                     </div>
                     <div className="absolute inset-0 flex flex-col justify-between p-4 text-white">
                         <div className="space-y-1">
@@ -116,7 +116,7 @@ const AudioPlayer = () => {
                             <div className="font-medium">{AUDIO.artist}</div>
                             <div className="text-sm">
                                 mapped by {" "}
-                                <span className="text-darkNeutral italic transition-all hover:text-purple">{AUDIO.mapper}</span>
+                                <span className="text-black100 italic transition-all hover:text-accent300">{AUDIO.mapper}</span>
                             </div>
                         </div>
                         <div className="invisible flex space-x-3 opacity-0 transition-all group-hover:visible group-hover:opacity-100">
@@ -141,24 +141,24 @@ const AudioPlayer = () => {
                             </span>
                         </div>
                         <div className="flex space-x-2">
-                            <span className="rounded-full bg-darkNeutral px-2 font-medium text-white">RANKED</span>
+                            <span className="rounded-full bg-black100 px-2 font-medium text-white">RANKED</span>
                             <div className="flex items-center space-x-1">
-                                <span className="h-5 w-2 rounded-full bg-red" />
-                                <span className="h-5 w-2 rounded-full bg-green" />
+                                <span className="h-5 w-2 rounded-full bg-red100" />
+                                <span className="h-5 w-2 rounded-full bg-green100" />
                                 <span className="h-5 w-2 rounded-full bg-yellow" />
                             </div>
                         </div>
                         <div className="w-[calc(100%_-_1em)] h-1 bg-gray-300 rounded-full mt-4 relative">
                             <div
-                                className="h-full bg-purple rounded-full absolute top-0 left-0 transition-all"
+                                className="h-full bg-primary100 rounded-full absolute top-0 left-0 transition-all"
                                 style={{ width: `${progress}%` }}
                             />
                             {isPlaying && <div
-                                className="h-3 w-3 bg-purple rounded-full absolute top-[-0.8rem] transition-all transform -translate-x-1/2"
+                                className="h-3 w-3 bg-primary100 rounded-full absolute top-[-0.8rem] transition-all transform -translate-x-1/2"
                                 style={{ left: `calc(${progress}% - 0.35rem)`, borderRadius: '50% 50% 50% 0', transform: 'rotate(-45deg)' }}
                             >
                                 <div
-                                    className="absolute h-2 w-2 bg-purple rounded-full top-[0.1rem] left-0"
+                                    className="absolute h-2 w-2 bg-primary100 rounded-full top-[0.1rem] left-0"
                                     style={{ borderRadius: '50%' }}
                                 />
                             </div>

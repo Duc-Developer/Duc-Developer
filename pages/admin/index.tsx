@@ -177,8 +177,8 @@ const Admin = () => {
     if (!isAuthenticated) {
         return <div className='w-full h-full flex justify-center items-center'>
             <div className='w-96 h-fit min-w-fit p-6 bg-astronaut-gradient rounded'>
-                <h4 className='text-neutral text-center text-nowrap'>Tính năng này chỉ dành cho nhà phát triển</h4>
-                <h6 className='text-neutral text-center'>Nếu bạn cần truy cập, vui lòng liên hệ với tôi</h6>
+                <h4 className='text-white100 text-center text-nowrap'>Tính năng này chỉ dành cho nhà phát triển</h4>
+                <h6 className='text-white100 text-center'>Nếu bạn cần truy cập, vui lòng liên hệ với tôi</h6>
                 <div className="flex mt-2 gap-4 items-center justify-center">
                     {CONTACTS
                         .map(({ link, name, icon: Icon }) => {
@@ -189,11 +189,11 @@ const Admin = () => {
                                 key={name}
                                 className="hover:scale-110 transition"
                             >
-                                <Icon className="h-6 w-6 text-white fill-current hover:fill-purple" />
+                                <Icon className="h-6 w-6 text-white fill-current hover:fill-accent100" />
                             </Link>
                         })}
                 </div>
-                <Button className='bg-purple mt-8 w-fit gap-2 items-center mx-auto flex' onClick={handleLogin}>
+                <Button className='bg-black100 mt-8 w-fit gap-2 items-center mx-auto flex' onClick={handleLogin}>
                     <FcGoogle size={32} />  <p className='text-nowrap'>Đăng nhập</p>
                 </Button>
             </div>
@@ -205,15 +205,15 @@ const Admin = () => {
         </div>;
     }
 
-    return <div className='p-4 w-full h-full flex gap-4 text-darkNeutral'>
+    return <div className='p-4 w-full h-full flex gap-4 text-black100'>
         <div className='grow flex flex-col gap-4 mt-4' style={{ maxWidth: '74%' }}>
             <Input value={form.title} placeholder='Title' className='w-full' onChange={handleChangeTitle} />
             <RichEditor editorRef={editorRef} onChange={handleChangeEditor} />
         </div>
-        <div className='basis-3/12 flex flex-col gap-4 items-center bg-neutral rounded p-4'>
+        <div className='basis-3/12 flex flex-col gap-4 items-center bg-white100 rounded p-4'>
             <div className='w-full flex items-center justify-center flex-wrap gap-4'>
                 <Button
-                    className='bg-green5 text-darkNeutral w-32 flex gap-2 items-center justify-center'
+                    className='bg-green200 text-black100 w-32 flex gap-2 items-center justify-center'
                     onClick={() => {
                         setForm(initialForm);
                         editorRef.current?.setData('');
@@ -222,21 +222,21 @@ const Admin = () => {
                     <IoIosCreate color='#000' />New
                 </Button>
                 <Button
-                    className='bg-yellow text-darkNeutral w-32 flex gap-2 items-center justify-center'
+                    className='bg-yellow text-black100 w-32 flex gap-2 items-center justify-center'
                     onClick={() => setIsModalOpen(true)}
                     disabled={!form.title}
                 >
                     <IoEyeSharp color='#000' />Preview
                 </Button>
                 <Button
-                    className='bg-darkNeutral text-neutral w-32 flex gap-2 items-center justify-center'
+                    className='bg-black100 text-white100 w-32 flex gap-2 items-center justify-center'
                     onClick={() => writer.mutate({ ...form, mode: form?.id ? 'UPDATE' : 'INSERT' })}
                     disabled={!form.title || form?.status === 'LIVE'}
                 >
                     <FaCloudArrowUp color='#fff' />Draft
                 </Button>
                 <Button
-                    className='bg-purple basis-full flex gap-2 items-center justify-center'
+                    className='bg-primary100 basis-full flex gap-2 items-center justify-center'
                     onClick={() => writer.mutate({ ...form, mode: form?.status === 'LIVE' ? 'UPDATE' : 'PUBLISH' })}
                     disabled={!form.title}
                 >
@@ -275,7 +275,7 @@ const Admin = () => {
         <CustomModal
             isOpen={isModalOpen}
             onRequestClose={() => setIsModalOpen(false)}
-            overlayClassName='bg-darkNeutral p-4 z-[1000] fixed top-0 left-0 w-screen h-screen'
+            overlayClassName='bg-black100 p-4 z-[1000] fixed top-0 left-0 w-screen h-screen'
         >
             <PostContent data={form} isPreview />
         </CustomModal>

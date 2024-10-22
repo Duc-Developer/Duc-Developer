@@ -11,7 +11,7 @@ const Custom404 = () => {
           Page Not Found
         </div>
       </div>
-      <div className='max-w-screen-sm text-lg px-4 py-2 text-neutral text-center'>
+      <div className='max-w-screen-sm text-lg px-4 py-2 text-white100 text-center'>
         This page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
       </div>
       <button className="mt-5">

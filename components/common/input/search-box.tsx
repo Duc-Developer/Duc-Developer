@@ -7,7 +7,7 @@ const SearchBox = ({ className, value, onChange, placeholder = 'Search...' }: Pr
             <input
                 type="text"
                 placeholder={placeholder}
-                className="w-full pl-10 pr-4 py-2 border border-darkNeutral6 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-darkNeutral"
+                className="w-full pl-10 pr-4 py-2 border border-astronaut100 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black100"
                 value={value}
                 onChange={(e) => onChange && onChange(e.target.value)}
             />

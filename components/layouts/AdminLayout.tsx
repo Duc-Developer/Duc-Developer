@@ -11,7 +11,7 @@ import Sidebar from "@/components/main/sidebar";
 const AdminLayout = ({ children, loading }: { children: React.ReactNode; loading: boolean; }) => {
     return (
         <>
-            <section className="relative w-screen max-h-screen transparent flex text-neutral">
+            <section className="relative w-screen max-h-screen transparent flex text-white100">
                 <StarsCanvas />
                 <Sidebar />
                 <section className="h-screen w-full grow flex flex-col gap-4 md:overflow-y-auto">
