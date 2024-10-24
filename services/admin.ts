@@ -53,3 +53,16 @@ export const verifyCaptcha = async (token: string) => {
     const data = await response.json();
     return data;
 };
+
+export const loginWithGoogleConsent = async ({ captcha }: { captcha?: string | null }) => {
+    if (!captcha) {
+        alert('Please verify reCAPTCHA');
+        throw { success: false, message: 'Please verify reCAPTCHA' };
+    }
+    const { success } = await verifyCaptcha(captcha);
+    if (!success) {
+        throw { success: false, message: 'reCAPTCHA is not valid' };
+    };
+    const { url } = await requestConsentPage();
+    return { success: true, url, message: 'redirect to google consent' };
+};
