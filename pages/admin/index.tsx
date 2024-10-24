@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import ReCAPTCHA from "react-google-recaptcha";
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, UseMutationOptions, useQuery } from '@tanstack/react-query';
 
 import { showToast } from '@/components/common/toast';
 const RichEditor = dynamic(() => import('@/components/rich-editor'), { ssr: false });
@@ -17,7 +16,7 @@ import { FaCloudArrowUp } from "react-icons/fa6";
 import { ClassicEditor, EventInfo } from 'ckeditor5';
 import { insertPost, publishPost, searchPosts, updatePost } from '@/services/posts';
 import { blogger_v3 } from 'googleapis';
-import { getInfo, requestConsentPage, verifyCaptcha } from '@/services/admin';
+import { getInfo, loginWithGoogleConsent } from '@/services/admin';
 import { CONTACTS, POST_STATUS } from '@/constants';
 import Autocomplete from '@/components/common/input/autocomplete';
 import PostList from '@/components/admin/post-list';
@@ -33,11 +32,13 @@ import { ResponseData as InsertPostResponses } from "@/pages/api/posts/insert";
 import { ResponseData as UpdatePostResponses } from "@/pages/api/posts/update";
 import { ResponseData as PublishPostResponses } from "@/pages/api/posts/publish";
 import { getCategories } from '@/services/categories';
+import Head from 'next/head';
+import Turnstile from '@/components/turnstile';
 
 type WriterResponse = InsertPostResponses | UpdatePostResponses | PublishPostResponses;
 type WriterVariables = blogger_v3.Schema$Post & { mode: 'INSERT' | 'UPDATE' | 'PUBLISH' };
 
-const reCaptchaKey = process.env.GOOGLE_RE_CAPTCHA_KEY ?? '';
+const reCaptchaKey = process.env.CLOUDFLARE_RE_CAPTCHA_KEY ?? '';
 const authorId = process.env.AUTHOR_ID ?? '';
 const initialForm: blogger_v3.Schema$Post = {
     title: '',
@@ -110,25 +111,22 @@ const Admin = () => {
         }
     }, [fetchedTokenInfo]);
 
-    const handleLogin = async () => {
-        try {
-            if (!reCaptchaToken) {
-                alert('Please verify reCAPTCHA');
-                return;
-            }
-            const { success } = await verifyCaptcha(reCaptchaToken);
-            if (!success) throw new Error('Failed to verify reCAPTCHA');
-            const { url } = await requestConsentPage();
-            if (url) {
-                window.open(url, '_self');
-            } else {
-                throw new Error('Failed to login');
-            }
-        } catch (error) {
-            setIsAuthenticated(false);
-            showToast({ message: 'Failed to login', status: 'error' });
-        }
+    const authenticatorOptions: UseMutationOptions<
+        { success: boolean; url: string; message: string },
+        Error,
+        { captcha?: string | null }
+    > = {
+        mutationFn: loginWithGoogleConsent,
+        onSuccess: (data) => {
+            const { url, success } = data ?? {};
+            if (!success) return;
+            window.open(url, '_self');
+        },
+        onError: (error) => {
+            showToast({ message: error?.message ?? 'Failed to login', status: 'error' });
+        },
     };
+    const authenticator = useMutation(authenticatorOptions);
 
     const handleChangeEditor = (event: EventInfo<string, unknown>, editor: ClassicEditor) => {
         const data = editor.getData();
@@ -175,111 +173,119 @@ const Admin = () => {
     };
 
     if (!isAuthenticated) {
-        return <div className='w-full h-full flex justify-center items-center'>
-            <div className='w-96 h-fit min-w-fit p-6 bg-astronaut-gradient rounded'>
-                <h4 className='text-neutral text-center text-nowrap'>Tính năng này chỉ dành cho nhà phát triển</h4>
-                <h6 className='text-neutral text-center'>Nếu bạn cần truy cập, vui lòng liên hệ với tôi</h6>
-                <div className="flex mt-2 gap-4 items-center justify-center">
-                    {CONTACTS
-                        .map(({ link, name, icon: Icon }) => {
-                            return <Link
-                                href={link}
-                                target="_blank"
-                                rel="noreferrer noopener"
-                                key={name}
-                                className="hover:scale-110 transition"
-                            >
-                                <Icon className="h-6 w-6 text-white fill-current hover:fill-purple" />
-                            </Link>
-                        })}
+        return <>
+            <Head>
+                <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+            </Head>
+            <Turnstile siteKey={reCaptchaKey} onVerify={handleReCaptchaChange} />
+            <div className='w-full h-full flex justify-center items-center'>
+                <div className='w-96 h-fit min-w-fit p-6 bg-astronaut-gradient rounded'>
+                    <h4 className='text-neutral text-center text-nowrap'>Tính năng này chỉ dành cho nhà phát triển</h4>
+                    <h6 className='text-neutral text-center'>Nếu bạn cần truy cập, vui lòng liên hệ với tôi</h6>
+                    <div className="flex mt-2 gap-4 items-center justify-center">
+                        {CONTACTS
+                            .map(({ link, name, icon: Icon }) => {
+                                return <Link
+                                    href={link}
+                                    target="_blank"
+                                    rel="noreferrer noopener"
+                                    key={name}
+                                    className="hover:scale-110 transition"
+                                >
+                                    <Icon className="h-6 w-6 text-white fill-current hover:fill-purple" />
+                                </Link>
+                            })}
+                    </div>
+                    <Button
+                        className='bg-purple mt-8 w-fit gap-2 items-center mx-auto flex'
+                        disabled={authenticator?.isPending}
+                        onClick={() => {
+                            authenticator.mutate({ captcha: reCaptchaToken });
+                        }}>
+                        <FcGoogle size={32} />  <p className='text-nowrap'>Đăng nhập</p>
+                    </Button>
                 </div>
-                <Button className='bg-purple mt-8 w-fit gap-2 items-center mx-auto flex' onClick={handleLogin}>
-                    <FcGoogle size={32} />  <p className='text-nowrap'>Đăng nhập</p>
-                </Button>
             </div>
-            <ReCAPTCHA
-                sitekey={reCaptchaKey}
-                onChange={handleReCaptchaChange}
-                className='fixed bottom-2 right-2'
-            />
-        </div>;
+        </>;
     }
 
-    return <div className='p-4 w-full h-full flex gap-4 text-darkNeutral'>
-        <div className='grow flex flex-col gap-4 mt-4' style={{ maxWidth: '74%' }}>
-            <Input value={form.title} placeholder='Title' className='w-full' onChange={handleChangeTitle} />
-            <RichEditor editorRef={editorRef} onChange={handleChangeEditor} />
-        </div>
-        <div className='basis-3/12 flex flex-col gap-4 items-center bg-neutral rounded p-4'>
-            <div className='w-full flex items-center justify-center flex-wrap gap-4'>
-                <Button
-                    className='bg-green5 text-darkNeutral w-32 flex gap-2 items-center justify-center'
-                    onClick={() => {
-                        setForm(initialForm);
-                        editorRef.current?.setData('');
-                    }}
-                >
-                    <IoIosCreate color='#000' />New
-                </Button>
-                <Button
-                    className='bg-yellow text-darkNeutral w-32 flex gap-2 items-center justify-center'
-                    onClick={() => setIsModalOpen(true)}
-                    disabled={!form.title}
-                >
-                    <IoEyeSharp color='#000' />Preview
-                </Button>
-                <Button
-                    className='bg-darkNeutral text-neutral w-32 flex gap-2 items-center justify-center'
-                    onClick={() => writer.mutate({ ...form, mode: form?.id ? 'UPDATE' : 'INSERT' })}
-                    disabled={!form.title || form?.status === 'LIVE'}
-                >
-                    <FaCloudArrowUp color='#fff' />Draft
-                </Button>
-                <Button
-                    className='bg-purple basis-full flex gap-2 items-center justify-center'
-                    onClick={() => writer.mutate({ ...form, mode: form?.status === 'LIVE' ? 'UPDATE' : 'PUBLISH' })}
-                    disabled={!form.title}
-                >
-                    <FaRegSave color='#fff' />Submit
-                </Button>
+    return <>
+        <div className='p-4 w-full h-full flex gap-4 text-darkNeutral'>
+            <div className='grow flex flex-col gap-4 mt-4' style={{ maxWidth: '74%' }}>
+                <Input value={form.title} placeholder='Title' className='w-full' onChange={handleChangeTitle} />
+                <RichEditor editorRef={editorRef} onChange={handleChangeEditor} />
             </div>
-            {
-                fetchingPosts ? <p>Loading...</p> : <div className='w-full h-[300px] overflow-auto'>
-                    <PostList
-                        data={allPosts}
-                        onEdit={(post) => {
-                            if (!post) return;
-                            setForm(post);
-                            editorRef.current?.setData(post.content ?? '');
+            <div className='basis-3/12 flex flex-col gap-4 items-center bg-neutral rounded p-4'>
+                <div className='w-full flex items-center justify-center flex-wrap gap-4'>
+                    <Button
+                        className='bg-green5 text-darkNeutral w-32 flex gap-2 items-center justify-center'
+                        onClick={() => {
+                            setForm(initialForm);
+                            editorRef.current?.setData('');
                         }}
-                        onView={(post) => {
-                            if (!post) return;
-                            const slug = SlugConverter.toPostSlug(post.url);
-                            if (slug && post?.status === POST_STATUS.LIVE) {
-                                window.open(`${process.env.DOMAIN}/blogs/${slug}`, '_blank');
-                            } else if (post.url) {
-                                showToast({ message: 'This post is not live yet', status: 'warning' });
-                            }
-                        }}
-                    />
+                    >
+                        <IoIosCreate color='#000' />New
+                    </Button>
+                    <Button
+                        className='bg-yellow text-darkNeutral w-32 flex gap-2 items-center justify-center'
+                        onClick={() => setIsModalOpen(true)}
+                        disabled={!form.title}
+                    >
+                        <IoEyeSharp color='#000' />Preview
+                    </Button>
+                    <Button
+                        className='bg-darkNeutral text-neutral w-32 flex gap-2 items-center justify-center'
+                        onClick={() => writer.mutate({ ...form, mode: form?.id ? 'UPDATE' : 'INSERT' })}
+                        disabled={!form.title || form?.status === 'LIVE'}
+                    >
+                        <FaCloudArrowUp color='#fff' />Draft
+                    </Button>
+                    <Button
+                        className='bg-purple basis-full flex gap-2 items-center justify-center'
+                        onClick={() => writer.mutate({ ...form, mode: form?.status === 'LIVE' ? 'UPDATE' : 'PUBLISH' })}
+                        disabled={!form.title}
+                    >
+                        <FaRegSave color='#fff' />Submit
+                    </Button>
                 </div>
-            }
-            <hr className='w-full border border-gray-300' />
-            <Autocomplete
-                placeholder='Add labels...'
-                suggestions={categories}
-                onSelected={(values) => setForm({ ...form, labels: values })}
-                defaultValue={form.labels}
-            />
+                {
+                    fetchingPosts ? <p>Loading...</p> : <div className='w-full h-[300px] overflow-auto'>
+                        <PostList
+                            data={allPosts}
+                            onEdit={(post) => {
+                                if (!post) return;
+                                setForm(post);
+                                editorRef.current?.setData(post.content ?? '');
+                            }}
+                            onView={(post) => {
+                                if (!post) return;
+                                const slug = SlugConverter.toPostSlug(post.url);
+                                if (slug && post?.status === POST_STATUS.LIVE) {
+                                    window.open(`${process.env.DOMAIN}/blogs/${slug}`, '_blank');
+                                } else if (post.url) {
+                                    showToast({ message: 'This post is not live yet', status: 'warning' });
+                                }
+                            }}
+                        />
+                    </div>
+                }
+                <hr className='w-full border border-gray-300' />
+                <Autocomplete
+                    placeholder='Add labels...'
+                    suggestions={categories}
+                    onSelected={(values) => setForm({ ...form, labels: values })}
+                    defaultValue={form.labels}
+                />
+            </div>
+            <CustomModal
+                isOpen={isModalOpen}
+                onRequestClose={() => setIsModalOpen(false)}
+                overlayClassName='bg-darkNeutral p-4 z-[1000] fixed top-0 left-0 w-screen h-screen'
+            >
+                <PostContent data={form} isPreview />
+            </CustomModal>
         </div>
-        <CustomModal
-            isOpen={isModalOpen}
-            onRequestClose={() => setIsModalOpen(false)}
-            overlayClassName='bg-darkNeutral p-4 z-[1000] fixed top-0 left-0 w-screen h-screen'
-        >
-            <PostContent data={form} isPreview />
-        </CustomModal>
-    </div>;
+    </>;
 }
 
 export default Admin;

@@ -9,12 +9,16 @@ export default async function verifyCaptcha(req: NextApiRequest, res: NextApiRes
     return res.status(COMMON_API_RESPONSES.BAD_REQUEST.STATUS).json({ error: 'No token provided' });
   }
 
-  const secretKey = process.env.GOOGLE_RE_CAPTCHA_SECRET;
-  const verificationUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${token}`;
+  const secretKey = process.env.CLOUDFLARE_RE_CAPTCHA_SECRET;
+  const verificationUrl ='https://challenges.cloudflare.com/turnstile/v0/siteverify';
 
   try {
     await runMiddleware(req, res);
+    const formData = new FormData();
+    formData.append('secret', secretKey as string);
+    formData.append('response', token);
     const response = await fetch(verificationUrl, {
+      body: formData,
       method: 'POST',
     });
     const data = await response.json();

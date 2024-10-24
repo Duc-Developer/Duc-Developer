@@ -17,7 +17,7 @@ const Button = ({ children, onClick, className, type = 'button', disabled }: But
       className={classNames(
         'px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md',
         'hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75',
-        'active:scale-95 transition-transform',
+        !disabled ? 'active:scale-95 transition-transform' : '',
         disabled ? 'bg-gray-400 cursor-not-allowed' : '',
         className
       )}
