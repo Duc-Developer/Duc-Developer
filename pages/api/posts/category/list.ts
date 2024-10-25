@@ -1,8 +1,6 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
-import { blogger_v3, google } from "googleapis";
-import { rootAuth } from "@/services/blogs";
+import type { NextApiRequest, NextApiResponse } from 'next';
 import { runMiddleware } from '@/config/cors';
-import { getBearerToken, supportedMethod } from '@/utilities/api';
+import { supportedMethod } from '@/utilities/api';
 import { COMMON_API_RESPONSES } from '@/constants/server';
 
 export type Category = {
