@@ -89,6 +89,7 @@ export default async function getCategories(
                     message: message ?? COMMON_API_RESPONSES.BAD_REQUEST.MESSAGE
                 });
         }
+        const {limit = 500} = req.query;
         const myHeaders = new Headers();
         myHeaders.append("accept", "text/javascript, application/javascript, application/ecmascript, application/x-ecmascript, */*; q=0.01");
         myHeaders.append("accept-language", "en,vi;q=0.9");
@@ -101,7 +102,7 @@ export default async function getCategories(
             redirect: "follow" as RequestRedirect
         };
 
-        const response = await fetch(`${endpoint}?alt=json&start-index=10&max-results=0`, requestOptions);
+        const response = await fetch(`${endpoint}?alt=json&max-results=${limit}`, requestOptions);
         const data = await response.json();
 
         res.status(COMMON_API_RESPONSES.SUCCESS.STATUS).json({
