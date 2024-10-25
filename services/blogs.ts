@@ -13,3 +13,10 @@ export const getBlogInfo = async (params?: typeof blogger.blogs.get.arguments[0]
     }, options);
     return response.data as blogger_v3.Schema$Blog;
 };
+
+export const getSummary = async ({ limit = 500 }: { limit?: number }) => {
+    const response = await fetch(`/api/blogs/davidBlogSummary?limit=${limit}`);
+    if (response.status !== 200) throw new Error('Failed to fetch blog summary');
+    const data = await response.json();
+    return data;
+}
