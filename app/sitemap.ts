@@ -1,7 +1,7 @@
-import { getBlogInfo } from '@/services/blogs';
-import { getPosts } from '@/services/posts';
+import { Entry } from '@/pages/api/blogs/davidBlogSummary';
+import { getBlogInfo, getSummary } from '@/services/blogs';
 import { SlugConverter } from '@/utilities';
-import type { MetadataRoute } from 'next'
+import type { MetadataRoute } from 'next';
 
 const JUMP_PAGE = 500;
 const BASE_SITEMAP_ID = 'index';
@@ -30,7 +30,20 @@ const STATIC_PAGES = [
     }
 ];
 
-let pageToken: string | null | undefined = null;
+const mapToSlugPath = (item: Entry): MetadataRoute.Sitemap[0] | null => {
+    const originLinkItem = item?.link?.find(link => link.rel === 'alternate');
+    const originLink = originLinkItem?.href ?? '';
+    const slug = `blogs/${SlugConverter.toPostSlug(originLink)}`;
+    const newUrl = `${domain}/${slug}`;
+    if(!newUrl) return null;
+    return {
+        url: newUrl,
+        lastModified: item.updated?.$t ?? item.published?.$t ?? new Date().toISOString(),
+        changeFrequency: 'weekly' as 'weekly',
+        priority: 0.5
+    };
+};
+
 export default async function sitemap({
     id
 }: {
@@ -60,28 +73,7 @@ export default async function sitemap({
     }
 
     // generate sitemap for blog posts
-    const params = {
-        fetchImages: false,
-        fetchBodies: false,
-        view: 'READER',
-        maxResults: JUMP_PAGE
-    } as Parameters<typeof getPosts>[0];
-
-    let siteIndex: any = /^sitemap-([0-9]+)$/.exec(id)?.[1];
-    siteIndex = siteIndex ? parseInt(siteIndex) : null;
-    if (params && pageToken) {
-        params.pageToken = pageToken;
-    }
-    const { posts = [], nextPageToken } = await getPosts(params) ?? []
-    pageToken = nextPageToken;
-    return posts.map((item) => {
-        const slug = `blogs/${SlugConverter.toPostSlug(item.url)}`;
-        const newUrl = `${domain}/${slug}`;
-        return {
-            url: newUrl,
-            lastModified: item.updated ?? item.published ?? new Date().toISOString(),
-            changeFrequency: 'weekly' as 'weekly',
-            priority: 0.5
-        };
-    })
+    const responses = await getSummary({ limit: JUMP_PAGE});
+    const entries = responses?.data?.feed?.entry ?? [];
+    return entries.map(mapToSlugPath).filter(Boolean) as MetadataRoute.Sitemap;
 }
