@@ -1,4 +1,4 @@
-import { getBlogInfo } from '@/services/blogs';
+import { getBlogInfo, getSummary } from '@/services/blogs';
 import type {
     InferGetStaticPropsType,
     GetStaticPaths,
@@ -8,21 +8,18 @@ import { sanitizeDescription, SlugConverter } from '@/utilities';
 import PostContent from '@/components/blogs/post-content';
 import Head from 'next/head';
 import type { GetStaticProps } from 'next';
-import { getPostByPath, getPosts } from '@/services/posts';
+import { getPostByPath } from '@/services/posts';
 
 export const getStaticPaths = (async () => {
-    const blogInfo = await getBlogInfo();
 
-    const { posts } = await getPosts({
-        fetchImages: false,
-        fetchBodies: false,
-        view: 'READER',
-        maxResults: blogInfo.posts?.totalItems ?? 500,
-    }) ?? [];
+    const responses = await getSummary({ limit: 500});
+    const posts = responses?.data?.feed?.entry ?? [];
 
     const paths: any[] = [];
     posts?.forEach(post => {
-        const newUrl = SlugConverter.toPostSlug(post.url);
+        const originLinkItem = post?.link?.find(link => link.rel === 'alternate');
+        const originLink = originLinkItem?.href ?? '';
+        const newUrl = SlugConverter.toPostSlug(originLink);
         if (!newUrl) return;
         paths.push({
             params: {

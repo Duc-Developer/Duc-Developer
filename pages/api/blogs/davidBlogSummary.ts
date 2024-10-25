@@ -31,6 +31,7 @@ export interface Feed {
     openSearch$totalResults: HashType<string>
     openSearch$startIndex: HashType<string>
     openSearch$itemsPerPage: HashType<string>
+    entry: Entry[]
 }
 
 export interface Title extends HashType<string> {
@@ -48,7 +49,7 @@ export interface Link {
 }
 
 export interface Author {
-    name:  HashType<string>
+    name: HashType<string>
     uri: HashType<string>
     email: HashType<string>
     gd$image: GdImage
@@ -73,6 +74,53 @@ export type ResponseData = {
     data?: BlogSummary;
 }
 
+export interface Entry {
+    id: HashType<string>
+    published: HashType<string>
+    updated: HashType<string>
+    title: Title2
+    content: Content
+    link: Link2[]
+    author: Author2[]
+    media$thumbnail: MediaThumbnail
+    thr$total: HashType<string>
+    category?: Category2[]
+}
+export interface Title2 extends HashType<string> {
+    type: string
+}
+export interface Content extends HashType<string> {
+    type: string
+}
+export interface Link2 {
+    rel: string
+    type: string
+    href: string
+    title?: string
+}
+export interface Author2 {
+    name: HashType<string>
+    uri: HashType<string>
+    email: HashType<string>
+    gd$image: GdImage2
+}
+export interface GdImage2 {
+    rel: string
+    width: string
+    height: string
+    src: string
+}
+export interface MediaThumbnail {
+    xmlns$media: string
+    url: string
+    height: string
+    width: string
+}
+export interface Category2 {
+    scheme: string
+    term: string
+}
+
 const endpoint = "https://codecungdavid.blogspot.com/feeds/posts/default";
 export default async function getCategories(
     req: NextApiRequest,
@@ -89,7 +137,7 @@ export default async function getCategories(
                     message: message ?? COMMON_API_RESPONSES.BAD_REQUEST.MESSAGE
                 });
         }
-        const {limit = 500} = req.query;
+        const { limit = 500 } = req.query;
         const myHeaders = new Headers();
         myHeaders.append("accept", "text/javascript, application/javascript, application/ecmascript, application/x-ecmascript, */*; q=0.01");
         myHeaders.append("accept-language", "en,vi;q=0.9");
