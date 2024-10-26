@@ -30,7 +30,7 @@ const ThemeToggle = () => {
         className={classNames(
             "w-24 h-10 rounded-full bg-white flex items-center px-2",
             "transition duration-300 focus:outline-none shadow",
-            isDarkMode ? "bg-darkNeutral4" : "bg-yellow"
+            isDarkMode ? "bg-gray300" : "bg-yellow"
         )}
         onClick={toggleTheme}>
         <div

@@ -6,8 +6,8 @@
 }
 
 .pageButton, .pageNumber {
-    background-color: #352C63;
-    border: 1px solid #ccc;
+    background-color: var(--primary-100);
+    border: 1px solid var(--gray-100);
     border-radius: 5px;
     padding: 0.5rem 1rem;
     margin: 0 0.25rem;
@@ -21,11 +21,11 @@
 }
 
 .pageButton:hover:not(:disabled), .pageNumber:hover {
-    background-color: #8270DB;
+    background-color: var(--accent-100);
 }
 
 .pageNumber.active {
-    background-color: #8270DB;
-    color: white;
-    border-color: #8270DB;
+    background-color: var(--accent-100);
+    color: var(--white-100);
+    border-color: var(--accent-100);
 }
