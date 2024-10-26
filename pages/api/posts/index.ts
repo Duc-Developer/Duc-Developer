@@ -8,6 +8,7 @@ export type ResponseData = {
   message: string;
   posts?: blogger_v3.Schema$Post[];
   nextPageToken?: string | null;
+  prevPageToken?: string | null;
   totalItems?: number;
 }
 
@@ -49,6 +50,7 @@ export default async function getPosts(
       const results = {
         posts: (postResponses?.data as blogger_v3.Schema$PostList)?.items || [],
         nextPageToken: (postResponses?.data as blogger_v3.Schema$PostList)?.nextPageToken ?? null,
+        prevPageToken: (postResponses?.data as blogger_v3.Schema$PostList)?.prevPageToken ?? null,
         message: 'success',
         totalItems: (blogInfoResponse?.data as blogger_v3.Schema$Blog)?.posts?.totalItems || 0
       };

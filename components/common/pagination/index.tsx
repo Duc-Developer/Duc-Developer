@@ -4,48 +4,30 @@ import styles from './styles.module.css';
 interface PaginationProps {
     currentPage: number;
     totalPages: number;
-    onPageChange: (page: number) => void;
+    nextPage: () => void;
+    prevPage: () => void;
 }
 
-const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange }) => {
-    const handleClick = (page: number) => {
-        if (page >= 1 && page <= totalPages) {
-            onPageChange(page);
-        }
-    };
-
-    const renderPageNumbers = () => {
-        const pageNumbers = [];
-        for (let i = 1; i <= totalPages; i++) {
-            pageNumbers.push(
-                <button
-                    key={i}
-                    className={`${styles.pageNumber} ${i === currentPage ? styles.active : ''}`}
-                    onClick={() => handleClick(i)}
-                >
-                    {i}
-                </button>
-            );
-        }
-        return pageNumbers;
-    };
+const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, nextPage, prevPage }) => {
 
     return (
         <div className={styles.pagination}>
+            <span className={styles.pageInfo}>
+                Page {currentPage} of {totalPages}
+            </span>
             <button
                 className={styles.pageButton}
-                onClick={() => handleClick(currentPage - 1)}
-                disabled={currentPage === 1}
+                onClick={prevPage}
+                disabled={currentPage === 1 || totalPages === 0}
             >
-                Trước
+                Previous
             </button>
-            {renderPageNumbers()}
             <button
                 className={styles.pageButton}
-                onClick={() => handleClick(currentPage + 1)}
-                disabled={currentPage === totalPages}
+                onClick={nextPage}
+                disabled={currentPage === totalPages || totalPages === 0}
             >
-                Sau
+                Next
             </button>
         </div>
     );
