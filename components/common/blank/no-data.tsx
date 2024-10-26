@@ -8,7 +8,7 @@ const NoData = ({ wrapperClassName }: { wrapperClassName?: string; }) => {
             wrapperClassName
         )}>
             <svg
-                className="w-24 h-24 text-red5 mb-4"
+                className="w-24 h-24 text-red300 mb-4"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"

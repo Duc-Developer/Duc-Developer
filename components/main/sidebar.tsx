@@ -28,7 +28,7 @@ const Sidebar = () => {
 
     return (
         <section className={classNames(
-            "fixed top-0 left-0 z-50 p-4 bg-purple md:bg-neutral_30 shadow flex flex-wrap justify-end",
+            "fixed top-0 left-0 z-50 p-4 bg-astronaut200 shadow flex flex-wrap justify-end",
             isCollapsed ? "w-screen md:w-auto" : "w-screen md:w-[15em]",
             "md:h-screen md:relative md:z-auto md:flex-col md:p-4 md:pb-8"
         )}>
@@ -51,11 +51,11 @@ const Sidebar = () => {
             {
                 !isCollapsed && <Link
                     rel="noreferrer noopener"
-                    className="hidden md:block mx-auto mb-2 text-neutral active:scale-90"
+                    className="hidden md:block mx-auto mb-2 text-white100 active:scale-90"
                     href={pathname?.startsWith('/admin') ? '/' : '/admin'}
                     title="For admin"
                 >
-                    {pathname?.startsWith('/admin') ? <FaHome size={32} /> : <MdAdminPanelSettings size={32} />}
+                    {pathname?.startsWith('/admin') ? <FaHome size={32} className="fill-current hover:fill-accent300" /> : <MdAdminPanelSettings size={32} className="fill-current hover:fill-accent300" />}
                 </Link>
             }
             <div className={classNames("hidden md:block font-bold text-white text-lg text-center whitespace-nowrap select-none", isCollapsed && "w-[1.5em] h-[1.5em] mx-0 -rotate-90")}>
@@ -63,7 +63,7 @@ const Sidebar = () => {
                 {!isCollapsed && <p className="text-sm text-center">David Chan</p>}
                 {!isCollapsed && <p className="text-xs text-center font-normal">Software Engineer</p>}
             </div>
-            <hr className={classNames("hidden md:inline-block border-neutral4", isCollapsed ? "my-8 rotate-90" : "my-4")} />
+            <hr className={classNames("hidden md:inline-block border-white100", isCollapsed ? "my-8 rotate-90" : "my-4")} />
 
             <div className={classNames("flex flex-wrap items-center md:flex-col md:flex-start gap-2 mr-2 md:mr-auto", !isCollapsed && "!flex-row gap-4 w-fit mx-auto")}>
                 {SOCIALS
@@ -79,12 +79,12 @@ const Sidebar = () => {
                                 i > 1 && "hidden sm:inline-block"
                             )}
                         >
-                            <Icon className="h-6 w-6 text-white fill-current hover:fill-purple" />
+                            <Icon className="h-6 w-6 text-white fill-current hover:fill-accent300" />
                         </Link>
                     })}
                 {!isCollapsed && <div className="block md:hidden"><LanguageToggle /></div>}
             </div>
-            <hr className="border-neutral4 my-4 hidden md:inline-block" />
+            <hr className="border-white100 my-4 hidden md:inline-block" />
             <div className={classNames("hidden md:flex md:flex-col gap-2", !isCollapsed && "!flex-row gap-4 w-fit mx-auto")}>
                 {CONTACTS
                     .filter(({ visibleMode }) => isCollapsed ? visibleMode === "all" : true)
@@ -96,7 +96,7 @@ const Sidebar = () => {
                             key={name}
                             className="hover:scale-110 transition"
                         >
-                            <Icon className="h-6 w-6 text-white fill-current hover:fill-purple" />
+                            <Icon className="h-6 w-6 text-white fill-current hover:fill-accent300" />
                         </Link>
                     })}
             </div>

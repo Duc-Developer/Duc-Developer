@@ -2,50 +2,54 @@
 
 import Posts from "@/components/blogs/posts";
 import { useEffect, useState } from "react";
-import { searchPosts } from "@/services/posts";
-import { ResponseData as PostResponses } from "@/pages/api/posts";
 import SearchBox from "@/components/common/input/search-box";
 import { showToast } from "@/components/common/toast";
 import useDebounce from "@/hooks/useDebounce";
 import { IMAGE_SRC_DEFAULT } from "@/constants";
+import usePostList from "@/hooks/usePostList";
 
-const PostSkeleton: any = Array.from({ length: 12 }).fill({
+export const PAGE_SIZE = 12;
+const PostSkeleton: any = Array.from({ length: PAGE_SIZE }).fill({
     title: 'Sample Blog Post',
     images: [{ url: IMAGE_SRC_DEFAULT }],
     content: "<p>Sample content</p>"
 }, 0);
+
 const Blogs = () => {
-    const [posts, setPosts] = useState<PostResponses['posts']>([]);
-    const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState<string>('');
     const searchDebounce = useDebounce(search, 500);
-
-    const fetchPosts = async () => {
-        setLoading(true);
-        try {
-            const data = await searchPosts({
-                fetchImages: true,
-                fetchBodies: true,
-                view: 'READER',
-                maxResults: 500,
-                q: searchDebounce
-            });
-            setPosts(data.posts);
-        } catch (error) {
-            showToast({ message: 'Failed to fetch posts', status: 'error' });
-        } finally {
-            setLoading(false);
-        }
-    };
+    const {
+        posts,
+        totalItems,
+        currentPage,
+        isFetching,
+        error,
+        resetWithFetch,
+        nextPage,
+        prevPage
+    } = usePostList(searchDebounce, PAGE_SIZE);
 
     useEffect(() => {
-        fetchPosts();
+        if (error) {
+            showToast({ status: 'error', message: error.message });
+        }
+    }, [error]);
+
+    useEffect(() => {
+        resetWithFetch();
     }, [searchDebounce]);
 
     return <>
         <SearchBox className="mb-4" value={search} onChange={setSearch} />
         {
-            <Posts loading={loading} data={loading ? PostSkeleton : (posts ?? [])} />
+            <Posts
+                loading={isFetching}
+                data={isFetching ? PostSkeleton : (posts ?? [])}
+                nextPage={nextPage}
+                prevPage={prevPage}
+                totalItems={totalItems}
+                currentPage={currentPage}
+            />
         }
     </>;
 };
