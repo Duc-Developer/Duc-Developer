@@ -86,7 +86,12 @@ const PostContent = ({ data, isPreview }: { data: blogger_v3.Schema$Post; isPrev
     };
 
     const handleScrollToTopClick = () => {
-        if (postContentRef.current) {
+        if (!postContentRef.current) return;
+        const nav = postContentRef.current.querySelector('nav');
+        try {
+            if (!nav) throw new Error('nav is not found');
+            nav.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } catch (error) {
             postContentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
         }
     };

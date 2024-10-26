@@ -13,5 +13,6 @@
     "scroll_to_top": "Cuộn lên đầu",
     "only_for_admin": "Chỉ dành cho Admin",
     "page_in_total": "Trang {{current}} trên {{total}}",
-    "sign_in_with": "Đăng nhập với {{platform}}"
+    "sign_in_with": "Đăng nhập với {{platform}}",
+    "no_choice": "Không lựa chọn"
 }

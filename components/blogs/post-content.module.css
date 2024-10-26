@@ -86,7 +86,7 @@
 .postContent a {
     display: inline-block;
     text-decoration: underline;
-    color: var(--astronaut-100);
+    color: var(--primary-100);
     font-weight: 700;
 }
 
