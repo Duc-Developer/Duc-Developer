@@ -5,7 +5,7 @@ import { ClassicEditor, EventInfo } from 'ckeditor5'
 import 'ckeditor5/ckeditor5.css';
 import styles from './style.module.css';
 import CustomUploadAdapterPlugin from './plugins/uploader';
-import { basePlugins, imageConfig, tableConfig, toolbarConfig } from './constants';
+import { basePlugins, headingConfig, imageConfig, tableConfig, toolbarConfig } from './constants';
 
 type Props = {
   defaultValue?: string;
@@ -36,6 +36,7 @@ const RichEditor = ({ defaultValue = '', editorRef, onChange }: Props) => {
           plugins: basePlugins,
           image: { ...imageConfig },
           table: { ...tableConfig },
+          heading: { ...headingConfig },
           initialData: defaultValue
         }}
       />
