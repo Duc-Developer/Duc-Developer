@@ -1,0 +1,17 @@
+{
+    "about_me": "About Me",
+    "skills": "Skills",
+    "projects": "Projects",
+    "blogs": "Blogs",
+    "footer_copyright": "{{suffix}} All rights reserved.",
+    "search_placeholder": "Search...",
+    "page": "Page",
+    "next": "Next",
+    "previous": "Previous",
+    "go_back": "Go back",
+    "share": "Share",
+    "scroll_to_top": "Scroll to top",
+    "only_for_admin": "Only for Admin",
+    "page_in_total": "Page {{current}} of {{total}}",
+    "sign_in_with": "Sign In with {{platform}}"
+}

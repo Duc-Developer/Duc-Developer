@@ -11,9 +11,11 @@ import LanguageToggle from "../sub/language-toggle";
 import { MenuLink } from "./navbar";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { FaHome } from "react-icons/fa";
+import { useTranslation } from "@/hooks/useTranslation";
 
 const Sidebar = () => {
     const pathname = usePathname();
+    const { t } = useTranslation('common');
     const [isCollapsed, setIsCollapsed] = useState(true);
 
     useEffect(() => {
@@ -53,7 +55,7 @@ const Sidebar = () => {
                     rel="noreferrer noopener"
                     className="hidden md:block mx-auto mb-2 text-white100 active:scale-90"
                     href={pathname?.startsWith('/admin') ? '/' : '/admin'}
-                    title="For admin"
+                    title={t('only_for_admin')}
                 >
                     {pathname?.startsWith('/admin') ? <FaHome size={32} className="fill-current hover:fill-accent300" /> : <MdAdminPanelSettings size={32} className="fill-current hover:fill-accent300" />}
                 </Link>

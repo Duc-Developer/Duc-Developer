@@ -1,12 +1,14 @@
+import { useTranslation } from '@/hooks/useTranslation';
 import React from 'react'
 
-type Props = { value?: string; onChange?: Function; className?: string;placeholder?: string; };
+type Props = { value?: string; onChange?: Function; className?: string; placeholder?: string; };
 const SearchBox = ({ className, value, onChange, placeholder = 'Search...' }: Props) => {
+    const { t } = useTranslation('common');
     return (
         <div className={`relative w-full max-w-md mx-auto ${className ?? ''}`}>
             <input
                 type="text"
-                placeholder={placeholder}
+                placeholder={t(placeholder)}
                 className="w-full pl-10 pr-4 py-2 border border-astronaut100 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black100"
                 value={value}
                 onChange={(e) => onChange && onChange(e.target.value)}

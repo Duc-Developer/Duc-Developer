@@ -20,9 +20,11 @@ hljs.registerLanguage('json', json);
 hljs.registerLanguage('xml', xml);
 
 import 'highlight.js/styles/tokyo-night-dark.min.css';
+import { useTranslation } from '@/hooks/useTranslation';
 
 const PostContent = ({ data, isPreview }: { data: blogger_v3.Schema$Post; isPreview?: boolean; }) => {
     const router = useRouter();
+    const { t } = useTranslation('common');
     const [isPurifySetup, setIsPurifySetup] = useState(false);
     const [showScrollToTop, setShowScrollToTop] = useState(false);
     const postContentRef = useRef<HTMLDivElement>(null);
@@ -54,7 +56,7 @@ const PostContent = ({ data, isPreview }: { data: blogger_v3.Schema$Post; isPrev
     }, []);
 
     useEffect(() => {
-        if(isPurifySetup) {
+        if (isPurifySetup) {
             hljs.initHighlighting();
         }
     }, [isPurifySetup]);
@@ -95,8 +97,8 @@ const PostContent = ({ data, isPreview }: { data: blogger_v3.Schema$Post; isPrev
                 ?.slice(0, 3) // show maximum 3 labels
                 ?.map((label, index) => {
                     let bgColor = 'bg-red100';
-                    if(index === 1) bgColor = 'bg-blue';
-                    if(index === 2) bgColor = 'bg-yellow';
+                    if (index === 1) bgColor = 'bg-blue';
+                    if (index === 2) bgColor = 'bg-yellow';
                     return <div key={index} className={`rounded px-4 py-2 ${bgColor}`}>
                         {label}
                     </div>;
@@ -105,10 +107,10 @@ const PostContent = ({ data, isPreview }: { data: blogger_v3.Schema$Post; isPrev
         {
             !isPreview && (
                 <>
-                    <button className={styles.backButton} onClick={handleBackClick} title='go back'>
+                    <button className={styles.backButton} onClick={handleBackClick} title={t('go_back')}>
                         <FaArrowLeft className={styles.icon} size={20} />
                     </button>
-                    <button className={styles.shareButton} onClick={handleShareClick} title='share'>
+                    <button className={styles.shareButton} onClick={handleShareClick} title={t('share')}>
                         <FaShareAlt className={styles.icon} size={20} />
                     </button>
                 </>
@@ -120,7 +122,7 @@ const PostContent = ({ data, isPreview }: { data: blogger_v3.Schema$Post; isPrev
             }} />
         </div>
         {showScrollToTop && (
-            <button className={styles.scrollToTopButton} onClick={handleScrollToTopClick} title='scroll to top'>
+            <button className={styles.scrollToTopButton} onClick={handleScrollToTopClick} title={t('scroll_to_top')}>
                 <TbArrowBigUp className={`${styles.icon} ${styles.normal}`} size={20} />
                 <TbArrowBigUpLinesFilled className={`${styles.icon} ${styles.floating}`} size={20} />
             </button>
