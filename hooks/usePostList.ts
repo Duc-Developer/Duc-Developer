@@ -4,25 +4,30 @@ import { searchPosts } from '@/services/posts';
 
 import { ResponseData as PostResponses } from "@/pages/api/posts";
 
-const usePostList = (searchKey: string, pageSize: number) => {
+interface PostListParams { searchKey: string, pageSize: number; labels?: string[]; }
+const usePostList = ({ searchKey, pageSize, labels }: PostListParams) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [pageToken, setPageToken] = useState<string | undefined>(undefined);
 
     const { data, isLoading, isFetching, error, refetch } = useQuery<PostResponses>({
         queryKey: ['posts'],
-        queryFn: () => searchPosts({
-            fetchImages: true,
-            fetchBodies: true,
-            view: 'READER',
-            maxResults: pageSize,
-            status: ['LIVE'],
-            q: searchKey,
-            pageToken,
-        })
+        queryFn: () => {
+            const params: any = {
+                fetchImages: true,
+                fetchBodies: true,
+                view: 'READER',
+                maxResults: pageSize,
+                status: ['LIVE'],
+                q: searchKey,
+                pageToken,
+            };
+            if (labels) params.labels = labels;
+            return searchPosts(params);
+        }
     });
 
     const refetchWithPageToken = (newPage: number, token?: string) => {
-        setPageToken(newPage === 1 ? undefined :token);
+        setPageToken(newPage === 1 ? undefined : token);
         setCurrentPage(newPage);
         setTimeout(() => refetch(), 0);
     }
