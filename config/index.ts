@@ -30,7 +30,7 @@ export const metadataEn = {
     type: "website",
     url: "https://david.id.vn",
     images: {
-      url: "https://david.id.vn/meta-image.png",
+      url: "https://david.id.vn/website_thumbnail.png",
       alt: "David software engineer",
       type: "website",
       width: 800,
@@ -42,7 +42,7 @@ export const metadataEn = {
     title: "David Chan | Software Engineer",
     description: "Welcome to my portfolio! I'm David Chan, a software engineer.",
     images: {
-      url: "https://david.id.vn/meta-image.png",
+      url: "https://david.id.vn/website_thumbnail.png",
       alt: "David software engineer",
       type: "website",
       width: 800,
@@ -81,7 +81,7 @@ export const metadataVn = {
     type: "website",
     url: "https://david.id.vn",
     images: {
-      url: "https://res.cloudinary.com/drwgmpzuh/image/upload/v1726822070/david.id.vn/meta-image.png",
+      url: "https://david.id.vn/website_thumbnail.png",
       alt: "David kỹ sư phần mềm",
       type: "website",
       width: 800,
@@ -93,7 +93,7 @@ export const metadataVn = {
     title: "David Chan | Kỹ sư phần mềm",
     description: "Chào mừng đến với portfolio của tôi! Tôi là David Chan, một kỹ sư phần mềm.",
     images: {
-      url: "https://res.cloudinary.com/drwgmpzuh/image/upload/v1726822070/david.id.vn/meta-image.png",
+      url: "https://david.id.vn/website_thumbnail.png",
       alt: "David kỹ sư phần mềm",
       type: "website",
       width: 800,

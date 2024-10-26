@@ -1,0 +1,17 @@
+{
+    "about_me": "Về tôi",
+    "skills": "Kỹ năng",
+    "projects": "Dự án",
+    "blogs": "Bài viết",
+    "footer_copyright" : "{{suffix}} Mọi quyền được bảo lưu.",
+    "search_placeholder": "Tìm kiếm...",
+    "page": "Trang",
+    "next": "Tiếp",
+    "previous": "Trước",
+    "go_back": "Quay lại",
+    "share": "Chia sẻ",
+    "scroll_to_top": "Cuộn lên đầu",
+    "only_for_admin": "Chỉ dành cho Admin",
+    "page_in_total": "Trang {{current}} trên {{total}}",
+    "sign_in_with": "Đăng nhập với {{platform}}"
+}

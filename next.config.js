@@ -3,6 +3,11 @@ const basePathConfig = process.env.BASE_PATH;
 
 const nextConfig = {
   distDir: 'dist',
+  i18n: {
+    locales: ['en', 'vn'],
+    defaultLocale: 'en',
+    localeDetection: true,
+  },
   images: {
     dangerouslyAllowSVG: true,
     remotePatterns: [

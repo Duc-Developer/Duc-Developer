@@ -4,9 +4,10 @@ import Link from "next/link";
 import { NAV_LINKS } from "@/constants";
 import ThemeToggle from "../sub/theme-toggle";
 import { classNames } from "@/lib/utils";
+import { useTranslation } from "@/hooks/useTranslation";
 
 export const MenuLink = ({ onClick }: { onClick?: Function }) => {
-
+  const { t } = useTranslation('common');
   return <>
     {NAV_LINKS.map((link) => {
       return <Link
@@ -19,7 +20,7 @@ export const MenuLink = ({ onClick }: { onClick?: Function }) => {
           "transition-colors duration-300 ease-in group"
         )}
       >
-        <span className="inline-block group-hover:animate-float300">{link.title}</span>
+        <span className="inline-block group-hover:animate-float300">{t(link.title)}</span>
       </Link>
     })}
   </>
@@ -59,6 +60,6 @@ const DesktopMenu = () => {
 
 export const Navbar = () => {
   return <section className="hidden md:block md:sticky top-0 z-[1000]">
-      <DesktopMenu />
+    <DesktopMenu />
   </section>;
 };
