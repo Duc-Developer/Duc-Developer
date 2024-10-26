@@ -7,7 +7,7 @@
 
 .pageButton, .pageNumber {
     background-color: var(--primary-100);
-    border: 1px solid var(--accent-100);
+    border: 1px solid var(--gray-100);
     border-radius: 5px;
     padding: 0.5rem 1rem;
     margin: 0 0.25rem;

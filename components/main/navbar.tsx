@@ -37,9 +37,9 @@ const DesktopMenu = () => {
         width={50}
         height={50}
         draggable={false}
-        className="cursor-pointer hover:animate-slowspin"
+        className="cursor-pointer hover:animate-slowspin rounded-full"
       />
-      <div className="font-bold ml-[10px] block text-gray-300">
+      <div className="font-bold text-2xl ml-[10px] block text-gray-300">
         David Chan
       </div>
     </Link>
