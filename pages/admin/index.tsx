@@ -34,6 +34,7 @@ import { ResponseData as PublishPostResponses } from "@/pages/api/posts/publish"
 import { getCategories } from '@/services/categories';
 import Head from 'next/head';
 import Turnstile from '@/components/turnstile';
+import { useTranslation } from '@/hooks/useTranslation';
 
 type WriterResponse = InsertPostResponses | UpdatePostResponses | PublishPostResponses;
 type WriterVariables = blogger_v3.Schema$Post & { mode: 'INSERT' | 'UPDATE' | 'PUBLISH' };
@@ -49,6 +50,8 @@ const initialForm: blogger_v3.Schema$Post = {
     },
 };
 const Admin = () => {
+    const {t: adminTrans} = useTranslation('admin');
+    const {t: commonTrans} = useTranslation('common');
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const editorRef = useRef<any>(null);
     const [reCaptchaToken, setReCaptchaToken] = useState<string | null>(null);
@@ -180,8 +183,8 @@ const Admin = () => {
             <Turnstile siteKey={reCaptchaKey} onVerify={handleReCaptchaChange} />
             <div className='w-full h-full flex justify-center items-center'>
                 <div className='w-96 h-fit min-w-fit p-6 bg-astronaut-gradient rounded'>
-                    <h4 className='text-white100 text-center text-nowrap'>Tính năng này chỉ dành cho nhà phát triển</h4>
-                    <h6 className='text-white100 text-center'>Nếu bạn cần truy cập, vui lòng liên hệ với tôi</h6>
+                    <h4 className='text-white100 text-center text-nowrap'>{adminTrans('login_title')}</h4>
+                    <h6 className='text-white100 text-center'>{adminTrans('login_description')}</h6>
                     <div className="flex mt-2 gap-4 items-center justify-center">
                         {CONTACTS
                             .map(({ link, name, icon: Icon }) => {
@@ -202,7 +205,7 @@ const Admin = () => {
                         onClick={() => {
                             authenticator.mutate({ captcha: reCaptchaToken });
                         }}>
-                        <FcGoogle size={32} />  <p className='text-nowrap'>Đăng nhập</p>
+                        <FcGoogle size={32} />  <p className='text-nowrap'>{commonTrans('sign_in_with', {platform: 'Google'})}</p>
                     </Button>
                 </div>
             </div>

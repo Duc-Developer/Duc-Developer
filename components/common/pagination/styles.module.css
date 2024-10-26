@@ -5,6 +5,10 @@
     margin-top: 1rem;
 }
 
+.pageInfo {
+    margin-right: 1rem;
+}
+
 .pageButton, .pageNumber {
     background-color: var(--primary-100);
     border: 1px solid var(--gray-100);

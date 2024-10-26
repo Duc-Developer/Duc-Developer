@@ -40,7 +40,12 @@ const Blogs = () => {
     }, [searchDebounce]);
 
     return <>
-        <SearchBox className="mb-4" value={search} onChange={setSearch} />
+        <SearchBox
+            className="mb-4"
+            value={search}
+            onChange={setSearch}
+            placeholder="search_placeholder"
+        />
         {
             <Posts
                 loading={isFetching}

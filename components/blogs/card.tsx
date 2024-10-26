@@ -6,9 +6,11 @@ import Link from 'next/link';
 import { showToast } from '../common/toast';
 import { FaShareAlt } from 'react-icons/fa';
 import { IMAGE_SRC_DEFAULT } from '@/constants';
+import { useTranslation } from '@/hooks/useTranslation';
 
 type Props = { data: blogger_v3.Schema$Post; isLoading?: boolean; placeholder?: string; };
 const PostCard = ({ data, isLoading, placeholder = IMAGE_SRC_DEFAULT }: Props) => {
+    const { t } = useTranslation('common');
     const cleanedContent = sanitizeDescription(data);
     const handleShareClick = async () => {
         if (navigator.share) {
@@ -71,7 +73,7 @@ const PostCard = ({ data, isLoading, placeholder = IMAGE_SRC_DEFAULT }: Props) =
                         >
                             <span>Đọc tiếp</span>
                         </Link>
-                        <button className={styles.shareButton} onClick={handleShareClick} title='share'>
+                        <button className={styles.shareButton} onClick={handleShareClick} title={t('share')}>
                             <FaShareAlt className={styles.shareIcon} size={18} />
                         </button>
                     </>

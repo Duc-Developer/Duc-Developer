@@ -15,8 +15,10 @@ import AudioPlayer from "../sub/audio-player";
 import { Skills } from "./skills";
 import { Projects } from "./projects";
 import { useSearchParams } from "next/navigation";
+import { useTranslation } from "@/hooks/useTranslation";
 
 const AboutMe = () => {
+    const { t } = useTranslation('home');
     return <>
         <motion.div
             variants={slideInFromTop}
@@ -24,7 +26,7 @@ const AboutMe = () => {
         >
             <SparklesIcon className="text-electric-violet mr-[10px] h-5 w-5" />
             <h1 className="Welcome-text text-sm">
-                Software Engineer Portfolio
+                {t('title')}
             </h1>
         </motion.div>
 
@@ -33,11 +35,11 @@ const AboutMe = () => {
             className="flex flex-col gap-6 mt-6 text-5xl md:text-6xl text-bold text-white max-w-[calc(100vw_-_2rem)] sm:max-w-xl w-auto h-auto"
         >
             <span className="text-4xl md:text-6xl">
-                Providing<br/>
+                {t('about_me_title_1')}<br />
                 <span className="text-6xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-r from-purple to-blue">
-                    the best
-                </span><br/>
-                project experience.
+                    {t('about_me_title_2')}
+                </span><br />
+                {t('about_me_title_3')}
             </span>
         </motion.div>
 
@@ -47,19 +49,19 @@ const AboutMe = () => {
         >
             <TypeAnimation
                 sequence={[
-                    "Hi there! I'm David Chan",
+                    t('about_me_description_1'),
                     1000,
-                    "A Frontend Developer",
+                    t('about_me_description_2'),
                     500,
-                    'I have experience with Reactjs',
+                    t('about_me_description_3'),
                     1000,
-                    'I have experience with Nextjs',
+                    t('about_me_description_4'),
                     1000,
-                    'I have experience with Nodejs',
+                    t('about_me_description_5'),
                     1000,
-                    'And Chrome Extension',
+                    t('about_me_description_6'),
                     1000,
-                    'Check out my projects and skills.',
+                    t('about_me_description_7'),
                     1000
                 ]}
                 wrapper="span"
@@ -77,7 +79,7 @@ const Slider = () => {
     const slideRef = useRef<any>(null);
 
     useEffect(() => {
-        if(!slideRef.current) return;
+        if (!slideRef.current) return;
         let slideIndex = 0;
         if (activeSlide) {
             slideIndex = ['about-me', 'skills', 'projects'].indexOf(activeSlide);
