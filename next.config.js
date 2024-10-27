@@ -27,9 +27,12 @@ const nextConfig = {
         hostname: 'placehold.co',
       }
     ],
+    deviceSizes: [320, 420, 768, 1024, 1200],
+    imageSizes: [16, 32, 48, 64, 96, 128, 200],
+    formats: ['image/avif', 'image/webp'],
   },
   basePath: basePathConfig,
-  env:{
+  env: {
     GOOGLE_BLOG_ID: process.env.GOOGLE_BLOG_ID,
     DOMAIN: process.env.DOMAIN,
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
