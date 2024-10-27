@@ -12,9 +12,12 @@ import { metadataVn } from "@/config";
 import Sidebar from "@/components/main/sidebar";
 import VideoBackground from "@/components/sub/video-background";
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { useRouter } from 'next/router';
 
 
 const MainLayout = ({ children, loading }: { children: React.ReactNode; loading: boolean; }) => {
+    const { pathname } = useRouter();
+    const isHome = pathname === '/';
     return (
         <>
             <section className="relative w-screen max-h-screen transparent flex text-white100">
@@ -51,7 +54,7 @@ const MainLayout = ({ children, loading }: { children: React.ReactNode; loading:
                     {
                         loading ? <LoadingPage />
                             : <>
-                                <VideoBackground />
+                                <VideoBackground className={isHome ? 'block' : '!hidden'} />
                                 <Navbar />
                                 <section className="page-wrapper grow pt-16 md:pt-8 md:mt-0 md:overflow-y-auto">
                                     <Suspense fallback={<>...</>}>

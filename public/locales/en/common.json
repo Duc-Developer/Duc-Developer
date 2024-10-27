@@ -14,5 +14,6 @@
     "only_for_admin": "Only for Admin",
     "page_in_total": "Page {{current}} of {{total}}",
     "sign_in_with": "Sign In with {{platform}}",
-    "no_choice": "No choice"
+    "no_choice": "No choice",
+    "close": "Close"
 }

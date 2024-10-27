@@ -21,19 +21,22 @@ import { CONTACTS, POST_STATUS } from '@/constants';
 import Autocomplete from '@/components/common/input/autocomplete';
 import PostList from '@/components/admin/post-list';
 import { IoIosCreate } from "react-icons/io";
+import { FaListAlt } from "react-icons/fa";
 
+import Drawer from '@/components/common/drawer';
 import PostContent from '@/components/blogs/post-content';
 import CustomModal from '@/components/common/modal';
+import Turnstile from '@/components/turnstile';
+
 import { SlugConverter } from '@/utilities';
+import { getCategories } from '@/services/categories';
+import { useTranslation } from '@/hooks/useTranslation';
 
 import { ResponseData as PostResponses } from "@/pages/api/posts";
 import { ResponseData as InfoResponse } from "@/pages/api/admin/info";
 import { ResponseData as InsertPostResponses } from "@/pages/api/posts/insert";
 import { ResponseData as UpdatePostResponses } from "@/pages/api/posts/update";
 import { ResponseData as PublishPostResponses } from "@/pages/api/posts/publish";
-import { getCategories } from '@/services/categories';
-import Turnstile from '@/components/turnstile';
-import { useTranslation } from '@/hooks/useTranslation';
 
 type WriterResponse = InsertPostResponses | UpdatePostResponses | PublishPostResponses;
 type WriterVariables = blogger_v3.Schema$Post & { mode: 'INSERT' | 'UPDATE' | 'PUBLISH' };
@@ -47,6 +50,12 @@ const initialForm: blogger_v3.Schema$Post = {
     author: {
         id: authorId,
     },
+    location: {
+        name: 'Hà Nội, Vietnam',
+        lat: 21.033804,
+        lng: 105.791146,
+        span: '0.01,0.01'
+    }
 };
 const Admin = () => {
     const { t: adminTrans } = useTranslation('admin');
@@ -55,6 +64,7 @@ const Admin = () => {
     const editorRef = useRef<any>(null);
     const [reCaptchaToken, setReCaptchaToken] = useState<string | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [drawerOpen, setDrawerOpen] = useState(false);
 
     const [form, setForm] = useState<blogger_v3.Schema$Post>(initialForm);
 
@@ -208,7 +218,15 @@ const Admin = () => {
     return <>
         <div className='p-4 w-full h-full flex gap-4 text-black100'>
             <div className='grow flex flex-col gap-4 mt-4' style={{ maxWidth: '74%' }}>
-                <Input value={form.title} placeholder='Title' className='w-full' onChange={handleChangeTitle} />
+                <div className='flex gap-4'>
+                    <Input value={form.title} placeholder='Title' className='grow' onChange={handleChangeTitle} />
+                    <Button
+                        className='bg-primary100 w-fit flex gap-2 items-center justify-center'
+                        onClick={() => setDrawerOpen(!drawerOpen)}
+                    >
+                        <FaListAlt color='#fff' size={28} />
+                    </Button>
+                </div>
                 <RichEditor editorRef={editorRef} onChange={handleChangeEditor} />
             </div>
             <div className='basis-3/12 flex flex-col gap-4 items-center bg-white100 rounded p-4'>
@@ -244,27 +262,10 @@ const Admin = () => {
                         <FaRegSave color='#fff' />Submit
                     </Button>
                 </div>
-                {
-                    fetchingPosts ? <p>Loading...</p> : <div className='w-full h-[300px] overflow-auto'>
-                        <PostList
-                            data={allPosts}
-                            onEdit={(post) => {
-                                if (!post) return;
-                                setForm(post);
-                                editorRef.current?.setData(post.content ?? '');
-                            }}
-                            onView={(post) => {
-                                if (!post) return;
-                                const slug = SlugConverter.toPostSlug(post.url);
-                                if (slug && post?.status === POST_STATUS.LIVE) {
-                                    window.open(`${process.env.DOMAIN}/blogs/${slug}`, '_blank');
-                                } else if (post.url) {
-                                    showToast({ message: 'This post is not live yet', status: 'warning' });
-                                }
-                            }}
-                        />
-                    </div>
-                }
+                <div>
+                    Location: <b>{form.location?.name}</b><br />
+                    {`lat: ${form.location?.lat}, lng: ${form.location?.lng}`}
+                </div>
                 <hr className='w-full border border-gray-300' />
                 <Autocomplete
                     placeholder='Add labels...'
@@ -273,6 +274,32 @@ const Admin = () => {
                     defaultValue={form.labels}
                 />
             </div>
+            <Drawer isOpen={drawerOpen} onClose={() => setDrawerOpen(false)}>
+                {
+                    fetchingPosts
+                        ? <p>Loading...</p>
+                        : <div className='w-full h-[calc(100vh_-_8rem)] overflow-auto'>
+                            <PostList
+                                data={allPosts}
+                                onEdit={(post) => {
+                                    if (!post) return;
+                                    setForm({ ...initialForm, ...post });
+                                    editorRef.current?.setData(post.content ?? '');
+                                    setDrawerOpen(false);
+                                }}
+                                onView={(post) => {
+                                    if (!post) return;
+                                    const slug = SlugConverter.toPostSlug(post.url);
+                                    if (slug && post?.status === POST_STATUS.LIVE) {
+                                        window.open(`${process.env.DOMAIN}/blogs/${slug}`, '_blank');
+                                    } else if (post.url) {
+                                        showToast({ message: 'This post is not live yet', status: 'warning' });
+                                    }
+                                }}
+                            />
+                        </div>
+                }
+            </Drawer>
             <CustomModal
                 isOpen={isModalOpen}
                 onRequestClose={() => setIsModalOpen(false)}

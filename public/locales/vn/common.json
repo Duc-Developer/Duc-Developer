@@ -14,5 +14,6 @@
     "only_for_admin": "Chỉ dành cho Admin",
     "page_in_total": "Trang {{current}} trên {{total}}",
     "sign_in_with": "Đăng nhập với {{platform}}",
-    "no_choice": "Không lựa chọn"
+    "no_choice": "Không lựa chọn",
+    "close": "Đóng"
 }
