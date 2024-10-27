@@ -32,7 +32,6 @@ import { ResponseData as InsertPostResponses } from "@/pages/api/posts/insert";
 import { ResponseData as UpdatePostResponses } from "@/pages/api/posts/update";
 import { ResponseData as PublishPostResponses } from "@/pages/api/posts/publish";
 import { getCategories } from '@/services/categories';
-import Head from 'next/head';
 import Turnstile from '@/components/turnstile';
 import { useTranslation } from '@/hooks/useTranslation';
 
@@ -50,8 +49,8 @@ const initialForm: blogger_v3.Schema$Post = {
     },
 };
 const Admin = () => {
-    const {t: adminTrans} = useTranslation('admin');
-    const {t: commonTrans} = useTranslation('common');
+    const { t: adminTrans } = useTranslation('admin');
+    const { t: commonTrans } = useTranslation('common');
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const editorRef = useRef<any>(null);
     const [reCaptchaToken, setReCaptchaToken] = useState<string | null>(null);
@@ -107,11 +106,8 @@ const Admin = () => {
     });
 
     useEffect(() => {
-        if (tokenInfo?.data?.expiry_date > new Date().getTime()) {
-            setIsAuthenticated(true);
-        } else {
-            setIsAuthenticated(false);
-        }
+        const { expiry_date } = tokenInfo?.data ?? {};
+        setIsAuthenticated(expiry_date > new Date().getTime());
     }, [fetchedTokenInfo]);
 
     const authenticatorOptions: UseMutationOptions<
@@ -177,9 +173,6 @@ const Admin = () => {
 
     if (!isAuthenticated) {
         return <>
-            <Head>
-                <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-            </Head>
             <Turnstile siteKey={reCaptchaKey} onVerify={handleReCaptchaChange} />
             <div className='w-full h-full flex justify-center items-center'>
                 <div className='w-96 h-fit min-w-fit p-6 bg-astronaut-gradient rounded'>
@@ -205,7 +198,7 @@ const Admin = () => {
                         onClick={() => {
                             authenticator.mutate({ captcha: reCaptchaToken });
                         }}>
-                        <FcGoogle size={32} />  <p className='text-nowrap'>{commonTrans('sign_in_with', {platform: 'Google'})}</p>
+                        <FcGoogle size={32} />  <p className='text-nowrap'>{commonTrans('sign_in_with', { platform: 'Google' })}</p>
                     </Button>
                 </div>
             </div>

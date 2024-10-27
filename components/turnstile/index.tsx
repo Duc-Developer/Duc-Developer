@@ -21,12 +21,15 @@ const Turnstile = ({ siteKey, onVerify }: { siteKey: string; onVerify: (token: s
     const turnstileRef = useRef(null);
 
     useEffect(() => {
+        if (!siteKey) return;
         if (window.turnstile && turnstileRef.current) {
             window.turnstile.render(turnstileRef.current, {
                 sitekey: siteKey,
                 callback: onVerify,
                 theme: 'light',
             });
+        } else {
+            console.error('Turnstile script not loaded');
         }
     }, [siteKey]);
 

@@ -1,4 +1,5 @@
 import { Suspense, useEffect, useMemo, useState } from 'react';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import {
     HydrationBoundary,
@@ -52,14 +53,19 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     }, [router]);
 
     const Layout = useMemo(() => isAdminRoute ? AdminLayout : MainLayout, [isAdminRoute]);
-    return (<QueryClientProvider client={queryClient}><Layout loading={loadingPage}>
-        <Suspense fallback={<LoadingPage />}>
-            <HydrationBoundary state={pageProps.dehydratedState}>
-                <Component {...pageProps} />
-            </HydrationBoundary>
-        </Suspense>
-    </Layout>
-    </QueryClientProvider>);
+    return (<>
+        <Head>
+            <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+        </Head>
+        <QueryClientProvider client={queryClient}><Layout loading={loadingPage}>
+            <Suspense fallback={<LoadingPage />}>
+                <HydrationBoundary state={pageProps.dehydratedState}>
+                    <Component {...pageProps} />
+                </HydrationBoundary>
+            </Suspense>
+        </Layout>
+        </QueryClientProvider>
+    </>);
 }
 
 export default MyApp
