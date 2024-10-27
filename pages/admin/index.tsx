@@ -50,6 +50,12 @@ const initialForm: blogger_v3.Schema$Post = {
     author: {
         id: authorId,
     },
+    location: {
+        name: 'Hà Nội, Vietnam',
+        lat: 21.033804,
+        lng: 105.791146,
+        span: '0.01,0.01'
+    }
 };
 const Admin = () => {
     const { t: adminTrans } = useTranslation('admin');
@@ -256,32 +262,10 @@ const Admin = () => {
                         <FaRegSave color='#fff' />Submit
                     </Button>
                 </div>
-                <Drawer isOpen={drawerOpen} onClose={() => setDrawerOpen(false)}>
-                    {
-                        fetchingPosts
-                            ? <p>Loading...</p>
-                            : <div className='w-full h-[calc(100vh_-_8rem)] overflow-auto'>
-                                <PostList
-                                    data={allPosts}
-                                    onEdit={(post) => {
-                                        if (!post) return;
-                                        setForm(post);
-                                        editorRef.current?.setData(post.content ?? '');
-                                        setDrawerOpen(false);
-                                    }}
-                                    onView={(post) => {
-                                        if (!post) return;
-                                        const slug = SlugConverter.toPostSlug(post.url);
-                                        if (slug && post?.status === POST_STATUS.LIVE) {
-                                            window.open(`${process.env.DOMAIN}/blogs/${slug}`, '_blank');
-                                        } else if (post.url) {
-                                            showToast({ message: 'This post is not live yet', status: 'warning' });
-                                        }
-                                    }}
-                                />
-                            </div>
-                    }
-                </Drawer>
+                <div>
+                    Location: <b>{form.location?.name}</b><br />
+                    {`lat: ${form.location?.lat}, lng: ${form.location?.lng}`}
+                </div>
                 <hr className='w-full border border-gray-300' />
                 <Autocomplete
                     placeholder='Add labels...'
@@ -290,6 +274,32 @@ const Admin = () => {
                     defaultValue={form.labels}
                 />
             </div>
+            <Drawer isOpen={drawerOpen} onClose={() => setDrawerOpen(false)}>
+                {
+                    fetchingPosts
+                        ? <p>Loading...</p>
+                        : <div className='w-full h-[calc(100vh_-_8rem)] overflow-auto'>
+                            <PostList
+                                data={allPosts}
+                                onEdit={(post) => {
+                                    if (!post) return;
+                                    setForm({ ...initialForm, ...post });
+                                    editorRef.current?.setData(post.content ?? '');
+                                    setDrawerOpen(false);
+                                }}
+                                onView={(post) => {
+                                    if (!post) return;
+                                    const slug = SlugConverter.toPostSlug(post.url);
+                                    if (slug && post?.status === POST_STATUS.LIVE) {
+                                        window.open(`${process.env.DOMAIN}/blogs/${slug}`, '_blank');
+                                    } else if (post.url) {
+                                        showToast({ message: 'This post is not live yet', status: 'warning' });
+                                    }
+                                }}
+                            />
+                        </div>
+                }
+            </Drawer>
             <CustomModal
                 isOpen={isModalOpen}
                 onRequestClose={() => setIsModalOpen(false)}
