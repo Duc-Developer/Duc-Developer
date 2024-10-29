@@ -99,6 +99,66 @@
     color: var(--primary-100);
 }
 
+/** Custom for CKEditor Styles **/
+
+.postContent :global(figure.image) {
+    margin: 0.5rem auto;
+}
+
+.postContent :global(.image-inline img) {
+    width: 1.5rem;
+    max-height: 1.5rem;
+    min-height: 1.5rem;
+}
+
+.postContent :global(.image.image-side) {
+    float: right;
+    margin-right: -12.5rem;
+    margin-left: 3.125rem;
+    margin-top: -3.125rem;
+}
+
+.postContent :global(.image.image-side img) {
+    width: 22.5rem;
+    height: 22.5rem;
+}
+
+.postContent p {
+    position: relative;
+}
+
+.postContent :global(.image-inline.image-margin-left),
+.postContent :global(.image-inline.image-margin-right) {
+    position: absolute;
+    margin: 0;
+    top: auto;
+}
+
+.postContent :global(.image-inline.image-margin-left) {
+    left: 0;
+}
+
+.postContent :global(.image-inline.image-margin-right) {
+    right: 0;
+}
+
+.postContent :global(.image-inline.image-margin-left) img,
+.postContent :global(.image-inline.image-margin-right) img {
+    filter: none;
+}
+
+.postContent :global(.image.image-style-align-block-left) {
+    float: left;
+    margin-right: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.postContent :global(.image.image-style-align-block-right) {
+    float: right;
+    margin-left: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
 @media screen and (max-width: 1024px) {
     .postContent {
         padding: 2rem 4rem;
@@ -111,7 +171,7 @@
     .scrollToTopButton {
         right: 2rem;
     }
-    
+
 }
 
 @media screen and (max-width: 768px) {
@@ -131,21 +191,61 @@
     .backButton {
         left: 2rem;
         right: auto;
-        position:fixed;
+        position: fixed;
         bottom: 4rem;
     }
 
     .shareButton {
-        position:fixed;
+        position: fixed;
         bottom: 4rem;
         right: 2.5rem;
     }
 
     .scrollToTopButton {
-        position:fixed;
+        position: fixed;
         left: calc(50vw - 3rem);
         transform: translateX(50%);
         bottom: 3.5rem;
+        width: 3rem;
+        height: 3rem;
+    }
+
+}
+
+@media screen and (max-width: 425px) {
+    .wrapper {
+        padding-top: 0.1rem;
+    }
+
+    .postContent {
+        padding: 2rem 1rem;
+        margin: 0 0;
+        max-height: 100vh;
+        border-radius: 0;
+    }
+
+    .backButton,
+    .shareButton,
+    .scrollToTopButton {
+        top: auto;
+        right: auto;
+    }
+
+    .backButton {
+        display: none;
+    }
+
+    .shareButton {
+        position: fixed;
+        bottom: 2rem;
+        right: 1.5rem;
+    }
+
+    .scrollToTopButton {
+        position: fixed;
+        left: calc(50vw - 3rem);
+        transform: translateX(50%);
+        bottom: 1.5rem;
         width: 3rem;
         height: 3rem;
     }

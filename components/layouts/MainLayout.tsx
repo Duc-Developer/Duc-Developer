@@ -56,7 +56,7 @@ const MainLayout = ({ children, loading }: { children: React.ReactNode; loading:
                             : <>
                                 <VideoBackground className={isHome ? 'block' : '!hidden'} />
                                 <Navbar />
-                                <section className="page-wrapper grow pt-16 md:pt-8 md:mt-0 md:overflow-y-auto">
+                                <section className="page-wrapper grow pt-14 md:pt-8 md:mt-0 md:overflow-y-auto">
                                     <Suspense fallback={<>...</>}>
                                         {children}
                                     </Suspense>
