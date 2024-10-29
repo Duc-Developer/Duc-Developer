@@ -212,6 +212,46 @@
 
 }
 
+@media screen and (max-width: 425px) {
+    .wrapper {
+        padding-top: 0.1rem;
+    }
+
+    .postContent {
+        padding: 2rem 1rem;
+        margin: 0 0;
+        max-height: 100vh;
+        border-radius: 0;
+    }
+
+    .backButton,
+    .shareButton,
+    .scrollToTopButton {
+        top: auto;
+        right: auto;
+    }
+
+    .backButton {
+        display: none;
+    }
+
+    .shareButton {
+        position: fixed;
+        bottom: 2rem;
+        right: 1.5rem;
+    }
+
+    .scrollToTopButton {
+        position: fixed;
+        left: calc(50vw - 3rem);
+        transform: translateX(50%);
+        bottom: 1.5rem;
+        width: 3rem;
+        height: 3rem;
+    }
+    
+}
+
 @keyframes float {
 
     0%,
