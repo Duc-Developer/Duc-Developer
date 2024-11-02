@@ -33,6 +33,7 @@ const config: Config = {
       },
       borderColor: {
         'astronaut25': 'rgba(16,51,84,0.25)',
+        'astronaut50': 'rgba(16,51,84,0.5)'
       },
     },
   },

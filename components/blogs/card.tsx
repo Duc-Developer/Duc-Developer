@@ -1,18 +1,23 @@
 import Image from 'next/image';
 import styles from './card.module.css'
 import { blogger_v3 } from 'googleapis';
-import { sanitizeDescription, SlugConverter } from '@/utilities';
+import { formatDate, sanitizeDescription, SlugConverter } from '@/utilities';
 import Link from 'next/link';
 import { showToast } from '../common/toast';
 import { FaShareAlt } from 'react-icons/fa';
 import { IMAGE_SRC_DEFAULT } from '@/constants';
 import { useTranslation } from '@/hooks/useTranslation';
+import { classNames } from '@/lib/utils';
+import { useRouter } from 'next/router';
 
 type Props = { data: blogger_v3.Schema$Post; isLoading?: boolean; placeholder?: string; };
 const PostCard = ({ data, isLoading, placeholder = IMAGE_SRC_DEFAULT }: Props) => {
+    const router = useRouter();
     const { t } = useTranslation('common');
     const cleanedContent = sanitizeDescription(data);
-    const handleShareClick = async () => {
+
+    const handleShareClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
         if (navigator.share) {
             try {
                 await navigator.share({
@@ -28,59 +33,63 @@ const PostCard = ({ data, isLoading, placeholder = IMAGE_SRC_DEFAULT }: Props) =
             showToast({ message: 'Web Share API not supported in this browser' });
         }
     };
-    return <div className={styles.wrapper}>
-        <div className={styles.cardHover}>
-            {isLoading ? (
-                <div className="animate-pulse">
-                    <div className="bg-gray-300 h-56 w-full rounded"></div>
-                </div>
-            ) : <Image
-                className={styles.cardHoverThumbnail}
+
+    return <div
+        className={classNames(
+            styles.card,
+            "bg-astronaut50 backdrop-blur15 border-8 border-astronaut50",
+            isLoading ? 'loading' : ''
+        )}
+        onClick={() => {
+            router.push(`/blogs/${SlugConverter.toPostSlug(data.url) ?? '/not-found'}`)
+        }}
+    >
+        {isLoading ? (
+            <div className="animate-pulse">
+                <div className="absolute top-0 left-0 bg-gray-300 h-64 w-full rounded"></div>
+            </div>)
+            : <Image
                 src={data.images?.[0].url ?? ''}
                 alt="blog-post"
                 width={200}
                 height={150}
                 overrideSrc={placeholder}
+                className={styles.thumbnail}
             />}
-            <div className={styles.cardHoverContent}>
-                {isLoading ? (
-                    <div className="animate-pulse">
-                        <div className="bg-gray-300 h-6 w-3/4 mb-2 rounded"></div>
-                        <div className="bg-gray-300 h-16 w-full rounded"></div>
-                    </div>
-                ) : <>
-                    <h3 className={styles.cardHoverTitle} title={data.title ?? ''}>
-                        {data.title}
-                    </h3>
-                    <p className={styles.cardHoverText}>
-                        <span>{cleanedContent}</span>
-                    </p>
-                </>
-                }
-            </div>
-            <div className={styles.cardHoverFooter}>
-                {isLoading ? (
-                    <div className="animate-pulse flex space-x-4 px-2">
-                        <div className="bg-gray-300 h-8 grow rounded"></div>
-                        <div className="bg-gray-300 h-8 w-8 rounded-full"></div>
-                    </div>
-                ) :
-                    <>
-                        <Link
-                            href={`blogs/${SlugConverter.toPostSlug(data.url) ?? '#not-found'}`}
-                            className={styles.cardHoverLink}
-                            data-replace="Đọc tiếp"
+        {
+            isLoading ? (
+                <div className="animate-pulse w-full flex flex-col justify-between gap-4">
+                    <div className="bg-gray-300 h-40 w-full rounded"></div>
+                    <div className="bg-gray-300 h-8 w-full rounded"></div>
+                </div>
+            ) : <div className={styles.info}>
+                <div className={styles.headerInfo}>
+                    {data.author?.displayName && <div className={styles.author}>{data.author.displayName}</div>}
+                    {data.published && <div className={styles.date}>{formatDate(data.published)}</div>}
+                </div>
+                <p className={styles.title}>{data.title}</p>
+                <p className={styles.description}>
+                    {cleanedContent}
+                </p>
+                <div className={styles.footer}>
+                    {
+                        data?.labels?.[0] && <div className={styles.tag}>
+                            {data.labels[0]}
+                        </div>
+                    }
+                    <div className={styles.actions}>
+                        <button
+                            className={styles.shareButton}
+                            onClick={handleShareClick}
+                            title={t('share')}
                         >
-                            <span>Đọc tiếp</span>
-                        </Link>
-                        <button className={styles.shareButton} onClick={handleShareClick} title={t('share')}>
-                            <FaShareAlt className={styles.shareIcon} size={18} />
+                            <FaShareAlt className={styles.shareIcon} size={20} />
                         </button>
-                    </>
-                }
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>;
+        }
+    </div>
 }
 
 export default PostCard
