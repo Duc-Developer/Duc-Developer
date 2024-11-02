@@ -27,7 +27,7 @@ export const MenuLink = ({ onClick }: { onClick?: Function }) => {
 };
 
 const DesktopMenu = () => {
-  return <div className="max-w-full flex justify-between gap-4 py-4 px-8">
+  return <div className="max-w-full flex justify-between items-center gap-4 py-2 px-8">
     <Link
       href="/#about-me"
       className="h-auto w-auto flex flex-row items-center"

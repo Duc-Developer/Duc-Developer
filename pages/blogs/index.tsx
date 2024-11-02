@@ -64,7 +64,7 @@ const Blogs = () => {
         resetWithFetch();
     };
 
-    return <>
+    return <div className="py-4">
         <div className="flex gap-4 justify-center mb-4">
             <Select
                 className="w-24 md:w-36"
@@ -90,7 +90,7 @@ const Blogs = () => {
                 currentPage={currentPage}
             />
         }
-    </>;
+    </div>;
 };
 
 export default Blogs;

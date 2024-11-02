@@ -50,13 +50,13 @@ const MainLayout = ({ children, loading }: { children: React.ReactNode; loading:
                 </Head>
                 <StarsCanvas />
                 <Sidebar />
-                <section className="h-screen w-full grow flex flex-col gap-4">
+                <section className="h-screen w-full grow flex flex-col">
                     {
                         loading ? <LoadingPage />
                             : <>
                                 <VideoBackground className={isHome ? 'block' : '!hidden'} />
                                 <Navbar />
-                                <section className="page-wrapper grow pt-14 md:pt-8 md:mt-0 md:overflow-y-auto">
+                                <section className="page-wrapper pt-20 md:pt-0 grow md:mt-0 md:overflow-y-auto">
                                     <Suspense fallback={<>...</>}>
                                         {children}
                                     </Suspense>
@@ -64,7 +64,7 @@ const MainLayout = ({ children, loading }: { children: React.ReactNode; loading:
                             </>
                     }
                     <ToastContainer />
-                    <Footer />
+                    {isHome && <Footer />}
                 </section>
             </section>
             <SpeedInsights />
