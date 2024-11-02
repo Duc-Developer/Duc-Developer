@@ -15,6 +15,7 @@ import type { AppProps } from 'next/app';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
+import 'ckeditor5/ckeditor5.css';
 import "./globals.css";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {

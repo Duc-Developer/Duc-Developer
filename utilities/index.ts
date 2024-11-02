@@ -56,7 +56,7 @@ export const sanitizeDescription = (data?: blogger_v3.Schema$Post, limit?: numbe
 
 export const throttle = (func: Function, limit: number = 500) => {
     let inThrottle: boolean;
-    return function(this: any) {
+    return function (this: any) {
         const args = arguments;
         const context = this;
         if (!inThrottle) {
@@ -69,7 +69,7 @@ export const throttle = (func: Function, limit: number = 500) => {
 
 export const debounce = (func: Function, delay: number = 500) => {
     let timeoutId: ReturnType<typeof setTimeout> | null;
-    return function(this: any) {
+    return function (this: any) {
         const args = arguments;
         const context = this;
         if (timeoutId) {
@@ -88,4 +88,16 @@ export const uuid = (): string => {
         const v = c === 'x' ? r : (r & 0x3) | 0x8;
         return v.toString(16);
     });
+};
+
+export const formatDate = (dateString: string | null | undefined): string | null => {
+    if (!dateString) return null;
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+        return null;
+    }
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
 };
