@@ -46,7 +46,7 @@ const PostCard = ({ data, isLoading, placeholder = IMAGE_SRC_DEFAULT }: Props) =
     >
         {isLoading ? (
             <div className="animate-pulse">
-                <div className="absolute top-0 left-0 bg-gray-300 h-64 w-full rounded"></div>
+                <div className="absolute top-0 left-0 bg-gray-300 h-52 w-full rounded"></div>
             </div>)
             : <Image
                 src={data.images?.[0].url ?? ''}
@@ -59,7 +59,7 @@ const PostCard = ({ data, isLoading, placeholder = IMAGE_SRC_DEFAULT }: Props) =
         {
             isLoading ? (
                 <div className="animate-pulse w-full flex flex-col justify-between gap-4">
-                    <div className="bg-gray-300 h-40 w-full rounded"></div>
+                    <div className="bg-gray-300 h-28 w-full rounded"></div>
                     <div className="bg-gray-300 h-8 w-full rounded"></div>
                 </div>
             ) : <div className={styles.info}>

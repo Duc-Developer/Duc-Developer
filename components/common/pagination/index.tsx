@@ -13,9 +13,6 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, nextPa
     const { t } = useTranslation('common');
     return (
         <div className={styles.pagination}>
-            <p className={styles.pageInfo}>
-                {t('page_in_total', { current: currentPage.toString(), total: totalPages.toString() })}
-            </p>
             <button
                 className={styles.pageButton}
                 onClick={prevPage}
@@ -23,6 +20,9 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, nextPa
             >
                 {t('previous')}
             </button>
+            <p className={styles.pageInfo}>
+                {t('page_in_total', { current: currentPage.toString(), total: totalPages.toString() })}
+            </p>
             <button
                 className={styles.pageButton}
                 onClick={nextPage}
