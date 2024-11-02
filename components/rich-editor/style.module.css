@@ -3,6 +3,7 @@
 }
 
 .richEditorWrapper blockquote {
+    font-family: 'Montserrat', serif;
     margin: 0.5rem auto;
     background-color: var(--quote);
     padding: 1rem;
