@@ -34,5 +34,8 @@ export const ASTRONAUT_PALETTE = {
     white300: '#e3e3e3',
     black100: '#0a0a0a',
     black200: '#242424',
-    black300: '#3d3d3d'
+    black300: '#3d3d3d',
+    red100: '#FF5A5F',
+
+    quote: '#ffede0',
 };

@@ -1,3 +1,12 @@
 .richEditorWrapper {
     color: #000000;
 }
+
+.richEditorWrapper blockquote {
+    margin: 0.5rem auto;
+    background-color: var(--quote);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    border-left: solid 0.5rem var(--red-100);
+}

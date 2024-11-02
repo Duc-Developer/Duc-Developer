@@ -2,7 +2,6 @@ import React, { useImperativeHandle, useRef } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import { ClassicEditor, EventInfo } from 'ckeditor5'
 
-import 'ckeditor5/ckeditor5.css';
 import styles from './style.module.css';
 import CustomUploadAdapterPlugin from './plugins/uploader';
 import { basePlugins, headingConfig, imageConfig, tableConfig, toolbarConfig } from './constants';

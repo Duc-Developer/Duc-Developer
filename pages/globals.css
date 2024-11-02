@@ -29,6 +29,9 @@
   --purple-100: #352C63;
   --yellow-100: #FFC940;
   --blue-100: #388BFF;
+  --red-100: #FF5A5F;
+
+  --quote: #ffede0;
 }
 
 html {
@@ -145,15 +148,16 @@ ol {
 pre {
   border-radius: 0.5rem;
   overflow-x: auto;
-  margin: 0.5rem 1rem;
+  margin: 0.5rem auto;
 }
 
 blockquote {
   margin: 0.5rem auto;
-  background-color: var(--gray-300);
+  background-color: var(--quote);
   padding: 1rem;
   border-radius: 0.5rem;
   overflow-x: auto;
+  border-left: solid 0.5rem var(--red-100);
 }
 
 
