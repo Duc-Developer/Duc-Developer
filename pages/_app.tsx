@@ -57,12 +57,6 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     return (<>
         <Head>
             <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-            <link rel="preconnect" href="https://fonts.googleapis.com" />
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-            <link
-                href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-                rel="stylesheet"
-            />
         </Head>
         <QueryClientProvider client={queryClient}><Layout loading={loadingPage}>
             <Suspense fallback={<LoadingPage />}>
