@@ -17,7 +17,6 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'ckeditor5/ckeditor5.css';
 import "./globals.css";
-import Script from 'next/script';
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
     const [queryClient] = useState(() => new QueryClient());
@@ -58,11 +57,13 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     return (<>
         <Head>
             <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+            <link rel="preconnect" href="https://fonts.googleapis.com" />
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+            <link
+                href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+                rel="stylesheet"
+            />
         </Head>
-        <Script
-            src="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-            strategy="beforeInteractive"
-        />
         <QueryClientProvider client={queryClient}><Layout loading={loadingPage}>
             <Suspense fallback={<LoadingPage />}>
                 <HydrationBoundary state={pageProps.dehydratedState}>

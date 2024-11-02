@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-require('dotenv').config();
+
 const vercelEnv = process.env.VERCEL_ENV;
 
 if (vercelEnv === 'production') {
