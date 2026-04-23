@@ -59,12 +59,12 @@
 
 <hr>
 
-<h2 align="center">👨‍💻 My Repositories 👨‍💻</h2>
+<h2 align="center">👨‍💻 My Packages 👨‍💻</h2>
 <br>
 <div width="100%" align="center" style="display: flex; flex-direction: column; gap: 10px;">
-  <a align="left" href="https://github.com/Duc-Developer/hierarchical-tree" title="hierarchical tree"><img align="left" height="115" src="https://github-readme-stats.vercel.app/api/pin/?username=Duc-Developer&repo=axios-token-refresh&theme=react&border_color=61dafb&border_radius=10"></a>
+  <a align="left" href="https://www.npmjs.com/axios-token-refresh" title="hierarchical tree"><img align="left" height="115" src="https://github-readme-stats.vercel.app/api/pin/?username=Duc-Developer&repo=axios-token-refresh&theme=react&border_color=61dafb&border_radius=10"></a>
 
-  <a align="right" href="https://github.com/Duc-Developer/react-for-quill" title="react for quill"><img align="right" height="115" src="https://github-readme-stats.vercel.app/api/pin/?username=Duc-Developer&repo=react-for-quill&theme=react&border_color=61dafb&border_radius=10">
+  <a align="right" href="https://www.npmjs.com/react-for-quill" title="react for quill"><img align="right" height="115" src="https://github-readme-stats.vercel.app/api/pin/?username=Duc-Developer&repo=react-for-quill&theme=react&border_color=61dafb&border_radius=10">
   </a>
 </div>
 <br/><br/><br/><br/><br/><br/>
