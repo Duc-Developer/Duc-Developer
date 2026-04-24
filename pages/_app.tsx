@@ -6,16 +6,19 @@ import {
     QueryClient,
     QueryClientProvider,
 } from '@tanstack/react-query'
+import { CopilotKit } from '@copilotkit/react-core';
 
 import AdminLayout from '@/components/layouts/AdminLayout';
 import MainLayout from '@/components/layouts/MainLayout';
 import LoadingPage from '@/components/common/loading/loading-page';
+import CopilotChatWidget from '@/components/common/copilot-chat-widget';
 
 import type { AppProps } from 'next/app';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'ckeditor5/ckeditor5.css';
+import '@copilotkit/react-ui/styles.css';
 import "./globals.css";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
@@ -54,18 +57,24 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     }, [router]);
 
     const Layout = useMemo(() => isAdminRoute ? AdminLayout : MainLayout, [isAdminRoute]);
+    const shouldShowCopilot = !isAdminRoute;
+
     return (<>
         <Head>
             <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
         </Head>
-        <QueryClientProvider client={queryClient}><Layout loading={loadingPage}>
-            <Suspense fallback={<LoadingPage />}>
-                <HydrationBoundary state={pageProps.dehydratedState}>
-                    <Component {...pageProps} />
-                </HydrationBoundary>
-            </Suspense>
-        </Layout>
+            <CopilotKit runtimeUrl="/api/copilotkit">
+        <QueryClientProvider client={queryClient}>
+                <Layout loading={loadingPage}>
+                    <Suspense fallback={<LoadingPage />}>
+                        <HydrationBoundary state={pageProps.dehydratedState}>
+                            <Component {...pageProps} />
+                        </HydrationBoundary>
+                    </Suspense>
+                    {shouldShowCopilot && <CopilotChatWidget />}
+                </Layout>
         </QueryClientProvider>
+            </CopilotKit>
     </>);
 }
 
