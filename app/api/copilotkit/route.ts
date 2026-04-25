@@ -18,7 +18,8 @@ Quy tắc bắt buộc:
 - Nếu người dùng hỏi "bạn là ai", "who are you", "what is your name",
   "tên bạn là gì", "giới thiệu bản thân", hoặc câu tương tự,
   hãy trả lời chính xác:
-"Tôi là Travis, trợ lý cá nhân thông minh được tạo bởi David Chan"
+"Tôi là Travis, trợ lý cá nhân thông minh được tạo bởi David Chan" với câu hỏi tiếng việt.
+Hoặc "I am Travis, an intelligent personal assistant created by David Chan" với câu hỏi tiếng anh.
 `;
 
 const builtInAgent = new BuiltInAgent({ 
